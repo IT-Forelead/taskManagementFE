@@ -11,25 +11,31 @@ export const useAuthStore = defineStore("auth", () => {
   user.value = JSON.parse(localStorage.getItem("user"));
 
   function login(login, password) {
-    isLoading.value = true;
-    authService
-      .login({
-        login: login,
-        password: password,
-      })
-      .then((res) => {
-        user.value = res?.data
-        localStorage.setItem("user", JSON.stringify(res?.data));
-        isLoggedIn.value = true
-        window.location.href = '/dashboard'
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Login yoki parol noto`g`ri!");
-      })
-      .finally(() => {
-        isLoading.value = false;
-      });
+    if (!login) {
+      toast.error("Iltimos loginni kiriting!");
+    } else if (!password) {
+      toast.error("Iltimos parolni kiriting!");
+    } else {
+      isLoading.value = true;
+      authService
+        .login({
+          login: login,
+          password: password,
+        })
+        .then((res) => {
+          user.value = res?.data
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          isLoggedIn.value = true
+          window.location.href = '/dashboard'
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Login yoki parol noto`g`ri!");
+        })
+        .finally(() => {
+          isLoading.value = false;
+        });
+    }
   }
 
   function logout() {
