@@ -2,9 +2,9 @@
 
 </script>
 <template>
-  <a href="/" class="flex items-center justify-start h-10 space-x-2">
-    <img src="/logo_full.svg" alt="Logo" class="hidden lg:block">
-    <img src="/logo_single.svg" alt="Logo single" class="lg:hidden">
+  <a href="/" class="flex items-center justify-start space-x-2">
+    <img src="/images/uztransgaz-logo.svg" alt="#" class="hidden h-auto lg:block w-28">
+    <img src="/logo_single.svg" alt="#" class="lg:hidden">
   </a>
 </template>
 
