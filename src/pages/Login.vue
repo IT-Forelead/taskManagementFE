@@ -21,7 +21,7 @@ const loginDashboard = () => {
 }
 
 // GOOGLE reCAPTCHA
-const isNotABot = ref(false)
+const isNotABot = ref(true)
 
 const verify = () => {
   isNotABot.value = true
@@ -64,7 +64,7 @@ const fail = () => {
       <button v-else-if="isNotABot" @click="loginDashboard()"
         class="h-[50px] w-full font-medium text-[15px] bg-[#2E5BFF] rounded-md flex items-center justify-center text-white">
         Kirish
-      </button>      
+      </button>
       <button v-else disabled
         class="h-[50px] w-full opacity-50 font-medium text-[15px] bg-[#2E5BFF] rounded-md flex items-center justify-center text-white">
         Kirish
