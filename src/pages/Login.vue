@@ -3,7 +3,7 @@ import { computed, reactive, ref, watch } from 'vue';
 import ClubLogo from '../components/common/ClubLogo.vue';
 import SpinnerIcon from '../assets/icons/SpinnerIcon.vue';
 import { useAuthStore } from '../stores/auth.store';
-import vueRecaptcha from 'vue3-recaptcha2';
+// import vueRecaptcha from 'vue3-recaptcha2';
 
 const { login } = useAuthStore()
 
@@ -54,8 +54,8 @@ const fail = () => {
         <input type="password" v-model="loginData.password" id="password" placeholder="*******"
           class="h-[42px] custom-input-bg border bg-[#e0e7ff3b] px-3 border-[#E0E7FF] outline-none rounded-md">
       </div>
-      <vue-recaptcha @verify="verify" @fail="fail" @error="error" @expire="expire" sitekey="6LdStc8oAAAAAEiXu3d0zVAYeYEl64kbvyNwsKu6" size="normal">
-      </vue-recaptcha>
+      <!-- <vue-recaptcha @verify="verify" @fail="fail" @error="error" @expire="expire" sitekey="6LdStc8oAAAAAEiXu3d0zVAYeYEl64kbvyNwsKu6" size="normal">
+      </vue-recaptcha> -->
       <button v-if="isLoading" disabled
         class="h-[50px] w-full font-medium text-[15px] bg-[#5578f9] rounded-md flex items-center justify-center text-white">
         <SpinnerIcon class="mr-2 w-7 h-7" />
