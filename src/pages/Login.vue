@@ -1,9 +1,10 @@
 <script setup>
-import { computed, reactive, ref, watch } from 'vue';
-import ClubLogo from '../components/common/ClubLogo.vue';
-import SpinnerIcon from '../assets/icons/SpinnerIcon.vue';
+import { vMaska } from "maska";
+import { computed, reactive, ref } from 'vue';
 import EyeIcon from '../assets/icons/EyeIcon.vue';
 import EyeSlashIcon from '../assets/icons/EyeSlashIcon.vue';
+import SpinnerIcon from '../assets/icons/SpinnerIcon.vue';
+import ClubLogo from '../components/common/ClubLogo.vue';
 import { useAuthStore } from '../stores/auth.store';
 // import vueRecaptcha from 'vue3-recaptcha2';
 
@@ -21,7 +22,7 @@ const togglePassword = () => (hidePassword.value = !hidePassword.value)
 const key = computed(() => import.meta.env.VITE_GOOGLE_API_KEY)
 
 const loginDashboard = () => {
-  login(loginData.login, loginData.password)
+  login(loginData.login.replace(/([() -])/g, ''), loginData.password)
 }
 
 // GOOGLE reCAPTCHA
@@ -50,7 +51,8 @@ const fail = () => {
       <h1 class="text-2xl font-bold">Kirish</h1>
       <div class="flex flex-col space-y-2 mt-11">
         <label for="login" class="text-xs font-medium">Telefon raqam</label>
-        <input type="text" v-model="loginData.login" id="login" placeholder="+998(00) 000-00-00"
+        <input type="text" v-model="loginData.login" id="login" v-maska data-maska="+998(##) ###-##-##"
+          data-maska-tokens="998" placeholder="+998(00) 000-00-00"
           class="h-10 custom-input-bg border bg-[#e0e7ff3b] px-3 border-[#E0E7FF] outline-none rounded-md">
       </div>
       <div class="flex flex-col space-y-2">
