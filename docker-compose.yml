@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  frontend:
+    restart: always
+    image: task-management-ui:latest
+    hostname: task-management-ui
+    container_name: task-management-ui
+    networks:
+      - external-net
+networks:
+  external-net:
+    name: external-net
+    external: true
