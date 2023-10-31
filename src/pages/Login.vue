@@ -2,10 +2,13 @@
 import { computed, reactive, ref, watch } from 'vue';
 import ClubLogo from '../components/common/ClubLogo.vue';
 import SpinnerIcon from '../assets/icons/SpinnerIcon.vue';
+import EyeIcon from '../assets/icons/EyeIcon.vue';
+import EyeSlashIcon from '../assets/icons/EyeSlashIcon.vue';
 import { useAuthStore } from '../stores/auth.store';
 // import vueRecaptcha from 'vue3-recaptcha2';
 
 const { login } = useAuthStore()
+const hidePassword = ref(true)
 
 const loginData = reactive({
   login: '',
@@ -13,6 +16,7 @@ const loginData = reactive({
 })
 
 const isLoading = computed(() => useAuthStore().isLoading)
+const togglePassword = () => (hidePassword.value = !hidePassword.value)
 
 const key = computed(() => import.meta.env.VITE_GOOGLE_API_KEY)
 
@@ -45,14 +49,21 @@ const fail = () => {
     <div v-motion-slide-bottom class="p-8 mt-12 bg-white w-96 shadow-6xl rounded-xl space-y-7">
       <h1 class="text-2xl font-bold">Kirish</h1>
       <div class="flex flex-col space-y-2 mt-11">
-        <label for="login" class="text-xs font-medium uppercase">Login</label>
-        <input type="text" v-model="loginData.login" id="login" placeholder="adm8904"
-          class="h-[42px] custom-input-bg border bg-[#e0e7ff3b] px-3 border-[#E0E7FF] outline-none rounded-md">
+        <label for="login" class="text-xs font-medium">Telefon raqam</label>
+        <input type="text" v-model="loginData.login" id="login" placeholder="+998(00) 000-00-00"
+          class="h-10 custom-input-bg border bg-[#e0e7ff3b] px-3 border-[#E0E7FF] outline-none rounded-md">
       </div>
       <div class="flex flex-col space-y-2">
-        <label for="password" class="text-xs font-medium uppercase">Parol</label>
-        <input type="password" v-model="loginData.password" id="password" placeholder="*******"
-          class="h-[42px] custom-input-bg border bg-[#e0e7ff3b] px-3 border-[#E0E7FF] outline-none rounded-md">
+        <label for="password" class="text-xs font-medium">Parol</label>
+        <div class="relative">
+          <input id="password" :type="hidePassword ? 'password' : 'text'" v-model="loginData.password"
+            class="bg-[#e0e7ff3b] px-3 w-full h-10 border border-[#E0E7FF] rounded-md outline-none"
+            placeholder="Parolni kiriting" />
+          <EyeIcon v-if="hidePassword" @click="togglePassword()"
+            class="absolute z-10 w-5 h-5 text-gray-500 -translate-y-1/2 cursor-pointer dark:text-gray-500 top-1/2 right-3" />
+          <EyeSlashIcon v-else @click="togglePassword()"
+            class="absolute z-10 w-5 h-5 text-gray-500 -translate-y-1/2 cursor-pointer dark:text-gray-500 top-1/2 right-3" />
+        </div>
       </div>
       <!-- <vue-recaptcha @verify="verify" @fail="fail" @error="error" @expire="expire" sitekey="6LdStc8oAAAAAEiXu3d0zVAYeYEl64kbvyNwsKu6" size="normal">
       </vue-recaptcha> -->
