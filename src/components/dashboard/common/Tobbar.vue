@@ -13,10 +13,10 @@ const { user, logout } = useAuthStore()
         <ClubProLogo />
         <div class="flex items-center space-x-10">
           <div class="bg-[#F1F1F3] h-10 p-1 w-full rounded-md flex items-center justify-between">
-            <p class="px-5 text-[13px] font-bold">{{ user?.name }}</p>
             <div class="bg-[#00AE69] h-8 w-8 relative rounded">
               <UserIcon class="absolute bottom-0 -translate-x-1/2 left-1/2" />
             </div>
+            <p class="px-5 text-base font-bold">{{ user?.name }}</p>
           </div>
           <div @click="logout()">
             <LogoutIcon class="w-8 h-8 cursor-pointer"/>

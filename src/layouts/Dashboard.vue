@@ -2,10 +2,9 @@
 import SearchAndFilter from '../components/dashboard/common/SearchAndFilter.vue';
 import Tobbar from '../components/dashboard/common/Tobbar.vue';
 
-
 </script>
 <template>
-  <div class="bg-[#F5F5F7] h-screen w-full">
+  <div class="w-full h-screen">
     <Tobbar />
     <SearchAndFilter />
     <router-view></router-view>
