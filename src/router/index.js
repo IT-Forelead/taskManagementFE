@@ -16,7 +16,7 @@ const router = createRouter({
           component: () => import("@/pages/Dashboard.vue"),
           meta: {
             title: "Dashboard",
-            protected: false,
+            protected: true,
           },
         },
       ],

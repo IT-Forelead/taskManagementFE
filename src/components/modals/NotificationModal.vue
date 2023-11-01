@@ -1,6 +1,5 @@
 <script setup>
 import { useModalStore  } from '../../stores/modal.store';
-import BellFillIcon from '../../assets/icons/BellFillIcon.vue';
 import BellIcon from '../../assets/icons/BellIcon.vue';
 
 </script>
