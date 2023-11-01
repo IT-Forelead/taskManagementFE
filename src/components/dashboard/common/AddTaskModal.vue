@@ -3,9 +3,70 @@ import { useModalStore } from "../../../stores/modal.store";
 import MyTeleport from "../../../MyTeleport.vue";
 import AttachIcon from "../../../assets/icons/AttachIcon.vue";
 import CloseIcon from "../../../assets/icons/CloseIcon.vue";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 
-const selectedDate = ref("");
+
+const successMessage = ref('')
+const attachedFileName = ref('')
+const success = (msg) => {
+  successMessage.value = msg
+  setTimeout(() => {
+    successMessage.value = ''
+  }, 8000)
+}
+
+const onFileSelected = (e) => {
+  var files = e.target.files || e.dataTransfer.files;
+  if (!files.length) {
+    return;
+  }
+  addTaskForm.attachedFile = files[0];
+  attachedFileName.value = files[0].name;
+}
+
+const errorMessage = ref('')
+const error = (msg) => {
+  errorMessage.value = msg
+  setTimeout(() => {
+    errorMessage.value = ''
+  }, 5000)
+}
+
+const closeModal = () => {
+  addTaskForm.title = ''
+  addTaskForm.attachedFile = ''
+  addTaskForm.date = ''
+  addTaskForm.job = ''
+  addTaskForm.comment = ''
+  
+}
+
+
+const addTask = () => {
+  if (!addTaskForm.title) {
+    error('Please enter title')
+  } else if (!addTaskForm.attachedFile) {
+    error('Please select file')
+  } else if (!addTaskForm.date) {
+    error('Please enter date')
+  } else if (!addTaskForm.job) {
+    error('Please select job')
+  } else if (!addTaskForm.comment) {
+    error('Please enter comment')
+  } else {
+    success('Successfully created Task')
+    closeModal()
+  }
+}
+
+
+const addTaskForm = reactive({
+  title: '',
+  attachedFile: '',
+  date: '',
+  job: '',
+  comment: '',
+})
 
 const closeTeleport = () => {
   useModalStore().closeTeleport();
@@ -19,8 +80,6 @@ const props = defineProps({
     <div>
       <div class="w-full h-full">
         <form
-          action="index.html"
-          method="post"
           class="p-8 border border-gray-300 rounded"
         >
           <div class="flex justify-between mb-6">
@@ -29,63 +88,66 @@ const props = defineProps({
             <button
               @click="closeTeleport"
               type="button"
-              class="text-gray-400  hover:bg-gray-200 hover:text-gray-500 rounded-lg w-10 h-10  inline-flex justify-center items-center"
+              class="text-black  hover:bg-gray-200 hover:text-gray-500 rounded-lg w-10 h-10  inline-flex justify-center items-center"
             >
-              <CloseIcon class="w-5 h-5" />
+              <CloseIcon class="w-7 h-7" />
             </button>
           </div>
 
-          <fieldset class="space-y-4">
+          <fieldset class="space-y-3 text-gray-500">
             <div>
-              <label for="name"></label>
+              <label for="task">Task title</label>
               <input
                 placeholder="Task title"
                 type="text"
-                id="name"
-                name="user_name"
-                class="w-full border border-gray-300 rounded py-2 px-3"
+                id="task"
+                name="task"
+                class="w-full border border-gray-300 rounded py-2 px-3" v-model="addTaskForm.title"
               />
             </div>
 
             <div class="relative block">
+              <label>Attach file task</label>
               <label
-                for="file"
-                class="block resize-none shadow appearance-none border rounded w-full h-min py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                for="file" v-if="!addTaskForm.attachedFile"
+                class="block resize-none shadow appearance-none border rounded w-full h-min py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 >Attach file task</label
               >
-
-              <div class="textarea-container flex-grow relative">
-                <input type="file" class="hidden" id="file" placeholder="" />
+              <label class="block resize-none shadow appearance-none border rounded w-full h-min py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+ v-if="addTaskForm.attachedFile" v-text="attachedFileName"></label>
+              <div class="textarea-container flex-grow relative" >
+                
+                <input type="file" class="hidden" id="file" placeholder="" @change="onFileSelected"/>
                 <div
-                  class="svg-container z-[-10] absolute bottom-2 right-3 flex items-center"
+                  class="svg-container z-[-10] absolute bottom-2 right-3 flex items-center "  
                 >
                   <AttachIcon class="bg-white hover:bg-gray-500" />
                 </div>
               </div>
             </div>
 
-            <!-- <Calendar /> -->
-
             <div class="relative">
-              <label for=""></label>
+              <label for="date">Date</label>
               <input
                 placeholder="DD.MM.YYYY"
                 type="date"
-                v-model="selectedDate"
+                name="date"
+                v-model="addTaskForm.date"
                 class="w-full z-[-10] appearance-none border border-gray-300 rounded py-2 px-4 leading-tight focus:outline-none focus:border-blue-500"
               />
-              <span
+              <!-- <span
                 class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
-              >
+              > -->
                 <!-- <CalendarIcon /> -->
-              </span>
+              <!-- </span> -->
             </div>
 
-            <label for="job" class="block"></label>
+            <label for="job" class="block">Assign task to user</label>
             <select
               id="job"
               name="user_job"
-              class="w-full border border-gray-300 rounded py-2 px-3"
+              class="w-full border border-gray-300 rounded py-2 px-3"                 v-model="addTaskForm.job"
+
             >
               <optgroup label="Web">
                 <option value="frontend_developer">Front-End Developer</option>
@@ -99,17 +161,22 @@ const props = defineProps({
               </optgroup>
             </select>
 
-            <label for="" class="block"></label>
+            <label for="" class="block">Comment</label>
             <textarea
               placeholder="Comment here"
               id="comment"
-              name="user_bio"
+              name="comment"
+              v-model="addTaskForm.comment"
+
               class="w-full border border-gray-300 rounded py-2 px-3"
             ></textarea>
           </fieldset>
-
-          <button
-            type="submit"
+          <div>
+              <p v-if="errorMessage" class="mr-2 text-red-600">{{ errorMessage }}</p>
+              <p v-if="successMessage" class="mr-2 text-green-600">{{ successMessage }}</p>
+            </div>
+          <button  @click="addTask" type="button"
+            
             class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 mt-6 rounded"
           >
             Create task
