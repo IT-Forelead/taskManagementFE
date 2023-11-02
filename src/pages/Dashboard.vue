@@ -1,12 +1,14 @@
 <script setup>
-import Chart from '../components/dashboard/Chart.vue';
-import Reports from '../components/dashboard/Reports.vue';
+// import Chart from '../components/dashboard/Chart.vue';
+// import Reports from '../components/dashboard/Reports.vue';
+import Report from '../components/dashboard/Report.vue';
 
 
 </script>
 <template>
-  <Reports />
-  <Chart />
+  <Report />
+  <!-- <Reports />
+  <Chart /> -->
 </template>
 
 
