@@ -8,7 +8,6 @@ export const useAuthStore = defineStore("auth", () => {
   const isLoading = ref(false);
   const isLoggedIn = ref(false);
 
-  user.value = JSON.parse(localStorage.getItem("user"));
 
   function login(login, password) {
     if (!login) {
@@ -24,7 +23,7 @@ export const useAuthStore = defineStore("auth", () => {
         })
         .then((res) => {
           user.value = res?.data;
-          localStorage.setItem("user", JSON.stringify(res?.data));
+          localStorage.setItem("session", JSON.stringify(res?.data));
           isLoggedIn.value = true;
           window.location.href = "/dashboard";
         })

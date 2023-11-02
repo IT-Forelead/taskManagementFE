@@ -4,9 +4,10 @@ import MyTeleport from "../../../MyTeleport.vue";
 import AttachIcon from "../../../assets/icons/AttachIcon.vue";
 import CloseIcon from "../../../assets/icons/CloseIcon.vue";
 import { ref, reactive } from "vue";
+import TaskService from "../../../services/task.service";
 
 const successMessage = ref("");
-const attachedFileName = ref("");
+const filename = ref("");
 const success = (msg) => {
   successMessage.value = msg;
   setTimeout(() => {
@@ -15,12 +16,13 @@ const success = (msg) => {
 };
 
 const onFileSelected = (e) => {
+  console.log("---------------------");
   var files = e.target.files || e.dataTransfer.files;
   if (!files.length) {
     return;
   }
-  addTaskForm.attachedFile = files[0];
-  attachedFileName.value = files[0].name;
+  addTaskForm.filename = files[0].name;
+  filename.value = files[0].name;
 };
 
 const errorMessage = ref("");
@@ -33,35 +35,41 @@ const error = (msg) => {
 
 const closeModal = () => {
   addTaskForm.title = "";
-  addTaskForm.attachedFile = "";
-  addTaskForm.date = "";
-  addTaskForm.job = "";
-  addTaskForm.comment = "";
+  addTaskForm.filename = "";
+  addTaskForm.dueDate = "";
+  //  addTaskForm.job = "";
+  addTaskForm.description = "";
 };
 
 const addTask = () => {
   if (!addTaskForm.title) {
     error("Please enter title");
-  } else if (!addTaskForm.attachedFile) {
+  } else if (!addTaskForm.filename) {
     error("Please select file");
-  } else if (!addTaskForm.date) {
-    error("Please enter date");
-  } else if (!addTaskForm.job) {
-    error("Please select job");
-  } else if (!addTaskForm.comment) {
-    error("Please enter comment");
+  } else if (!addTaskForm.dueDate) {
+    error("Please enter dueDate");
+    // } else if (!addTaskForm.job) {
+    //   error("Please select job");
+  } else if (!addTaskForm.description) {
+    error("Please enter description");
   } else {
-    success("Successfully created Task");
-    closeModal();
+    TaskService.createTask(addTaskForm)
+      .then(() => {
+        success("Successfully created Task");
+        closeModal();
+      })
+      .catch((err) => {
+        error("Error creating task");
+      });
   }
 };
 
 const addTaskForm = reactive({
   title: "",
-  attachedFile: "",
-  date: "",
-  job: "",
-  comment: "",
+  filename: "",
+  dueDate: "",
+  // job: "",
+  description: "",
 });
 
 const closeTeleport = () => {
@@ -94,8 +102,8 @@ const props = defineProps({
               <input
                 placeholder="Task title"
                 type="text"
-                id="task"
-                name="task"
+                id="title"
+                name="title"
                 class="w-full border border-gray-300 rounded py-2 px-3"
                 v-model="addTaskForm.title"
               />
@@ -104,21 +112,22 @@ const props = defineProps({
             <div class="relative block">
               <label>Attach file task</label>
               <label
-                for="file"
-                v-if="!addTaskForm.attachedFile"
+                for="filename"
+                v-if="!addTaskForm.filename"
                 class="block resize-none shadow appearance-none border rounded w-full h-min py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 >Attach file task</label
               >
               <label
                 class="block resize-none shadow appearance-none border rounded w-full h-min py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                v-if="addTaskForm.attachedFile"
-                v-text="attachedFileName"
+                v-if="addTaskForm.filename"
+                v-text="filename"
               ></label>
               <div class="textarea-container flex-grow relative">
                 <input
                   type="file"
                   class="hidden"
-                  id="file"
+                  id="filename"
+                  name="filename"
                   placeholder=""
                   @change="onFileSelected"
                 />
@@ -131,12 +140,13 @@ const props = defineProps({
             </div>
 
             <div class="relative">
-              <label for="date">Date</label>
+              <label for="dueDate">Date</label>
               <input
                 placeholder="DD.MM.YYYY"
                 type="date"
-                name="date"
-                v-model="addTaskForm.date"
+                id="dueDate"
+                name="dueDate"
+                v-model="addTaskForm.dueDate"
                 class="w-full z-[-10] appearance-none border border-gray-300 rounded py-2 px-4 leading-tight focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -144,9 +154,8 @@ const props = defineProps({
               <label for="job" class="block">Assign task to user</label>
               <select
                 id="job"
-                name="user_job"
+                name="job"
                 class="w-full border border-gray-300 rounded py-2 px-3"
-                v-model="addTaskForm.job"
               >
                 <optgroup label="Web">
                   <option value="frontend_developer">
@@ -163,15 +172,15 @@ const props = defineProps({
               </select>
             </div>
             <div class="relative">
-            <label for="" class="block">Comment</label>
-            <textarea
-              placeholder="Comment here"
-              id="comment"
-              name="comment"
-              v-model="addTaskForm.comment"
-              class="w-full border border-gray-300 rounded py-2 px-3"
-            ></textarea>
-          </div>
+              <label for="" class="block">Description</label>
+              <textarea
+                placeholder="comment here"
+                id="description"
+                name="description"
+                v-model="addTaskForm.description"
+                class="w-full border border-gray-300 rounded py-2 px-3"
+              ></textarea>
+            </div>
           </fieldset>
           <div>
             <p v-if="errorMessage" class="mr-2 text-red-600">

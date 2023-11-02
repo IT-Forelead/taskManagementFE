@@ -3,7 +3,6 @@ import { refreshToken } from '../helpers/refresh.token.js'
 
 export const PublicAxiosService = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  headers: { 'Content-Type': 'application/json' },
 })
 
 const Axios = axios.create({
@@ -15,11 +14,11 @@ const Axios = axios.create({
 /* ALL AXIOS REQUESTS */
 Axios.interceptors.request.use(
   async (config) => {
-    const session = JSON.parse(localStorage.getItem('user'))
-    if (session?.access) {
+    const session = JSON.parse(localStorage.getItem('session'))
+    if (session?.accessToken) {
       config.headers = {
         ...config.headers,
-        "X-CSRFToken": session?.access,
+        Authorization: `Bearer ${session?.accessToken}`,
       }
     }
 
@@ -30,21 +29,21 @@ Axios.interceptors.request.use(
 
 /* ALL AXIOS RESPONSES */
 Axios.interceptors.response.use(
-  (response) => response,
+  (response) => response?.data,
   async (error) => {
     const config = error?.config
-    if (error?.response?.status === 401 && !config?.sent) {
+    if (error?.response?.status === 403 && !config?.sent) {
       config.sent = true
 
       const result = await refreshToken()
-      if (result?.access) {
+      if (result?.accessToken) {
         config.headers = {
           ...config.headers,
-          "X-CSRFToken": result?.access,
+          Authorization: `Bearer ${result?.accessToken}`,
         }
       }
       let res = await axios(config)
-      return res
+      return res?.data
     }
     return Promise.reject(error)
   }

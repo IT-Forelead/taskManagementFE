@@ -1,5 +1,4 @@
 <script setup>
-import { useModalStore } from "../../../stores/modal.store";
 import AddTaskModal from "./AddTaskModal.vue";
 import LogoutIcon from "../../../assets/icons/LogoutIcon.vue";
 import UserIcon from "../../../assets/icons/UserIcon.vue";
@@ -27,7 +26,7 @@ const { user, logout } = useAuthStore();
             <AddTaskModal />
           </div>
           <div
-           @click="useModalStore().toggleNotification()">
+           @click="useModalStore().toggleNotification">
             <BellFillIcon class="w-8 h-8 text-gray-400 cursor-pointer"/>
           </div>
           <div class="bg-[#F1F1F3] h-10 p-1 w-full rounded-md flex items-center justify-between"
