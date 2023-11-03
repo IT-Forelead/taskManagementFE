@@ -1,16 +1,14 @@
 import { defineStore } from "pinia";
 export const useModalStore = defineStore("modal", {
   state: () => ({
-    isMyTeleportOpen: false,
-    modal: "",
+    isOpenAddTaskModal: false,
   }),
   actions: {
-    openTeleport(modalName) {
-      this.modal = modalName;
-      this.isMyTeleportOpen = true;
+    openAddTaskModal() {
+      this.isOpenAddTaskModal = true
     },
-    closeTeleport() {
-      this.isMyTeleportOpen = false;
+    closeAddTaskModal() {
+      this.isOpenAddTaskModal = false
     },
   },
 });

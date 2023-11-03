@@ -14,23 +14,15 @@ const { user, logout } = useAuthStore();
     <div class="container mx-auto">
       <div class="flex items-center justify-between h-16">
         <ClubProLogo />
-        <div class="flex items-center space-x-10 w-80">
-          <button
-            class="whitespace-nowrap"
-            @click="useModalStore().openTeleport('ADD')"
-            type="button"
-          >
-            Add Task
+        <div class="flex items-center space-x-10">
+          <button @click="useModalStore().openAddTaskModal()" type="button"
+            class="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-600 whitespace-nowrap">
+            Add task
           </button>
-          <div v-if="useModalStore().modal == 'ADD'">
-            <AddTaskModal />
-          </div>
           <div @click="useModalStore().toggleNotification">
-            <BellFillIcon class="w-8 h-8 text-gray-400 cursor-pointer"/>
+            <BellFillIcon class="w-8 h-8 text-gray-400 cursor-pointer" />
           </div>
-          <div class="bg-[#F1F1F3] h-10 p-1 w-full rounded-md flex items-center justify-between"
-          >
-
+          <div class="bg-[#F1F1F3] h-10 p-1 w-full rounded-md flex items-center justify-between">
             <div class="bg-[#00AE69] h-8 w-8 relative rounded">
               <UserIcon class="absolute bottom-0 -translate-x-1/2 left-1/2" />
             </div>
@@ -44,7 +36,8 @@ const { user, logout } = useAuthStore();
     </div>
   </div>
 
-  <NotificationModal/>
+  <NotificationModal />
+  <AddTaskModal />
 </template>
 
 
