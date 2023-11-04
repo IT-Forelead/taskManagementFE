@@ -1,21 +1,14 @@
-<script setup>
 
-</script>
 <template>
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_120_1388)">
-      <path
-        d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z"
-        stroke="#B1B1B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M17.5 17.5L12.5 12.5" stroke="#B1B1B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    </g>
-    <defs>
-      <clipPath id="clip0_120_1388">
-        <rect width="20" height="20" fill="white" />
-      </clipPath>
-    </defs>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
+    <path fill="currentColor"
+      d="m229.66 218.34l-50.07-50.06a88.11 88.11 0 1 0-11.31 11.31l50.06 50.07a8 8 0 0 0 11.32-11.32ZM40 112a72 72 0 1 1 72 72a72.08 72.08 0 0 1-72-72Z">
+    </path>
   </svg>
 </template>
 
-
-<style scoped></style>
+<script>
+export default {
+  name: 'PhMagnifyingGlass'
+}
+</script>

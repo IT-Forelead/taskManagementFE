@@ -1,7 +1,7 @@
 <script setup>
 import { useModalStore } from '../../stores/modal.store'
-import AttachIcon from '../../assets/icons/AttachIcon.vue'
-import CloseIcon from '../../assets/icons/CloseIcon.vue'
+import PaperclipIcon from '../../assets/icons/PaperclipIcon.vue'
+import XIcon from '../../assets/icons/XIcon.vue'
 import { ref, reactive } from 'vue'
 import TaskService from '../../services/task.service'
 import { toast } from 'vue-sonner'
@@ -70,7 +70,7 @@ const submitData = () => {
           <h1 class="flex items-center text-2xl font-bold">Add task</h1>
           <button @click="closeModal()"
             class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full text-sm p-1.5 inline-flex items-center">
-            <CloseIcon />
+            <XIcon />
           </button>
         </div>
         <div class="space-y-3 text-gray-500">
@@ -85,13 +85,12 @@ const submitData = () => {
             <label for="filename" v-if="!taskForm.filename"
               class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline">Attach
               file task</label>
-            <label
-              class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline"
+            <label class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline"
               v-if="taskForm.filename" v-text="filename"></label>
             <div class="relative flex-grow textarea-container">
               <input type="file" class="hidden" id="filename" name="filename" placeholder="" @change="onFileSelected" />
               <div class="svg-container z-[-10] absolute bottom-2 right-3 flex items-center">
-                <AttachIcon class="bg-white hover:bg-gray-500" />
+                <PaperclipIcon class="bg-black hover:bg-gray-500" />
               </div>
             </div>
           </div>
