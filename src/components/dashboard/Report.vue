@@ -84,7 +84,7 @@ onMounted(() => {
               Яратилган сана
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-              Бажарилиши керак бқлган сана
+              Бажариш санаси
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Холати

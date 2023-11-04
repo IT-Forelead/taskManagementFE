@@ -17,7 +17,7 @@ const { user, logout } = useAuthStore();
         <div class="flex items-center space-x-10">
           <button @click="useModalStore().openAddTaskModal()" type="button"
             class="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-600 whitespace-nowrap">
-            Add task
+            Топшириқ яратиш
           </button>
           <div @click="useModalStore().toggleNotification">
             <BellFillIcon class="w-8 h-8 text-gray-400 cursor-pointer" />
