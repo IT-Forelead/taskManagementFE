@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import SearchIcon from '../../../assets/icons/SearchIcon.vue'
-import FilterIcon from '../../../assets/icons/FilterIcon.vue';
+import SearchIcon from '../../assets/icons/SearchIcon.vue'
+import FunnelIcon from '../../assets/icons/FunnelIcon.vue';
 const sortBy = ref('dashboard')
 
 const searchInput = ref('')
@@ -33,13 +33,13 @@ const searchInput = ref('')
         <div class="flex items-center space-x-5">
           <div class="relative w-full">
             <label for="search" class="absolute -translate-y-1/2 top-1/2 left-3">
-              <SearchIcon />
+              <SearchIcon class="w-5 h-5 text-[#B1B1B8]" />
             </label>
             <input v-model="searchInput" id="search" placeholder="Izlash"
               class="h-10 custom-input-bg w-full bg-[#E8E8E8] px-3 pl-10 outline-none rounded-md">
           </div>
           <div class="h-10 cursor-pointer bg-[#EDF1FD] rounded-md px-3 md:px-8 py-2 flex items-center justify-center space-x-2">
-            <FilterIcon />
+            <FunnelIcon class="w-5 h-5 text-[#3365FC]" />
             <p class="text-[#3365FC] text-[14px]">Filter</p>
           </div>
         </div>
