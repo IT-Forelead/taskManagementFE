@@ -67,7 +67,7 @@ const submitData = () => {
     <div class="relative w-full h-full max-w-xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2">
       <div class="relative p-4 bg-white border rounded-lg shadow">
         <div class="flex items-center justify-between mb-6">
-          <h1 class="flex items-center text-2xl font-bold">Add task</h1>
+          <h1 class="flex items-center text-2xl font-bold">Топшириқ яратиш</h1>
           <button @click="closeModal()"
             class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full text-sm p-1.5 inline-flex items-center">
             <CloseIcon />
@@ -75,16 +75,16 @@ const submitData = () => {
         </div>
         <div class="space-y-3 text-gray-500">
           <div>
-            <label for="task">Task title</label>
-            <input placeholder="Task title" type="text" id="title" class="w-full px-3 py-2 border border-gray-300 rounded"
+            <label for="task">Топшириқ номи</label>
+            <input placeholder="Номини киритинг" type="text" id="title" class="w-full px-3 py-2 border border-gray-300 rounded"
               v-model="taskForm.title" />
           </div>
 
           <div class="relative block">
-            <label>Attach file task</label>
+            <label>Хужатни юклаш</label>
             <label for="filename" v-if="!taskForm.filename"
-              class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline">Attach
-              file task</label>
+              class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline">
+              Хужатни танлаш</label>
             <label
               class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline"
               v-if="taskForm.filename" v-text="filename"></label>
@@ -97,12 +97,12 @@ const submitData = () => {
           </div>
 
           <div>
-            <label for="dueDate">Date</label>
+            <label for="dueDate">Бажарилиши керак бўлган сана</label>
             <input type="date" id="dueDate" v-model="taskForm.dueDate"
               class="w-full px-4 py-2 leading-tight border border-gray-300 rounded appearance-none focus:outline-none" />
           </div>
           <div>
-            <label for="job">Assign task to user</label>
+            <label for="job">Ижрочиларни танлаш</label>
             <select id="job" name="job" class="w-full px-3 py-2 border border-gray-300 rounded">
               <optgroup label="Web">
                 <option value="frontend_developer">
@@ -119,18 +119,18 @@ const submitData = () => {
             </select>
           </div>
           <div>
-            <label for="description">Description</label>
-            <textarea rows="4" placeholder="Comment here" id="description" v-model="taskForm.description"
+            <label for="description">Хужжат мазмуни</label>
+            <textarea rows="4" placeholder="Мазмунини киритиш..." id="description" v-model="taskForm.description"
               class="w-full px-3 py-2 border border-gray-300 rounded"></textarea>
           </div>
         </div>
         <button v-if="!isLoading" @click="submitData()" type="button"
           class="w-full px-4 py-2 mt-6 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
-          Create task
+          Топшириқни яратиш
         </button>
         <button v-else type="button"
           class="w-full px-4 py-2 mt-6 font-bold text-white bg-blue-500 rounded cursor-default">
-          Creating task
+          Топшириқни яратиш
         </button>
       </div>
     </div>

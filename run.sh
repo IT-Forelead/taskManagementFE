@@ -1,5 +1,5 @@
 #!/bin/bash
 source ../env.sh
-docker compose down mxui
+docker compose down
 source ./build.sh
-docker compose up -d mxui
+docker compose up -d

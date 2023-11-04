@@ -56,25 +56,25 @@ onMounted(() => {
               #
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-              Task title
+              Топшириқ номи
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-              Assign
+              Ижрочилар
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-              Description
+              Топшириқ мазмуни
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-              Created At
+              Яратилган сана
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-              Deadline
+              Бажарилиши керак бқлган сана
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-              Status
+              Холати
             </th>
             <th class="px-4 py-3 text-sm leading-4 tracking-wider text-center text-gray-500">
-              Action
+              Амаллар
             </th>
           </tr>
         </thead>
@@ -121,7 +121,7 @@ onMounted(() => {
 
       <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div class="text-base leading-5 text-gray-700">
-          Total: 98
+          Хаммаси: 98
         </div>
         <nav class="relative z-0 inline-flex shadow-sm">
           <div>

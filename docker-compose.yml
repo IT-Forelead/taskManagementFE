@@ -10,7 +10,6 @@ services:
 #    image: task-management-ui:latest
 #    container_name: task-management-ui
 #    hostname: task-management-ui
-#    restart: always
 #    ports:
 #      - "3003:80"
 networks:
