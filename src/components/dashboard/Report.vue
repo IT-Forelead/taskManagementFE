@@ -5,6 +5,7 @@ import CaretRight from '../../assets/icons/CaretRight.vue'
 import { toast } from 'vue-sonner'
 import { onMounted, ref } from 'vue';
 import TaskService from '../../services/task.service';
+import moment from 'moment';
 
 const userId = ref('')
 const status = ref('')
@@ -13,6 +14,19 @@ const createdAt = ref('')
 const assigned = ref(false)
 const reports = ref([])
 // statuses: new, in_progress, complete, on_hold
+const makePrettyStatus = (status) => {
+  switch (status) {
+    case 'new':
+      return 'янги'
+    case 'in_progress':
+      return 'жараёнда'
+    case 'complete':
+      return 'бажарилган'
+    case 'on_hold':
+      return 'кутиш жараёнида'
+  }
+}
+
 
 
 
@@ -21,7 +35,7 @@ const loadReports = async () => {
       .then((result) => {
         setTimeout(() => {
           console.log('RESULT', result)
-//          reports.value.push(result)
+          reports.value = result
         }, 500)
       })
       .catch(() => {
@@ -81,33 +95,31 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody class="divide-y-4 divide-[#F5F5F7] bg-white overflow-hidden">
-          <tr v-for="n in 10" :key="n" class="">
+          <tr v-for="(data, idx) in reports" :key="idx" class="">
             <td class="px-6 py-3 whitespace-no-wrap rounded-l-md">
               <div class="flex items-center">
-                <div class="text-sm leading-5 text-gray-800">{{ n }}</div>
+                <div class="text-sm leading-5 text-gray-800">{{ idx + 1 }}</div>
               </div>
             </td>
             <td class="px-6 py-3 whitespace-no-wrap">
-              <div class="text-sm leading-5 text-gray-900">
-                Task title one
-              </div>
+              <div class="text-sm leading-5 text-gray-900">{{ data?.title }}</div>
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-              Jumaniyozov Suroj
+              -
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, ad.
+              {{ data?.description }}
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-              31.10.2023 17:30
+              {{ moment(data?.createdAt).format('DD/MM/YYYY H:mm') }}
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-              31.10.2023 17:30
+              {{ moment(data?.dueDate).format('DD/MM/YYYY') }}
             </td>
             <td class="px-4 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
               <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
                 <span aria-hidden class="absolute inset-0 bg-green-200 rounded-full opacity-50"></span>
-                <span class="relative text-xs">active</span>
+                <span class="relative text-xs">{{ makePrettyStatus(data?.status) }}</span>
               </span>
             </td>
             <td class="px-6 py-3 text-center whitespace-no-wrap rounded-r-md">
@@ -123,7 +135,7 @@ onMounted(() => {
 
       <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div class="text-base leading-5 text-gray-700">
-          Хаммаси: 98
+          Хаммаси: <b>{{ reports.length }}</b>
         </div>
         <nav class="relative z-0 inline-flex shadow-sm">
           <div>
