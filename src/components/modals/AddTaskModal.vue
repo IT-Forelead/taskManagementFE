@@ -4,6 +4,7 @@ import SpinnerIcon from '../../assets/icons/SpinnerIcon.vue'
 import XIcon from '../../assets/icons/XIcon.vue'
 import { ref, reactive } from 'vue'
 import TaskService from '../../services/task.service'
+import UploadService from '../../services/upload.service'
 import { toast } from 'vue-sonner'
 
 const isLoading = ref(false)
@@ -14,15 +15,6 @@ const taskForm = reactive({
   dueDate: '',
   description: '',
 })
-
-const onFileSelected = (e) => {
-  var files = e.target.files || e.dataTransfer.files;
-  if (!files.length) {
-    return;
-  }
-  taskForm.filename = files[0].name;
-  filename.value = files[0].name;
-}
 
 const clearForm = () => {
   taskForm.title = ''
@@ -36,6 +28,47 @@ const closeModal = () => {
   clearForm()
 }
 
+function getFile(e) {
+  if (e.target.files[0].type.includes('pdf')) {
+    taskForm.filename = e.target.files[0]
+  } else {
+    toast.error("File isn't upload")
+  }
+}
+
+const createTask = (id) => {
+  TaskService.createTask({
+    title: taskForm.title,
+    assetId: id,
+    dueDate: { from: taskForm.dueDate, to: taskForm.dueDate },
+    description: taskForm.description
+  })
+    .then(() => {
+      toast.success("Successfully created task")
+      isLoading.value = false
+      closeModal();
+    })
+    .catch((err) => {
+      toast.error("Error creating task")
+      isLoading.value = false
+    })
+}
+
+const uploadFile = () => {
+  const formData = new FormData()
+  formData.append('file', taskForm.filename)
+  formData.append('public', true)
+  UploadService.upload(formData)
+    .then((res) => {
+      console.log("asset id: " + res)
+      createTask(res)
+    })
+    .catch((err) => {
+      toast.error("File isn't upload")
+      isLoading.value = false
+    })
+}
+
 const submitData = () => {
   if (!taskForm.title) {
     toast.error("Please enter title")
@@ -47,16 +80,7 @@ const submitData = () => {
     toast.error("Please enter description")
   } else {
     isLoading.value = true
-    TaskService.createTask(taskForm)
-      .then(() => {
-        toast.success("Successfully created task")
-        isLoading.value = false
-        closeModal();
-      })
-      .catch((err) => {
-        toast.error("Error creating task")
-        isLoading.value = false
-      })
+    uploadFile()
   }
 }
 
@@ -83,28 +107,13 @@ const submitData = () => {
           </div>
           <div>
             <label for="file" class="mb-1 text-sm font-medium leading-6 text-gray-900">
-              Upload file
+              <span class="inline-block">
+                Upload file
+              </span>
+              <input @change="getFile" id="file" type="file" placeholder="Task title"
+                class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </label>
-            <input @change="onFileSelected" id="file" type="file" placeholder="Task title"
-              class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
-
-          <!-- <div class="relative block">
-            <label>Attach file task</label>
-            <label for="filename" v-if="!taskForm.filename"
-              class="block w-full leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline">Attach
-              file task</label>
-            <label
-              class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline"
-              v-if="taskForm.filename" v-text="filename"></label>
-            <div class="relative flex-grow textarea-container">
-              <input type="file" class="hidden" id="filename" name="filename" placeholder="" @change="onFileSelected" />
-              <div class="svg-container z-[-10] absolute bottom-2 right-3 flex items-center">
-                <PaperclipIcon class="bg-black hover:bg-gray-500" />
-              </div>
-            </div>
-          </div> -->
-
           <div>
             <label for="due-date" class="mb-1 text-sm font-medium leading-6 text-gray-900">
               Due date
@@ -121,7 +130,6 @@ const submitData = () => {
               <option>Mexico</option>
             </select>
           </div>
-
           <div>
             <label for="description" class="mb-1 text-sm font-medium leading-6 text-gray-900">Description</label>
             <textarea v-model="taskForm.description" id="description" rows="4" placeholder="Comment here"
