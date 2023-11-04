@@ -11,6 +11,7 @@ const status = ref('')
 const dueDate = ref('')
 const createdAt = ref('')
 const assigned = ref(false)
+const reports = ref([])
 // statuses: new, in_progress, complete, on_hold
 
 
@@ -20,6 +21,7 @@ const loadReports = async () => {
       .then((result) => {
         setTimeout(() => {
           console.log('RESULT', result)
+//          reports.value.push(result)
         }, 500)
       })
       .catch(() => {
