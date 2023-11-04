@@ -1,7 +1,7 @@
 <script setup>
 import { useModalStore } from '../../stores/modal.store'
-import AttachIcon from '../../assets/icons/AttachIcon.vue'
-import CloseIcon from '../../assets/icons/CloseIcon.vue'
+import SpinnerIcon from '../../assets/icons/SpinnerIcon.vue'
+import XIcon from '../../assets/icons/XIcon.vue'
 import { ref, reactive } from 'vue'
 import TaskService from '../../services/task.service'
 import { toast } from 'vue-sonner'
@@ -70,20 +70,29 @@ const submitData = () => {
           <h1 class="flex items-center text-2xl font-bold">Add task</h1>
           <button @click="closeModal()"
             class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full text-sm p-1.5 inline-flex items-center">
-            <CloseIcon />
+            <XIcon />
           </button>
         </div>
-        <div class="space-y-3 text-gray-500">
+        <div class="space-y-3">
           <div>
-            <label for="task">Task title</label>
-            <input placeholder="Task title" type="text" id="title" class="w-full px-3 py-2 border border-gray-300 rounded"
-              v-model="taskForm.title" />
+            <label for="title" class="mb-1 text-sm font-medium leading-6 text-gray-900">
+              Title
+            </label>
+            <input v-model="taskForm.title" id="title" type="text" placeholder="Task title"
+              class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div>
+            <label for="file" class="mb-1 text-sm font-medium leading-6 text-gray-900">
+              Upload file
+            </label>
+            <input @change="onFileSelected" id="file" type="file" placeholder="Task title"
+              class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
 
-          <div class="relative block">
+          <!-- <div class="relative block">
             <label>Attach file task</label>
             <label for="filename" v-if="!taskForm.filename"
-              class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline">Attach
+              class="block w-full leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline">Attach
               file task</label>
             <label
               class="block w-full px-3 py-2 leading-tight border rounded shadow appearance-none resize-none h-min focus:outline-none focus:shadow-outline"
@@ -91,47 +100,45 @@ const submitData = () => {
             <div class="relative flex-grow textarea-container">
               <input type="file" class="hidden" id="filename" name="filename" placeholder="" @change="onFileSelected" />
               <div class="svg-container z-[-10] absolute bottom-2 right-3 flex items-center">
-                <AttachIcon class="bg-white hover:bg-gray-500" />
+                <PaperclipIcon class="bg-black hover:bg-gray-500" />
               </div>
             </div>
+          </div> -->
+
+          <div>
+            <label for="due-date" class="mb-1 text-sm font-medium leading-6 text-gray-900">
+              Due date
+            </label>
+            <input v-model="taskForm.dueDate" id="due-date" type="date"
+              class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div>
+            <label for="assign" class="mb-1 text-sm font-medium leading-6 text-gray-900">Assign</label>
+            <select id="assign"
+              class="block w-full px-2 py-2 text-gray-900 bg-white border-0 rounded shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <option>United States</option>
+              <option>Canada</option>
+              <option>Mexico</option>
+            </select>
           </div>
 
           <div>
-            <label for="dueDate">Date</label>
-            <input type="date" id="dueDate" v-model="taskForm.dueDate"
-              class="w-full px-4 py-2 leading-tight border border-gray-300 rounded appearance-none focus:outline-none" />
-          </div>
-          <div>
-            <label for="job">Assign task to user</label>
-            <select id="job" name="job" class="w-full px-3 py-2 border border-gray-300 rounded">
-              <optgroup label="Web">
-                <option value="frontend_developer">
-                  Front-End Developer
-                </option>
-              </optgroup>
-              <optgroup label="Mobile">
-                <option value="android_developer">Android Developer</option>
-              </optgroup>
-              <optgroup label="Business">
-                <option value="business_owner">Business Owner</option>
-                <option value="freelancer">Freelancer</option>
-              </optgroup>
-            </select>
-          </div>
-          <div>
-            <label for="description">Description</label>
-            <textarea rows="4" placeholder="Comment here" id="description" v-model="taskForm.description"
-              class="w-full px-3 py-2 border border-gray-300 rounded"></textarea>
+            <label for="description" class="mb-1 text-sm font-medium leading-6 text-gray-900">Description</label>
+            <textarea v-model="taskForm.description" id="description" rows="4" placeholder="Comment here"
+              class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
           </div>
         </div>
-        <button v-if="!isLoading" @click="submitData()" type="button"
-          class="w-full px-4 py-2 mt-6 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
-          Create task
-        </button>
-        <button v-else type="button"
-          class="w-full px-4 py-2 mt-6 font-bold text-white bg-blue-500 rounded cursor-default">
-          Creating task
-        </button>
+        <div class="flex items-center justify-end mt-6">
+          <button v-if="!isLoading" @click="submitData()" type="button"
+            class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded shadow-sm w-36 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Create task
+          </button>
+          <button v-else type="button"
+            class="flex items-center justify-center px-3 py-2 space-x-1 text-sm font-semibold text-white bg-indigo-600 rounded shadow-sm cursor-default w-36">
+            <SpinnerIcon class="w-5 h-5" />
+            <span>Creating task</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

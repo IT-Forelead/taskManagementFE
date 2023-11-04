@@ -1,12 +1,12 @@
 <script setup>
-import AddTaskModal from '../../modals/AddTaskModal.vue'
-import LogoutIcon from "../../../assets/icons/LogoutIcon.vue";
-import UserIcon from "../../../assets/icons/UserIcon.vue";
-import BellFillIcon from '../../../assets/icons/BellFillIcon.vue';
-import { useAuthStore } from "../../../stores/auth.store";
-import ClubProLogo from "../../common/ClubProLogo.vue";
-import { useModalStore } from '../../../stores/modal.store'
-import NotificationModal from '../../modals/NotificationModal.vue';
+import AddTaskModal from '../modals/AddTaskModal.vue'
+import SignOutIcon from "../../assets/icons/SignOutIcon.vue";
+import UserIcon from "../../assets/icons/UserIcon.vue";
+import BellFillIcon from '../../assets/icons/BellFillIcon.vue';
+import { useAuthStore } from "../../stores/auth.store";
+import ClubProLogo from "../common/ClubProLogo.vue";
+import { useModalStore } from '../../stores/modal.store'
+import NotificationModal from '../modals/NotificationModal.vue';
 const { user, logout } = useAuthStore();
 </script>
 <template>
@@ -23,13 +23,13 @@ const { user, logout } = useAuthStore();
             <BellFillIcon class="w-8 h-8 text-gray-400 cursor-pointer" />
           </div>
           <div class="bg-[#F1F1F3] h-10 p-1 w-full rounded-md flex items-center justify-between">
-            <div class="bg-[#00AE69] h-8 w-8 relative rounded">
-              <UserIcon class="absolute bottom-0 -translate-x-1/2 left-1/2" />
+            <div class="bg-[#00AE69] h-8 w-8 flex items-center justify-center rounded">
+              <UserIcon class="w-7 h-7 text-[#F1F1F3]" />
             </div>
             <p class="px-5 text-base font-bold">{{ user?.name }}</p>
           </div>
           <div @click="logout()">
-            <LogoutIcon class="w-8 h-8 cursor-pointer" />
+            <SignOutIcon class="w-8 h-8 cursor-pointer" />
           </div>
         </div>
       </div>
