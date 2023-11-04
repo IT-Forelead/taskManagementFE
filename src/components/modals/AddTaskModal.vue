@@ -91,7 +91,7 @@ const submitData = () => {
     <div class="relative w-full h-full max-w-xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2">
       <div class="relative p-4 bg-white border rounded-lg shadow">
         <div class="flex items-center justify-between mb-6">
-          <h1 class="flex items-center text-2xl font-bold">Add task</h1>
+          <h1 class="flex items-center text-2xl font-bold">Топшириқ яратиш</h1>
           <button @click="closeModal()"
             class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full text-sm p-1.5 inline-flex items-center">
             <XIcon />
@@ -108,7 +108,7 @@ const submitData = () => {
           <div>
             <label for="file" class="mb-1 text-sm font-medium leading-6 text-gray-900">
               <span class="inline-block">
-                Upload file
+                Номини киритинг
               </span>
               <input @change="getFile" id="file" type="file" placeholder="Task title"
                 class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -116,13 +116,13 @@ const submitData = () => {
           </div>
           <div>
             <label for="due-date" class="mb-1 text-sm font-medium leading-6 text-gray-900">
-              Due date
+              Бажарилиши керак бўлган сана
             </label>
             <input v-model="taskForm.dueDate" id="due-date" type="date"
               class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
           <div>
-            <label for="assign" class="mb-1 text-sm font-medium leading-6 text-gray-900">Assign</label>
+            <label for="assign" class="mb-1 text-sm font-medium leading-6 text-gray-900">Ижрочиларни танлаш</label>
             <select id="assign"
               class="block w-full px-2 py-2 text-gray-900 bg-white border-0 rounded shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               <option>United States</option>
@@ -131,20 +131,20 @@ const submitData = () => {
             </select>
           </div>
           <div>
-            <label for="description" class="mb-1 text-sm font-medium leading-6 text-gray-900">Description</label>
-            <textarea v-model="taskForm.description" id="description" rows="4" placeholder="Comment here"
+            <label for="description" class="mb-1 text-sm font-medium leading-6 text-gray-900">Хужжат мазмуни</label>
+            <textarea v-model="taskForm.description" id="description" rows="4" placeholder="Мазмунини киритиш..."
               class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
           </div>
         </div>
         <div class="flex items-center justify-end mt-6">
           <button v-if="!isLoading" @click="submitData()" type="button"
             class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded shadow-sm w-36 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Create task
+            Топшириқни яратиш
           </button>
           <button v-else type="button"
             class="flex items-center justify-center px-3 py-2 space-x-1 text-sm font-semibold text-white bg-indigo-600 rounded shadow-sm cursor-default w-36">
             <SpinnerIcon class="w-5 h-5" />
-            <span>Creating task</span>
+            <span>Топшириқни яратиш</span>
           </button>
         </div>
       </div>

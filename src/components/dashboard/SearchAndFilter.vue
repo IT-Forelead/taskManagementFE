@@ -16,17 +16,17 @@ const searchInput = ref('')
             <div @click="sortBy = 'dashboard'"
               :class="sortBy.includes('dashboard') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
               class="uppercase border-l-2 px-3 lg:px-14 cursor-pointer border-y-2  text-xs tracking-[1.13px] font-medium rounded-l-md flex-1 h-10 flex items-center justify-center">
-              Dashboard
+              Янги
             </div>
             <div @click="sortBy = 'sponsors'"
               :class="sortBy.includes('sponsors') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
               class="uppercase cursor-pointer px-3 lg:px-14 border-2  text-xs tracking-[1.13px] font-medium flex-1 h-10 flex items-center justify-center">
-              Homiylar
+              Бажарилаётганлар
             </div>
             <div @click="sortBy = 'students'"
               :class="sortBy.includes('students') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
               class="uppercase border-r-2 px-3 lg:px-14 cursor-pointer border-y-2  text-xs tracking-[1.13px] font-medium rounded-r-md flex-1 h-10 flex items-center justify-center">
-              Tabalabar
+              Бажарилганлар
             </div>
           </div>
         </div>

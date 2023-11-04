@@ -2,11 +2,11 @@
 import { computed, ref } from 'vue';
 const series = computed(() =>
   [{
-    name: 'Homiylar',
+    name: 'Бажарилаётганлар',
     data: [31, 40, 28, 51, 42, 109, 100]
   },
   {
-    name: 'Talabalar',
+    name: 'Бажарилганлар',
     data: [11, 32, 45, 32, 34, 52, 41]
   }]
 )
