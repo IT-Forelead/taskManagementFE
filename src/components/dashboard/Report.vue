@@ -2,7 +2,35 @@
 import EyeIcon from '../../assets/icons/EyeIcon.vue'
 import CaretLeft from '../../assets/icons/CaretLeft.vue'
 import CaretRight from '../../assets/icons/CaretRight.vue'
+import { toast } from 'vue-sonner'
+import { onMounted, ref } from 'vue';
+import TaskService from '../../services/task.service';
 
+const userId = ref('')
+const status = ref('')
+const dueDate = ref('')
+const createdAt = ref('')
+const assigned = ref(false)
+// statuses: new, in_progress, complete, on_hold
+
+
+
+const loadReports = async () => {
+    TaskService.getTasks({})
+      .then((result) => {
+        setTimeout(() => {
+          console.log('RESULT', result)
+        }, 500)
+      })
+      .catch(() => {
+        toast.error('Error while getting response')
+              })
+  }
+
+onMounted(() => {
+  loadReports()
+}
+)
 </script>
 <template>
   <div class="container mx-auto">
