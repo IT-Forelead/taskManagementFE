@@ -1,5 +1,6 @@
 <script setup>
 import AddTaskModal from '../modals/AddTaskModal.vue'
+import EditTaskModal from '../modals/EditTaskModal.vue'
 import SignOutIcon from "../../assets/icons/SignOutIcon.vue";
 import UserIcon from "../../assets/icons/UserIcon.vue";
 import BellFillIcon from '../../assets/icons/BellFillIcon.vue';
@@ -38,7 +39,7 @@ const { user, logout } = useAuthStore();
 
   <NotificationModal />
   <AddTaskModal />
+  <EditTaskModal />
 </template>
-
 
 <style scoped></style>

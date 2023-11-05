@@ -5,8 +5,10 @@ import { toast } from 'vue-sonner';
 import CaretLeft from '../../assets/icons/CaretLeft.vue';
 import CaretRight from '../../assets/icons/CaretRight.vue';
 import EyeIcon from '../../assets/icons/EyeIcon.vue';
+import PencilEditIcon from '../../assets/icons/PencilEditIcon.vue';
 import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
+import { useModalStore } from '../../stores/modal.store';
 
 const tasks = computed(() => {
   return useTaskStore().tasks
@@ -118,6 +120,9 @@ onMounted(() => {
               <div class="flex justify-center item-center">
                 <div class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <EyeIcon class="w-6 h-6" />
+                </div>
+                <div @click="useModalStore().openEditTaskModal()" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                  <PencilEditIcon class="w-6 h-6" />
                 </div>
               </div>
             </td>
