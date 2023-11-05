@@ -1,10 +1,10 @@
 import { PublicAxiosService } from "../services/axios.service"
 
 export async function refreshToken() {
-  const oldSession = JSON.parse(localStorage.getItem('user'))
+  const oldSession = JSON.parse(localStorage.getItem('session'))
   try {
     /* REFRESH TOKEN REQUEST */
-    const response = await PublicAxiosService.get('/auth/refresh/', {
+    const response = await PublicAxiosService.get('/auth/refresh', {
       headers: {
         "X-CSRFToken": oldSession?.refresh,
       },
@@ -12,16 +12,16 @@ export async function refreshToken() {
 
     const session = response?.data
     if (!session?.access) {
-      localStorage.removeItem('user')
+      localStorage.removeItem('session')
     }
 
-    localStorage.setItem('user', JSON.stringify(session))
+    localStorage.setItem('session', JSON.stringify(session))
 
     return session
   } catch (error) {
     if (error?.response?.status === 403 || error?.response?.status === 401) {
       alert("Your session has been expired!")
-      localStorage.removeItem('user')
+      localStorage.removeItem('session')
       window.location.reload()
     }
   }

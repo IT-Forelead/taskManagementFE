@@ -40,7 +40,7 @@ const createTask = (id) => {
   TaskService.createTask({
     title: taskForm.title,
     assetId: id,
-    dueDate: { from: taskForm.dueDate, to: taskForm.dueDate },
+    dueDate: taskForm.dueDate,
     description: taskForm.description
   })
     .then(() => {
