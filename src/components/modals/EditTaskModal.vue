@@ -1,19 +1,28 @@
 <script setup>
 import { useModalStore } from '../../stores/modal.store'
 import { useTaskStore } from '../../stores/task.store'
+import { useUserStore } from '../../stores/user.store'
 import SpinnerIcon from '../../assets/icons/SpinnerIcon.vue'
 import XIcon from '../../assets/icons/XIcon.vue'
-import { ref, reactive } from 'vue'
+import { computed, onMounted, ref, reactive } from 'vue'
 import TaskService from '../../services/task.service'
 import UploadService from '../../services/upload.service'
+import UserService from '../../services/user.service'
 import { toast } from 'vue-sonner'
+
+const users = computed(() => {
+  return useUserStore().users
+})
 
 const isLoading = ref(false)
 
 const taskForm = reactive({
   title: '',
   filename: '',
+  assetId: '',
   dueDate: '',
+  userId: '',
+  status: '',
   description: '',
 })
 
@@ -37,14 +46,16 @@ function getFile(e) {
   }
 }
 
-const createTask = (id) => {
-  TaskService.createTask({
+const updateTask = (id) => {
+  TaskService.updateTask({
     title: taskForm.title,
     assetId: id,
     dueDate: taskForm.dueDate,
+    userId: taskForm.userId,
+    status: taskForm.status,
     description: taskForm.description
   }).then(() => {
-    toast.success("Successfully created task")
+    toast.success("Successfully updated task")
     isLoading.value = false
     TaskService.getTasks({})
       .then((res) => {
@@ -58,7 +69,7 @@ const createTask = (id) => {
       })
     closeModal();
   }).catch((err) => {
-    toast.error("Error creating task")
+    toast.error("Error updating task")
     isLoading.value = false
   })
 }
@@ -70,7 +81,7 @@ const uploadFile = () => {
   UploadService.upload(formData)
     .then((res) => {
       console.log("asset id: " + res)
-      createTask(res)
+      updateTask(res)
     })
     .catch((err) => {
       toast.error("File isn't upload")
@@ -81,7 +92,7 @@ const uploadFile = () => {
 const submitData = () => {
   if (!taskForm.title) {
     toast.error("Please enter title")
-  } else if (!taskForm.filename) {
+  } else if (!taskForm.filename && !taskForm.assetId) {
     toast.error("Please select file")
   } else if (!taskForm.dueDate) {
     toast.error("Please enter dueDate")
@@ -92,6 +103,21 @@ const submitData = () => {
     uploadFile()
   }
 }
+
+const getUsers = async () => {
+  UserService.getUsers({})
+    .then((result) => {
+      useUserStore().clearStore()
+      useUserStore().setUsers(result)
+    })
+    .catch(() => {
+      toast.error('Error while getting response')
+    })
+}
+
+onMounted(() => {
+  getUsers()
+})
 </script>
 <template>
   <div v-if="useModalStore().isOpenEditTaskModal"
@@ -129,15 +155,14 @@ const submitData = () => {
             <input v-model="taskForm.dueDate" id="due-date" type="date"
               class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
-          <!-- <div>
+          <div>
             <label for="assign" class="mb-1 text-sm font-medium leading-6 text-gray-900">Ижрочиларни танлаш</label>
-            <select id="assign"
+            <select v-model="taskForm.userId" id="assign"
               class="block w-full px-2 py-2 text-gray-900 bg-white border-0 rounded shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              <option>United States</option>
-              <option>Canada</option>
-              <option>Mexico</option>
+              <option value="">Foydalanuvchini tanlang</option>
+              <option :value="user?.id" v-for="(user, idx) in users" :key="idx">{{ user?.firstname + ' ' + user?.lastname }}</option>
             </select>
-          </div> -->
+          </div>
           <div>
             <label for="description" class="mb-1 text-sm font-medium leading-6 text-gray-900">Хужжат мазмуни</label>
             <textarea v-model="taskForm.description" id="description" rows="4" placeholder="Мазмунини киритиш..."

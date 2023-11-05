@@ -7,6 +7,9 @@ class TaskService {
   async getTasks(filter) {
     return AxiosService.post('/tasks', filter)
   }
+  async updateTask(data) {
+    return AxiosService.put(`/tasks/${data.id}`, data)
+  }
 }
 
 export default new TaskService()
