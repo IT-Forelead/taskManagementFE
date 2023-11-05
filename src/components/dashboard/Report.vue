@@ -8,6 +8,7 @@ import EyeIcon from '../../assets/icons/EyeIcon.vue';
 import PencilEditIcon from '../../assets/icons/PencilEditIcon.vue';
 import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
+import { useUserStore } from '../../stores/user.store';
 import { useModalStore } from '../../stores/modal.store';
 
 const tasks = computed(() => {
@@ -35,6 +36,10 @@ const loadReports = async () => {
     .catch(() => {
       toast.error('Error while getting response')
     })
+}
+
+const getFullName = (userId) => {
+    return useUserStore().users.find(u => u.id == userId)?.firstname
 }
 
 onMounted(() => {
@@ -99,7 +104,7 @@ onMounted(() => {
               <div class="text-sm leading-5 text-gray-900">{{ data?.title }}</div>
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-              -
+              {{ getFullName(data?.userId) }}
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
               {{ data?.description }}
