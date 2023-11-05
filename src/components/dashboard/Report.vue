@@ -1,19 +1,17 @@
 <script setup>
-import EyeIcon from '../../assets/icons/EyeIcon.vue'
-import CaretLeft from '../../assets/icons/CaretLeft.vue'
-import CaretRight from '../../assets/icons/CaretRight.vue'
-import { toast } from 'vue-sonner'
-import { onMounted, ref } from 'vue';
-import TaskService from '../../services/task.service';
 import moment from 'moment';
+import { computed, onMounted } from 'vue';
+import { toast } from 'vue-sonner';
+import CaretLeft from '../../assets/icons/CaretLeft.vue';
+import CaretRight from '../../assets/icons/CaretRight.vue';
+import EyeIcon from '../../assets/icons/EyeIcon.vue';
+import TaskService from '../../services/task.service';
+import { useTaskStore } from '../../stores/task.store';
 
-const userId = ref('')
-const status = ref('')
-const dueDate = ref('')
-const createdAt = ref('')
-const assigned = ref(false)
-const reports = ref([])
-// statuses: new, in_progress, complete, on_hold
+const tasks = computed(() => {
+  return useTaskStore().tasks
+})
+
 const makePrettyStatus = (status) => {
   switch (status) {
     case 'new':
@@ -27,26 +25,20 @@ const makePrettyStatus = (status) => {
   }
 }
 
-
-
-
 const loadReports = async () => {
-    TaskService.getTasks({})
-      .then((result) => {
-        setTimeout(() => {
-          console.log('RESULT', result)
-          reports.value = result
-        }, 500)
-      })
-      .catch(() => {
-        toast.error('Error while getting response')
-              })
-  }
+  TaskService.getTasks({})
+    .then((result) => {
+      useTaskStore().setTasks(result)
+    })
+    .catch(() => {
+      toast.error('Error while getting response')
+    })
+}
 
 onMounted(() => {
+  useTaskStore().clearStore()
   loadReports()
-}
-)
+})
 </script>
 <template>
   <div class="container mx-auto">
@@ -95,7 +87,7 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody class="divide-y-4 divide-[#F5F5F7] bg-white overflow-hidden">
-          <tr v-for="(data, idx) in reports" :key="idx" class="">
+          <tr v-for="(data, idx) in tasks" :key="idx" class="">
             <td class="px-6 py-3 whitespace-no-wrap rounded-l-md">
               <div class="flex items-center">
                 <div class="text-sm leading-5 text-gray-800">{{ idx + 1 }}</div>
@@ -135,7 +127,7 @@ onMounted(() => {
 
       <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div class="text-base leading-5 text-gray-700">
-          Хаммаси: <b>{{ reports.length }}</b>
+          Хаммаси: <b>{{ tasks.length }}</b>
         </div>
         <nav class="relative z-0 inline-flex shadow-sm">
           <div>
