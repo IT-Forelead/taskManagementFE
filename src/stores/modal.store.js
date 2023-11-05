@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useTaskStore } from './task.store';
 
 export const useModalStore = defineStore('modal', {
   state: () => ({
@@ -14,7 +15,8 @@ export const useModalStore = defineStore('modal', {
     closeAddTaskModal() {
       this.isOpenAddTaskModal = false
     },
-    openEditTaskModal() {
+    openEditTaskModal(taskId) {
+      useTaskStore().setSelectedTask(taskId)
       this.isOpenEditTaskModal = true
     },
     closeEditTaskModal() {

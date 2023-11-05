@@ -121,7 +121,7 @@ onMounted(() => {
                 <div class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <EyeIcon class="w-6 h-6" />
                 </div>
-                <div @click="useModalStore().openEditTaskModal()" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                <div @click="useModalStore().openEditTaskModal(data.id)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <PencilEditIcon class="w-6 h-6" />
                 </div>
               </div>
