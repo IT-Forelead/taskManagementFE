@@ -46,6 +46,18 @@ onMounted(() => {
   useTaskStore().clearStore()
   loadReports()
 })
+
+const openViewTaskModal = (data) => {
+  useTaskStore().setSelectedTask(data)
+  useModalStore().openViewTaskModal()
+}
+
+const openEditTaskModal = (taskId) => {
+  useTaskStore().setSelectedTask(taskId)
+  useModalStore().openEditTaskModal()
+}
+
+
 </script>
 <template>
   <div class="container mx-auto">
@@ -117,16 +129,16 @@ onMounted(() => {
             </td>
             <td class="px-4 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
               <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                <span aria-hidden class="absolute inset-0 bg-green-200 rounded-full opacity-50"></span>
+                <span class="absolute inset-0 bg-green-200 rounded-full opacity-50"></span>
                 <span class="relative text-xs">{{ makePrettyStatus(data?.status) }}</span>
               </span>
             </td>
             <td class="px-6 py-3 text-center whitespace-no-wrap rounded-r-md">
               <div class="flex justify-center item-center">
-                <div class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                <div @click="openViewTaskModal(data)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <EyeIcon class="w-6 h-6" />
                 </div>
-                <div @click="useModalStore().openEditTaskModal(data.id)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                <div @click="openEditTaskModal(data.id)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <PencilEditIcon class="w-6 h-6" />
                 </div>
               </div>

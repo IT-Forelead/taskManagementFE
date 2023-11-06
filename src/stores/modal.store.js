@@ -6,6 +6,7 @@ export const useModalStore = defineStore('modal', {
     isOpenAddTaskModal: false,
     isOpenEditTaskModal: false,
     isOpenNotification: false,
+    isOpenViewTaskModal:false,
     isOpenProfileDropDown: false
   }),
   actions: {
@@ -21,6 +22,12 @@ export const useModalStore = defineStore('modal', {
     },
     closeEditTaskModal() {
       this.isOpenEditTaskModal = false
+    },
+    openViewTaskModal(){
+      this.isOpenViewTaskModal = true
+    },
+    closeViewTaskModal(){
+      this.isOpenViewTaskModal = false
     },
     toggleNotification() {
       this.isOpenNotification = !this.isOpenNotification
