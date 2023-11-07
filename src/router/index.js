@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: "/dashboard",
       redirect: "/dashboard/main/",
-      component: () => import("@/layouts/Dashboard.vue"),
+      component: () => import("@/layouts/DashboardLayout.vue"),
       children: [
         {
           path: "/dashboard/main",
@@ -25,7 +25,7 @@ const router = createRouter({
     {
       path: "/",
       redirect: "/auth/login",
-      component: () => import("@/layouts/Auth.vue"),
+      component: () => import("@/layouts/AuthLayout.vue"),
       children: [
         {
           path: "/auth/login",
