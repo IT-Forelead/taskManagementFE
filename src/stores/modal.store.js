@@ -4,9 +4,7 @@ import { useTaskStore } from './task.store';
 export const useModalStore = defineStore('modal', {
   state: () => ({
     isOpenAddTaskModal: false,
-    isOpenEditTaskModal: false,
-    isOpenNotification: false,
-    isOpenProfileDropDown: false
+    isOpenEditTaskModal: false
   }),
   actions: {
     openAddTaskModal() {
@@ -21,12 +19,6 @@ export const useModalStore = defineStore('modal', {
     },
     closeEditTaskModal() {
       this.isOpenEditTaskModal = false
-    },
-    toggleNotification() {
-      this.isOpenNotification = !this.isOpenNotification
-    },
-    toggleProfile() {
-      this.isOpenProfileDropDown = !this.isOpenProfileDropDown
     },
   },
 })
