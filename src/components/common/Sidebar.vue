@@ -1,161 +1,58 @@
 <script setup>
-import { computed, onMounted } from '@vue/runtime-core'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-// import decodeJwt, { parseJwt } from '../mixins/utils'
-// import { useAuthStore } from '../store/auth.store'
-// import { useSidebarStore } from '../store/sidebar.store'
-// import ChevronRightIcon from './../assets/icons/ChevronRightIcon.vue'
-// import EnvelopeIcon from './../assets/icons/EnvelopeIcon.vue'
-// import FolderOpenIcon from './../assets/icons/FolderOpenIcon.vue'
-// import FolderUserIcon from './../assets/icons/FolderUserIcon.vue'
-// import FootPrintsIcon from './../assets/icons/FootPrintsIcon.vue'
-// import HouseIcon from './../assets/icons/HouseIcon.vue'
-// import MoneyIcon from './../assets/icons/MoneyIcon.vue'
-import BellIcon from '../../assets/icons/BellIcon.vue'
-import ChevronRightRoundedIcon from '../../assets/icons/ChevronRightRoundedIcon.vue'
-// import UsersThreeIcon from './../assets/icons/UsersThreeIcon.vue'
-// import ShoppingCartIcon from './../assets/icons/ShoppingCartIcon.vue'
-
-// const router = useRouter()
-
-// const payload = ref({})
-
-// const isOpen = computed(() => useSidebarStore().isOpenSidebar)
-// const isOpenSubMenuForTariffs = computed(() => useSidebarStore().isOpenSubMenuForTariffs)
-// const isOpenSubMenuForServices = computed(() => useSidebarStore().isOpenSubMenuForServices)
-// const isOpenSubMenuForSales = computed(() => useSidebarStore().isOpenSubMenuForSales)
-
+import CheckCircleOutlineIcon from '../../assets/icons/CheckCircleOutlineIcon.vue'
+import GraphUpOutlineIcon from '../../assets/icons/GraphUpOutlineIcon.vue'
+import ClipboardRemoveOutlineIcon from '../../assets/icons/ClipboardRemoveOutlineIcon.vue'
+import ClipboardListOutlineIcon from '../../assets/icons/ClipboardListOutlineIcon.vue'
+import ClipboardHeartOutlineIcon from '../../assets/icons/ClipboardHeartOutlineIcon.vue'
+import ChatSquareArrowOutlineIcon from '../../assets/icons/ChatSquareArrowOutlineIcon.vue'
 </script>
 <template>
-  <div class="fixed z-50 block h-screen text-gray-400 bg-gray-900 w-80">
-    <div class="flex items-center justify-center h-20 bg-gray-600">
-      <img src="/images/alpha-sport-urgench-logo.png" class="w-auto h-14" alt="#" />
+  <div class="fixed z-50 block h-screen text-gray-400 bg-slate-900 w-80">
+    <div class="flex flex-col items-center py-8 space-y-4">
+      <div class="inline-flex items-center justify-center text-5xl text-white rounded-full bg-slate-700 h-28 w-28">
+        JS
+      </div>
+      <div class="text-lg font-medium text-white">Jumaniyozov Surojiddin</div>
     </div>
-    <div class="relative space-y-1 overflow-y-auto py-14 h-5/6">
-      <router-link to="/dashboard" active-class="active" class="relative flex items-center w-full h-10 space-x-4 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="w-1.5 h-10 rounded-r-xl first-child-bg-color mr-2"></div>
-        <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-          <BellIcon class="w-6 h-6" />
-        </div>
-        <div>Dashboard</div>
+    <div class="flex justify-center px-4">
+      <button type="button"
+        class="flex items-center justify-center w-full py-2 space-x-2 text-base font-normal text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <CheckCircleOutlineIcon class="w-5 h-5" />
+        <span>
+          Топшириқни яратиш
+        </span>
+      </button>
+    </div>
+    <div class="relative py-4 overflow-y-auto h-5/6">
+      <router-link to="/dashboard" active-class="active"
+        class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 rounded-r-full cursor-pointer bg-slate-800 text-white hover:text-white">
+        <GraphUpOutlineIcon class="w-6 h-6" />
+        <div>Hisobot</div>
       </router-link>
-      <div class="relative flex items-center justify-between w-full h-10 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="flex items-center space-x-4">
-          <div class="w-1.5 h-10 rounded-r-xl mr-2 first-child-bg-color"></div>
-          <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-            <BellIcon class="w-6 h-6" />
-          </div>
-          <div>Tarifflar</div>
-        </div>
-        <ChevronRightRoundedIcon class="w-5 h-5 mx-4 text-gray-400 transition-all duration-300" :class="{ 'rotate-90': isOpenSubMenuForTariffs }" />
-      </div>
-      <div :class="{ hidden: !isOpenSubMenuForTariffs }" class="transition-all duration-300">
-        <router-link to="/tariffs" active-class="active" class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 pl-14">
-          <div class="flex items-center space-x-2">
-            <p>-</p>
-            <p>Tarifflar</p>
-          </div>
-        </router-link>
-        <router-link to="/trainer-tariffs" active-class="active" class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 pl-14">
-          <div class="flex items-center space-x-2">
-            <p>-</p>
-            <p>Tarifflar</p>
-          </div>
-        </router-link>
-      </div>
-      <div class="relative flex items-center justify-between w-full h-10 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="flex items-center space-x-4">
-          <div class="w-1.5 h-10 rounded-r-xl mr-2 first-child-bg-color"></div>
-          <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-            <BellIcon class="w-6 h-6" />
-          </div>
-          <div>Tarifflar</div>
-        </div>
-        <ChevronRightRoundedIcon class="w-5 h-5 mx-4 text-gray-400 transition-all duration-300" :class="{ 'rotate-90': isOpenSubMenuForSales }" />
-      </div>
-      <div :class="{ hidden: !isOpenSubMenuForSales }" class="transition-all duration-300">
-        <router-link to="/sales" active-class="active" class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 pl-14">
-          <div class="flex items-center space-x-2">
-            <p>-</p>
-            <p>Xabarlar</p>
-          </div>
-        </router-link>
-        <router-link to="/history-products" active-class="active" class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 pl-14">
-          <div class="flex items-center space-x-2">
-            <p>-</p>
-            <p>Xabarlar</p>
-          </div>
-        </router-link>
-        <router-link to="/products" active-class="active" class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 pl-14">
-          <div class="flex items-center space-x-2">
-            <p>-</p>
-            <p>Xabarlar</p>
-          </div>
-        </router-link>
-      </div>
-      <router-link to="/payments" active-class="active" class="relative flex items-center w-full h-10 space-x-4 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="w-1.5 h-10 rounded-r-xl first-child-bg-color mr-2"></div>
-        <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-          <BellIcon class="w-6 h-6" />
-        </div>
-        <div>Xabarlar</div>
+      <router-link to="/dashboard" active-class="active"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <ClipboardHeartOutlineIcon class="w-6 h-6" />
+        <div>Qayta nazoratga olingan</div>
       </router-link>
-      <router-link to="/visits" active-class="active" class="relative flex items-center w-full h-10 space-x-4 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="w-1.5 h-10 rounded-r-xl first-child-bg-color mr-2"></div>
-        <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-          <BellIcon class="w-6 h-6" />
-        </div>
-        <div>Xabarlar</div>
+      <router-link to="/dashboard" active-class="active"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <ClipboardListOutlineIcon class="w-6 h-6" />
+        <div>Topshiriqlar</div>
       </router-link>
-      <router-link to="/customers" active-class="active" class="relative flex items-center w-full h-10 space-x-4 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="w-1.5 h-10 rounded-r-xl first-child-bg-color mr-2"></div>
-        <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-          <BellIcon class="w-6 h-6" />
-        </div>
-        <div>Xabarlar</div>
+      <router-link to="/dashboard" active-class="active"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <ChatSquareArrowOutlineIcon class="w-6 h-6" />
+        <div>Berilgan javoblar</div>
       </router-link>
-      <div class="relative flex items-center justify-between w-full h-10 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="flex items-center space-x-4">
-          <div class="w-1.5 h-10 rounded-r-xl mr-2 first-child-bg-color"></div>
-          <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-            <BellIcon class="w-6 h-6" />
-          </div>
-          <div>Xabarlar</div>
-        </div>
-        <ChevronRightRoundedIcon class="w-5 h-5 mx-4 text-gray-400 transition-all duration-300 rotate-90" />
-      </div>
-      <div class="transition-all duration-300">
-        <router-link to="/services" active-class="active" class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 pl-14">
-          <div class="flex items-center space-x-2">
-            <p>-</p>
-            <p>Xabarlar</p>
-          </div>
-        </router-link>
-        <router-link to="/trainer-services" active-class="active" class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 pl-14">
-          <div class="flex items-center space-x-2">
-            <p>-</p>
-            <p>Xabarlar</p>
-          </div>
-        </router-link>
-      </div>
-      <router-link to="/users" active-class="active" class="relative flex items-center w-full h-10 space-x-4 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="w-1.5 h-10 rounded-r-xl first-child-bg-color mr-2"></div>
-        <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-          <BellIcon class="w-6 h-6" />
-        </div>
-        <div>Xabarlar</div>
-      </router-link>
-      <router-link to="/sms-messages" active-class="active" class="relative flex items-center w-full h-10 space-x-4 font-medium transition-colors duration-300 cursor-pointer hover:bg-yellow-300/10 hover:text-yellow-200 py-7">
-        <div class="w-1.5 h-10 rounded-r-xl first-child-bg-color mr-2"></div>
-        <div class="flex items-center justify-center w-10 h-10 rounded-xl second-child-bg-color">
-          <BellIcon class="w-6 h-6" />
-        </div>
-        <div>Xabarlar</div>
+      <router-link to="/dashboard" active-class="active"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <ClipboardRemoveOutlineIcon class="w-6 h-6" />
+        <div>Qabul qilinmaganlar</div>
       </router-link>
     </div>
-    <div class="absolute bottom-0 w-full mb-3 text-sm text-center dark:text-gray-400">
-      Copyright &copy; {{ new Date().getFullYear() }} <a href="http://it-forelead.uz" class="hover:underline">IT-Forelead</a>. <br />
+    <div class="absolute bottom-0 w-full mb-3 text-xs text-center dark:text-gray-400">
+      Copyright &copy; {{ new Date().getFullYear() }} <a href="http://it-forelead.uz"
+        class="hover:underline">IT-Forelead</a>. <br />
       All Rights Reserved.
     </div>
   </div>
