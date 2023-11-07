@@ -1,5 +1,5 @@
 <script setup>
-import Tobbar from '../components/common/Tobbar.vue'
+import Navbar from '../components/common/Navbar.vue'
 import Sidebar from '../components/common/Sidebar.vue'
 
 </script>
@@ -7,7 +7,7 @@ import Sidebar from '../components/common/Sidebar.vue'
   <div class="w-full h-screen">
     <Sidebar />
     <div class="flex-1 ml-80">
-      <Tobbar />
+      <Navbar />
       <router-view></router-view>
     </div>
   </div>
