@@ -8,7 +8,9 @@ import Sidebar from '../components/common/Sidebar.vue'
     <Sidebar />
     <div class="flex-1 ml-80">
       <Navbar />
-      <router-view></router-view>
+      <div class="px-8 pt-8">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>

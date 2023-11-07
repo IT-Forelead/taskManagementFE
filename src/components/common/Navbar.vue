@@ -31,7 +31,7 @@ import ProfileDropdown from './ProfileDropdown.vue'
         </li>
       </ul>
     </div>
-    <div class="flex items-center space-x-8">
+    <div class="flex items-center space-x-4">
       <NotificationDropdown />
       <LanguageDropdown />
       <ProfileDropdown />
