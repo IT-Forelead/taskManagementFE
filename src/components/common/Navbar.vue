@@ -6,6 +6,7 @@ import ShieldCheckOutlineIcon from '../../assets/icons/ShieldCheckOutlineIcon.vu
 import AddCircleOutlineIcon from '../../assets/icons/AddCircleOutlineIcon.vue'
 import AddTaskModal from '../modals/AddTaskModal.vue'
 import EditTaskModal from '../modals/EditTaskModal.vue'
+import ViewTaskModal from '../modals/ViewTaskModal.vue'
 import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
@@ -46,6 +47,7 @@ import { useModalStore } from '../../stores/modal.store'
 
   <AddTaskModal />
   <EditTaskModal />
+  <ViewTaskModal />
 </template>
 
 <style scoped></style>
