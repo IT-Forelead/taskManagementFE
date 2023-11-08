@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: "/dashboard",
       redirect: "/dashboard/main/",
-      component: () => import("@/layouts/Dashboard.vue"),
+      component: () => import("@/layouts/DashboardLayout.vue"),
       children: [
         {
           path: "/dashboard/main",
@@ -21,11 +21,28 @@ const router = createRouter({
         },
       ],
     },
+    // *** ADD TASK PAGE ***
+    {
+      path: "/add-task",
+      redirect: "/add-task",
+      component: () => import("@/layouts/DashboardLayout.vue"),
+      children: [
+        {
+          path: "",
+          name: "Add task",
+          component: () => import("@/pages/AddTask.vue"),
+          meta: {
+            title: "Add task",
+            protected: true,
+          },
+        },
+      ],
+    },
     // *** AUTH ***
     {
       path: "/",
       redirect: "/auth/login",
-      component: () => import("@/layouts/Auth.vue"),
+      component: () => import("@/layouts/AuthLayout.vue"),
       children: [
         {
           path: "/auth/login",

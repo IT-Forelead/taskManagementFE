@@ -2,8 +2,8 @@
 import moment from 'moment';
 import { computed, onMounted } from 'vue';
 import { toast } from 'vue-sonner';
-import CaretLeft from '../../assets/icons/CaretLeft.vue';
-import CaretRight from '../../assets/icons/CaretRight.vue';
+import CaretLeftIcon from '../../assets/icons/CaretLeftIcon.vue';
+import CaretRightIcon from '../../assets/icons/CaretRightIcon.vue';
 import EyeIcon from '../../assets/icons/EyeIcon.vue';
 import PencilEditIcon from '../../assets/icons/PencilEditIcon.vue';
 import TaskService from '../../services/task.service';
@@ -155,7 +155,7 @@ const openEditTaskModal = (taskId) => {
           <div>
             <a href="#"
               class="relative inline-flex items-center px-2 py-2 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7] rounded-l-md hover:text-gray-400">
-              <CaretLeft class="w-5 h-5" />
+              <CaretLeftIcon class="w-5 h-5" />
             </a>
           </div>
           <div>
@@ -175,7 +175,7 @@ const openEditTaskModal = (taskId) => {
           <div>
             <a href="#"
               class="relative inline-flex items-center px-2 py-2 -ml-px text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7] rounded-r-md hover:text-gray-400">
-              <CaretRight class="w-5 h-5" />
+              <CaretRightIcon class="w-5 h-5" />
             </a>
           </div>
         </nav>
