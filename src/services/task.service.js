@@ -10,6 +10,9 @@ class TaskService {
   async updateTask(id, data) {
     return AxiosService.put(`/tasks/${id}`, data)
   }
+  async getTasksCounts() {
+    return AxiosService.get('/tasks/counts')
+  }
 }
 
 export default new TaskService()
