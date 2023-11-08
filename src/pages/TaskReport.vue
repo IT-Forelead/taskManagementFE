@@ -15,7 +15,7 @@ onMounted(() => {
   getTasksCounts();
 });
 
-const tasksCount = computed(() => {
+const tasksCounts = computed(() => {
   return useTaskStore().tasksCounts;
 });
 </script>
@@ -66,7 +66,7 @@ const tasksCount = computed(() => {
         >
           <div class="text-base text-gray-900">Барча топшириқлар</div>
           <div class="text-lg font-medium text-blue-600">
-            {{ tasksCount.count }}
+            {{ tasksCounts.count }}
           </div>
         </div>
         <div
@@ -74,7 +74,7 @@ const tasksCount = computed(() => {
         >
           <div class="text-base text-gray-900">Бажарилмоқда</div>
           <div class="text-lg font-medium text-orange-600">
-            {{ tasksCount.inProgress }}
+            {{ tasksCounts.inProgress }}
           </div>
         </div>
         <div
@@ -82,7 +82,7 @@ const tasksCount = computed(() => {
         >
           <div class="text-base text-gray-900">Бажарилган</div>
           <div class="text-lg font-medium text-green-600">
-            {{ tasksCount.completed }}
+            {{ tasksCounts.completed }}
           </div>
         </div>
         <div
@@ -90,7 +90,7 @@ const tasksCount = computed(() => {
         >
           <div class="text-base text-gray-900">Бажарилмаган</div>
           <div class="text-lg font-medium text-red-500">
-            {{ tasksCount.new }}
+            {{ tasksCounts.new }}
           </div>
         </div>
         <div
@@ -98,7 +98,7 @@ const tasksCount = computed(() => {
         >
           <div class="text-base text-gray-900">Муддатидан кеч бажарилган</div>
           <div class="text-lg font-medium text-indigo-600">
-            {{ tasksCount.onHold }}
+            {{ tasksCounts.onHold }}
           </div>
         </div>
         <div
@@ -106,7 +106,7 @@ const tasksCount = computed(() => {
         >
           <div class="text-base text-gray-900">Қайта назоратга олинган</div>
           <div class="text-lg font-medium text-yellow-600">
-            {{ tasksCount.approved }}
+            {{ tasksCounts.approved }}
           </div>
         </div>
         <div
@@ -120,7 +120,7 @@ const tasksCount = computed(() => {
         >
           <div class="text-base text-gray-900">Қабул қилинмаганлар</div>
           <div class="text-lg font-medium text-red-600">
-            {{ tasksCount.rejected }}
+            {{ tasksCounts.rejected }}
           </div>
         </div>
       </div>
