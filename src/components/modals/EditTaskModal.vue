@@ -14,6 +14,10 @@ const users = computed(() => {
   return useUserStore().users
 })
 
+const taskId = computed(() => {
+  return useTaskStore().selectedTaskId
+})
+
 const isLoading = ref(false)
 
 const taskForm = reactive({
@@ -29,11 +33,11 @@ const closeModal = () => {
   clearForm()
 }
 
-const updateTask  = () => {
-  TaskService.updateTask({
-    taskId: useTaskStore().selectedTask,
-    userId: taskForm.userId,
-  }).then(() => {
+const updateTask = () => {
+  TaskService.updateTask(
+    taskId.value,
+    { userIds: [taskForm.userId] }
+  ).then(() => {
     toast.success("Successfully updated task")
     isLoading.value = false
     TaskService.getTasks({})
@@ -54,8 +58,8 @@ const updateTask  = () => {
 }
 
 const submitData = () => {
-    isLoading.value = true
-    updateTask()
+  isLoading.value = true
+  updateTask()
 }
 
 const getUsers = async () => {
@@ -90,7 +94,8 @@ onMounted(() => {
             <select v-model="taskForm.userId" id="assign"
               class="block w-full px-2 py-2 text-gray-900 bg-white border-0 rounded shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               <option value="">Ижрочиларни танлаш</option>
-              <option :value="user?.id" v-for="(user, idx) in users" :key="idx">{{ user?.firstname + ' ' + user?.lastname }}</option>
+              <option :value="user?.id" v-for="(user, idx) in users" :key="idx">{{ user?.firstname + ' ' + user?.lastname
+              }}</option>
             </select>
           </div>
         </div>

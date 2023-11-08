@@ -7,8 +7,8 @@ class TaskService {
   async getTasks(filter) {
     return AxiosService.post('/tasks', filter)
   }
-  async updateTask(data) {
-    return AxiosService.put(`/tasks/${data.taskId}`, data)
+  async updateTask(id, data) {
+    return AxiosService.put(`/tasks/${id}`, data)
   }
 }
 

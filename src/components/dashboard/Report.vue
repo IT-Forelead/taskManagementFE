@@ -53,12 +53,11 @@ const openViewTaskModal = (data) => {
 }
 
 const openEditTaskModal = (taskId) => {
-  useTaskStore().setSelectedTask(taskId)
+  useTaskStore().setSelectedTaskId(taskId)
   useModalStore().openEditTaskModal()
 }
-
-
 </script>
+
 <template>
   <div class="container mx-auto">
     <!-- <div v-if="isLoadingCommonData" class="flex items-center w-full space-x-7 my-7">

@@ -4,6 +4,7 @@ export const useTaskStore = defineStore('task', {
     state: () => ({
         tasks: [],
         selectedTask: {},
+        selectedTaskId: '',
     }),
     actions: {
         setTasks(data) {
@@ -11,6 +12,9 @@ export const useTaskStore = defineStore('task', {
         },
         setSelectedTask(data) {
             this.selectedTask = data
+        },
+        setSelectedTaskId(data) {
+            this.selectedTaskId = data
         },
         clearStore() {
             this.tasks = []
