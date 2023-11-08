@@ -108,15 +108,15 @@ const submitData = () => {
         <div class="space-y-3">
           <div>
             <label for="title" class="mb-1 text-sm font-medium leading-6 text-gray-900">
-              Title
+              Топшириқ номи
             </label>
-            <input v-model="taskForm.title" id="title" type="text" placeholder="Task title"
+            <input v-model="taskForm.title" id="title" type="text" placeholder="Топшириқ номини киритинг"
               class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
           <div>
             <label for="file" class="mb-1 text-sm font-medium leading-6 text-gray-900">
               <span class="inline-block">
-                Номини киритинг
+                Файлни танланг
               </span>
               <input @change="getFile" id="file" type="file" placeholder="Task title"
                 class="block w-full rounded border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
