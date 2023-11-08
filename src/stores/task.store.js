@@ -5,6 +5,7 @@ export const useTaskStore = defineStore('task', {
         tasks: [],
         selectedTask: {},
         selectedTaskId: '',
+        tasksCounts: {},
     }),
     actions: {
         setTasks(data) {
@@ -19,5 +20,9 @@ export const useTaskStore = defineStore('task', {
         clearStore() {
             this.tasks = []
         },
+        setTasksCounts(data) {
+            this.tasksCounts = data
+
+        }
     },
 })
