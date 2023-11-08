@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '../../assets/icons/AddCircleOutlineIcon.vue'
 import AddTaskModal from '../modals/AddTaskModal.vue'
 import EditTaskModal from '../modals/EditTaskModal.vue'
 import ViewTaskModal from '../modals/ViewTaskModal.vue'
+import AssignExecutorModal from '../modals/AssignExecutorModal.vue'
 import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
@@ -48,6 +49,7 @@ import { useModalStore } from '../../stores/modal.store'
   <AddTaskModal />
   <EditTaskModal />
   <ViewTaskModal />
+  <AssignExecutorModal />
 </template>
 
 <style scoped></style>

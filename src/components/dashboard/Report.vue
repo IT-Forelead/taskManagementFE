@@ -3,6 +3,7 @@ import moment from 'moment';
 import { computed, onMounted } from 'vue';
 import { toast } from 'vue-sonner';
 import CaretLeftIcon from '../../assets/icons/CaretLeftIcon.vue';
+import UserPlusBrokenIcon from '../../assets/icons/UserPlusBrokenIcon.vue';
 import CaretRightIcon from '../../assets/icons/CaretRightIcon.vue';
 import EyeIcon from '../../assets/icons/EyeIcon.vue';
 import PencilEditIcon from '../../assets/icons/PencilEditIcon.vue';
@@ -55,6 +56,11 @@ const openViewTaskModal = (data) => {
 const openEditTaskModal = (taskId) => {
   useTaskStore().setSelectedTaskId(taskId)
   useModalStore().openEditTaskModal()
+}
+
+const openAssignExecutorModal = (taskId) => {
+  useTaskStore().setSelectedTaskId(taskId)
+  useModalStore().openAssignExecutorModal()
 }
 </script>
 
@@ -139,6 +145,9 @@ const openEditTaskModal = (taskId) => {
                 </div>
                 <div @click="openEditTaskModal(data.id)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <PencilEditIcon class="w-6 h-6" />
+                </div>
+                <div @click="openAssignExecutorModal(data.id)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                  <UserPlusBrokenIcon class="w-6 h-6" />
                 </div>
               </div>
             </td>

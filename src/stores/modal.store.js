@@ -4,7 +4,8 @@ export const useModalStore = defineStore('modal', {
   state: () => ({
     isOpenAddTaskModal: false,
     isOpenEditTaskModal: false,
-    isOpenViewTaskModal:false
+    isOpenViewTaskModal:false,
+    isOpenAssignExecutorModal:false,
   }),
   actions: {
     openAddTaskModal() {
@@ -24,6 +25,12 @@ export const useModalStore = defineStore('modal', {
     },
     closeViewTaskModal(){
       this.isOpenViewTaskModal = false
+    },
+    openAssignExecutorModal(){
+      this.isOpenAssignExecutorModal = true
+    },
+    closeAssignExecutorModal(){
+      this.isOpenAssignExecutorModal = false
     },
   },
 })
