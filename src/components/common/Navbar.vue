@@ -25,10 +25,6 @@ import { useModalStore } from '../../stores/modal.store'
           <span class="text-base">Топшириқлар</span>
         </li>
         <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
-          <ChatLineOutlineIcon class="w-5 h-5" />
-          <span class="text-base">Девонхона</span>
-        </li>
-        <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
           <ShieldCheckOutlineIcon class="w-5 h-5" />
           <span class="text-base">Назорат</span>
         </li>
