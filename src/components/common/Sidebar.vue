@@ -43,7 +43,7 @@ import { useModalStore } from '../../stores/modal.store'
       </router-link>
     </div> -->
     <div class="relative py-4 overflow-y-auto h-5/6">
-      <router-link to="/dashboard" active-class="active"
+      <router-link to="/tasks/report" active-class="active"
         class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 rounded-r-full cursor-pointer bg-slate-800 text-white hover:text-white">
         <GraphUpOutlineIcon class="w-6 h-6" />
         <span>Ҳисобот</span>

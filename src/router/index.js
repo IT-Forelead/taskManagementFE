@@ -21,6 +21,23 @@ const router = createRouter({
         },
       ],
     },
+    // *** Tasks ***
+    {
+      path: "/tasks",
+      redirect: "/tasks/report/",
+      component: () => import("@/layouts/DashboardLayout.vue"),
+      children: [
+        {
+          path: "/tasks/report/",
+          name: "Tasks report",
+          component: () => import("@/pages/TaskReport.vue"),
+          meta: {
+            title: "Tasks report",
+            protected: true,
+          },
+        },
+      ],
+    },
     // *** ADD TASK PAGE ***
     {
       path: "/add-task",
