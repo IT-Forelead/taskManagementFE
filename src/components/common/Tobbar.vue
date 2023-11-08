@@ -8,7 +8,7 @@ import { useAuthStore } from "../../stores/auth.store";
 import ClubProLogo from "../common/ClubProLogo.vue";
 import { useModalStore } from '../../stores/modal.store'
 import NotificationModal from '../modals/NotificationModal.vue';
-import TaskViewModal from '../modals/ViewTaskModal.vue';
+import ViewTaskModal from "../modals/ViewTaskModal.vue";
 const { user, logout } = useAuthStore();
 </script>
 <template>
@@ -41,7 +41,6 @@ const { user, logout } = useAuthStore();
   <NotificationModal />
   <AddTaskModal />
   <EditTaskModal />
-  <TaskViewModal/>
 </template>
 
 <style scoped></style>

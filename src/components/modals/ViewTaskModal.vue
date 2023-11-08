@@ -70,7 +70,7 @@ const getFullName = (userId) => {
         </div>
         <div class="flex items-center justify-end p-4 space-x-2 border-t">
           <button @click="closeModal"
-            class="w-36 py-2 px-4 rounded-md text-white text-base bg-red-600 cursor-pointer hover:bg-red-800">
+            class="w-36 py-2 px-4 rounded-md text-white text-base bg-gray-500 cursor-pointer hover:bg-gray-600">
             Ёпиш
           </button>
         </div>

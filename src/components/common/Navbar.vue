@@ -8,6 +8,7 @@ import EditTaskModal from '../modals/EditTaskModal.vue'
 import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
+import ViewTaskModal from "@/components/modals/ViewTaskModal.vue";
 </script>
 <template>
   <div
@@ -40,6 +41,7 @@ import ProfileDropdown from './ProfileDropdown.vue'
 
   <AddTaskModal />
   <EditTaskModal />
+  <ViewTaskModal/>
 </template>
 
 <style scoped></style>
