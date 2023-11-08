@@ -49,22 +49,22 @@ import { useModalStore } from '../../stores/modal.store'
         <GraphUpOutlineIcon class="w-6 h-6" />
         <span>Ҳисобот</span>
       </router-link>
-      <router-link to="/add-task" active-class="active"
+      <router-link to="/tasks/recontrol" active-class="active"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <ClipboardHeartOutlineIcon class="w-6 h-6" />
         <span>Қайта назоратга олинган</span>
       </router-link>
-      <router-link to="/dashboard" active-class="active"
+      <router-link to="/tasks/assignments" active-class="active"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <ClipboardListOutlineIcon class="w-6 h-6" />
         <span>Топшириқлар</span>
       </router-link>
-      <router-link to="/dashboard" active-class="active"
+      <router-link to="/tasks/answers-given" active-class="active"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <ChatSquareArrowOutlineIcon class="w-6 h-6" />
         <span>Берилган жавоблар</span>
       </router-link>
-      <router-link to="/dashboard" active-class="active"
+      <router-link to="/tasks/not-accepted" active-class="active"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <ClipboardRemoveOutlineIcon class="w-6 h-6" />
         <span>Қабул қилинмаганлар</span>

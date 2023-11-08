@@ -24,15 +24,51 @@ const router = createRouter({
     // *** Tasks ***
     {
       path: "/tasks",
-      redirect: "/tasks/report/",
+      redirect: "/tasks/report",
       component: () => import("@/layouts/DashboardLayout.vue"),
       children: [
         {
-          path: "/tasks/report/",
+          path: "/tasks/report",
           name: "Tasks report",
           component: () => import("@/pages/TaskReport.vue"),
           meta: {
             title: "Tasks report",
+            protected: true,
+          },
+        },
+        {
+          path: "/tasks/assignments",
+          name: "Assignments",
+          component: () => import("@/pages/Assignments.vue"),
+          meta: {
+            title: "Assignments",
+            protected: true,
+          },
+        },
+        {
+          path: "/tasks/recontrol",
+          name: "Recontrol",
+          component: () => import("@/pages/Recontrol.vue"),
+          meta: {
+            title: "Recontrol",
+            protected: true,
+          },
+        },
+        {
+          path: "/tasks/answers-given",
+          name: "Answers given",
+          component: () => import("@/pages/AnswersGiven.vue"),
+          meta: {
+            title: "Answers given",
+            protected: true,
+          },
+        },
+        {
+          path: "/tasks/not-accepted",
+          name: "Not accepted",
+          component: () => import("@/pages/NotAccepted.vue"),
+          meta: {
+            title: "Not accepted",
             protected: true,
           },
         },

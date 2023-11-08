@@ -15,7 +15,7 @@
             </div>
             <div class="bg-white border-b border-gray-200 rounded shadow">
                 <ul class="flex flex-wrap">
-                    <li class="inline-flex items-center justify-center px-6 py-4 text-blue-600 border-b-2 border-blue-600 hover:border-blue-600">
+                    <li class="inline-flex items-center justify-center px-6 py-4 text-blue-600 border-b-2 border-transparent hover:border-blue-600">
                         Ҳисобот
                     </li>
                     <li class="inline-flex items-center justify-center px-6 py-4 text-green-600 border-b-2 border-transparent hover:border-green-500">
@@ -30,7 +30,7 @@
                         Берилган жавоблар
                     </li>
                     <li
-                        class="inline-flex items-center justify-center px-6 py-4 text-red-600 border-b-2 border-transparent hover:border-red-500">
+                        class="inline-flex items-center justify-center px-6 py-4 text-red-600 border-b-2 border-red-500 hover:border-red-500">
                         Қабул қилинмаганлар
                     </li>
                 </ul>
