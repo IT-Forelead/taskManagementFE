@@ -3,11 +3,9 @@ import moment from 'moment';
 import { computed, onMounted } from 'vue';
 import { toast } from 'vue-sonner';
 import CaretLeftIcon from '../../assets/icons/CaretLeftIcon.vue';
-import UserPlusBrokenIcon from '../../assets/icons/UserPlusBrokenIcon.vue';
 import CaretRightIcon from '../../assets/icons/CaretRightIcon.vue';
-import EyeIcon from '../../assets/icons/EyeIcon.vue';
 import EyeOutlineIcon from '../../assets/icons/EyeOutlineIcon.vue';
-import PencilEditIcon from '../../assets/icons/PencilEditIcon.vue';
+import UserPlusOutlineIcon from '../../assets/icons/UserPlusOutlineIcon.vue';
 import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
 import { useUserStore } from '../../stores/user.store';
@@ -145,7 +143,7 @@ const openAssignExecutorModal = (taskId) => {
                   <EyeOutlineIcon class="w-6 h-6" />
                 </div>
                 <div @click="openAssignExecutorModal(data.id)" class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
-                  <UserPlusBrokenIcon class="w-6 h-6" />
+                  <UserPlusOutlineIcon class="w-6 h-6" />
                 </div>
               </div>
             </td>
