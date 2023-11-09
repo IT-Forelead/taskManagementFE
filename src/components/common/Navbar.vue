@@ -15,7 +15,7 @@ import { useModalStore } from '../../stores/modal.store'
 </script>
 <template>
   <div
-    class="relative z-50 flex items-center justify-between w-full h-12 px-4 bg-white border-b border-gray-200 border-solid shadow-7xl">
+    class="sticky top-0 z-50 flex items-center justify-between w-full h-12 px-4 py-2 bg-white border-b border-gray-200 shadow-7xl">
     <div class="flex items-center space-x-8">
       <div class="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer hover:bg-gray-100">
         <HamburgerMenuOutlineIcon class="w-6 h-6" />
