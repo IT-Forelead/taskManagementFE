@@ -9,12 +9,15 @@ import { cleanObjectEmptyFields } from '../../helpers/cleanEmptyFields';
 const sortBy = ref('dashboard')
 
 const searchInput = ref('')
+const statusAction = ref('')
 
 const getTasksByStatus = (status) => {
   if (status == "all") {
     TaskService.getTasks({})
     .then((result) => {
+      useTaskStore().clearStore()
       useTaskStore().setTasks(result)
+      statusAction.value = status
     })
     .catch(() => {
       toast.error('Error occurred while getting response')
@@ -26,7 +29,9 @@ const getTasksByStatus = (status) => {
       })
     )
     .then((result) => {
+      useTaskStore().clearStore()
       useTaskStore().setTasks(result)
+      statusAction.value = status
     })
     .catch(() => {
       toast.error('Error occurred while getting response')
@@ -41,22 +46,27 @@ const getTasksByStatus = (status) => {
       <div class="bg-white border-b border-gray-200 rounded shadow">
         <ul class="flex flex-wrap">
           <li @click="getTasksByStatus('all')"
+            :class="statusAction.includes('all') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
             class="inline-flex items-center justify-center px-6 py-4 text-blue-600 border-b-2 border-transparent hover:border-blue-600 cursor-pointer">
             Xаммаси
           </li>
           <li @click="getTasksByStatus('new')"
+            :class="statusAction.includes('new') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
             class="inline-flex items-center justify-center px-6 py-4 text-blue-600 border-b-2 border-transparent hover:border-blue-500 cursor-pointer">
             Янги
           </li>
           <li @click="getTasksByStatus('in_progress')"
+            :class="statusAction.includes('in_progress') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
             class="inline-flex items-center justify-center px-6 py-4 text-blue-600 border-b-2 border-transparent hover:border-blue-500 cursor-pointer">
             Бажарилаётганлар
           </li>
           <li @click="getTasksByStatus('complete')"
+            :class="statusAction.includes('complete') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
             class="inline-flex items-center justify-center px-6 py-4 text-blue-600 border-b-2 border-transparent hover:border-blue-500 cursor-pointer">
             Бажарилганлар
           </li>
           <li @click="getTasksByStatus('on_hold')"
+            :class="statusAction.includes('on_hold') ? 'border-[#3366FF] text-white bg-[#3366FF]' : 'border-[#E0E7FF] text-[#3366FF99]'"
             class="inline-flex items-center justify-center px-6 py-4 text-blue-600 border-b-2 border-transparent hover:border-blue-500 cursor-pointer ">
             Муддати утганлар
           </li>
