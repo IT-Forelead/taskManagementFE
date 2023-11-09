@@ -3,8 +3,10 @@ import moment from 'moment';
 import { computed, onMounted } from 'vue';
 import { toast } from 'vue-sonner';
 import CaretLeftIcon from '../../assets/icons/CaretLeftIcon.vue';
+import UserPlusBrokenIcon from '../../assets/icons/UserPlusBrokenIcon.vue';
 import CaretRightIcon from '../../assets/icons/CaretRightIcon.vue';
 import EyeIcon from '../../assets/icons/EyeIcon.vue';
+import EyeOutlineIcon from '../../assets/icons/EyeOutlineIcon.vue';
 import PencilEditIcon from '../../assets/icons/PencilEditIcon.vue';
 import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
@@ -55,6 +57,11 @@ const openViewTaskModal = (data) => {
 const openEditTaskModal = (taskId) => {
   useTaskStore().setSelectedTaskId(taskId)
   useModalStore().openEditTaskModal()
+}
+
+const openAssignExecutorModal = (taskId) => {
+  useTaskStore().setSelectedTaskId(taskId)
+  useModalStore().openAssignExecutorModal()
 }
 </script>
 
@@ -133,12 +140,12 @@ const openEditTaskModal = (taskId) => {
               </span>
             </td>
             <td class="px-6 py-3 text-center whitespace-no-wrap rounded-r-md">
-              <div class="flex justify-center item-center">
-                <div @click="openViewTaskModal(data)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
-                  <EyeIcon class="w-6 h-6" />
+              <div class="flex justify-center space-x-4 item-center">
+                <div @click="openViewTaskModal(data)" class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                  <EyeOutlineIcon class="w-6 h-6" />
                 </div>
-                <div @click="openEditTaskModal(data.id)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
-                  <PencilEditIcon class="w-6 h-6" />
+                <div @click="openAssignExecutorModal(data.id)" class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                  <UserPlusBrokenIcon class="w-6 h-6" />
                 </div>
               </div>
             </td>
