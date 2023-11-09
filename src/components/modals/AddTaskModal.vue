@@ -81,15 +81,18 @@ const uploadFile = () => {
 const submitData = () => {
   if (!taskForm.title) {
     toast.error("Please enter title")
-  } else if (!taskForm.filename) {
-    toast.error("Please select file")
   } else if (!taskForm.dueDate) {
     toast.error("Please enter dueDate")
   } else if (!taskForm.description) {
     toast.error("Please enter description")
   } else {
     isLoading.value = true
-    uploadFile()
+    if (taskForm.filename) {
+      uploadFile()
+    } else {
+      createTask()
+    }
+    
   }
 }
 </script>
