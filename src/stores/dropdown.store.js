@@ -12,10 +12,10 @@ export const useDropdownStore = defineStore('dropdown', {
     setSelectOptionAssignExecutor(data) {
       this.selectOptionAssignExecutor = data
     },
-    openAssignExecutorDropDown() {
+    openAssignExecutorDropdown() {
       this.isOpenAssignExecutorDropdown = true
     },
-    closeAssignExecutorDropDown() {
+    closeAssignExecutorDropdown() {
       this.isOpenAssignExecutorDropdown = false
     },
     toggleNotificationDropdown() {
