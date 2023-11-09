@@ -72,6 +72,15 @@ const router = createRouter({
             protected: true,
           },
         },
+        {
+          path: "/tasks/statistics",
+          name: "Statistics",
+          component: () => import("@/pages/Statistics.vue"),
+          meta: {
+            title: "Statistics",
+            protected: true,
+          },
+        },
       ],
     },
     // *** ADD TASK PAGE ***
