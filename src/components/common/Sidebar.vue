@@ -9,7 +9,7 @@ import PieChartOutlineIcon from '../../assets/icons/PieChartOutlineIcon.vue'
 import { useModalStore } from '../../stores/modal.store'
 </script>
 <template>
-  <div class="fixed z-50 block h-screen text-gray-400 bg-slate-900 w-80">
+  <div class="fixed z-50 block h-screen text-gray-400 w-72 bg-slate-900">
     <!-- <div class="flex flex-col items-center py-8 space-y-4">
       <div class="inline-flex items-center justify-center text-5xl text-white rounded-full bg-slate-700 h-28 w-28">
         JS

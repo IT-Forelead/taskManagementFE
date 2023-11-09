@@ -4,9 +4,9 @@ import Sidebar from '../components/common/Sidebar.vue'
 
 </script>
 <template>
-  <div class="w-full h-screen">
+  <div class="w-full min-h-screen">
     <Sidebar />
-    <div class="flex-1 ml-80">
+    <div class="flex-1 ml-72">
       <Navbar />
       <div class="px-8 pt-8">
         <router-view></router-view>
