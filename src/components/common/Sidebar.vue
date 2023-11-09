@@ -44,32 +44,17 @@ import { useModalStore } from '../../stores/modal.store'
       </router-link>
     </div>
     <div class="relative py-4 overflow-y-auto h-5/6">
-      <router-link to="/tasks/report" active-class="active"
-        class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 rounded-r-full cursor-pointer bg-slate-800 text-white hover:text-white">
-        <GraphUpOutlineIcon class="w-6 h-6" />
-        <span>Ҳисобот</span>
-      </router-link>
-      <router-link to="/tasks/recontrol" active-class="active"
-        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
-        <ClipboardHeartOutlineIcon class="w-6 h-6" />
-        <span>Қайта назоратга олинган</span>
-      </router-link>
-      <router-link to="/tasks/assignments" active-class="active"
-        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
-        <ClipboardListOutlineIcon class="w-6 h-6" />
-        <span>Топшириқлар</span>
-      </router-link>
-      <router-link to="/tasks/answers-given" active-class="active"
-        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
-        <ChatSquareArrowOutlineIcon class="w-6 h-6" />
-        <span>Берилган жавоблар</span>
-      </router-link>
-      <router-link to="/tasks/not-accepted" active-class="active"
-        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
-        <ClipboardRemoveOutlineIcon class="w-6 h-6" />
-        <span>Қабул қилинмаганлар</span>
-      </router-link>
       <router-link to="/dashboard" active-class="active"
+        class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 rounded-r-full cursor-pointer bg-slate-800 text-white hover:text-white">
+        <ClipboardListOutlineIcon class="w-6 h-6" />
+        <span>Барча Топшириқлар</span>
+      </router-link>
+      <router-link to="/tasks/report" active-class="active"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <GraphUpOutlineIcon class="w-6 h-6" />
+        <span>Ҳисоботлар</span>
+      </router-link>
+      <router-link to="/tasks/report" active-class="active"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <PieChartOutlineIcon class="w-6 h-6" />
         <div>Статистика</div>

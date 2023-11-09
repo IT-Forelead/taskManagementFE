@@ -23,7 +23,9 @@ import { useModalStore } from '../../stores/modal.store'
       <ul class="flex items-center space-x-6">
         <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
           <ChecklistMinimalisticOutlineIcon class="w-5 h-5" />
-          <span class="text-base">Топшириқлар</span>
+          <router-link to="/dashboard">
+            <span class="text-base">Топшириқлар</span>
+          </router-link>
         </li>
         <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
           <ShieldCheckOutlineIcon class="w-5 h-5" />
