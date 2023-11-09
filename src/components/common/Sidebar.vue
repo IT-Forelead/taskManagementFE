@@ -7,6 +7,11 @@ import ClipboardHeartOutlineIcon from '../../assets/icons/ClipboardHeartOutlineI
 import ChatSquareArrowOutlineIcon from '../../assets/icons/ChatSquareArrowOutlineIcon.vue'
 import PieChartOutlineIcon from '../../assets/icons/PieChartOutlineIcon.vue'
 import { useModalStore } from '../../stores/modal.store'
+import { ref } from 'vue'
+const reportType = ref('')
+const changeReportType = (report) => {
+  reportType.value = report;
+}
 </script>
 <template>
   <div class="fixed z-50 block h-screen text-gray-400 bg-slate-900 w-80">
@@ -45,16 +50,22 @@ import { useModalStore } from '../../stores/modal.store'
     </div>
     <div class="relative py-4 overflow-y-auto h-5/6">
       <router-link to="/dashboard" active-class="active"
-        class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 rounded-r-full cursor-pointer bg-slate-800 text-white hover:text-white">
+        @click="changeReportType('all_tasks')"
+        :class="reportType.includes('all_tasks') ? 'rounded-r-full bg-slate-800 text-white' : ''"
+        class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <ClipboardListOutlineIcon class="w-6 h-6" />
         <span>Барча Топшириқлар</span>
       </router-link>
       <router-link to="/tasks/report" active-class="active"
+        @click="changeReportType('tasks_report')"
+        :class="reportType.includes('tasks_report') ? 'rounded-r-full bg-slate-800 text-white' : ''"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <GraphUpOutlineIcon class="w-6 h-6" />
         <span>Ҳисоботлар</span>
       </router-link>
       <router-link to="/tasks/report" active-class="active"
+        @click="changeReportType('statistics')"
+        :class="reportType.includes('statistics') ? 'rounded-r-full bg-slate-800 text-white' : ''"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <PieChartOutlineIcon class="w-6 h-6" />
         <div>Статистика</div>
