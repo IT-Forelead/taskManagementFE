@@ -66,7 +66,7 @@ const createTask = (id) => {
 const uploadFile = () => {
   const formData = new FormData()
   formData.append('file', taskForm.filename)
-  formData.append('public', true)
+  formData.append('public', false)
   UploadService.upload(formData)
     .then((res) => {
       console.log("asset id: " + res)
