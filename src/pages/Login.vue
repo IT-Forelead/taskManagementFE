@@ -1,6 +1,6 @@
 <script setup>
 import { vMaska } from "maska";
-import { computed, reactive, ref } from 'vue';
+import {computed, onMounted, onUnmounted, reactive, ref} from 'vue';
 import EyeIcon from '../assets/icons/EyeIcon.vue';
 import EyeSlashIcon from '../assets/icons/EyeSlashIcon.vue';
 import SpinnerIcon from '../assets/icons/SpinnerIcon.vue';
@@ -25,6 +25,19 @@ const loginDashboard = () => {
   login(loginData.login.replace(/([() -])/g, ''), loginData.password)
 }
 
+onMounted(() => {
+  window.addEventListener("keydown", handleKeyDown);
+});
+
+const handleKeyDown = (event) => {
+  if (event.key === "Enter") {
+    loginDashboard()
+  }
+};
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeyDown);
+});
 // GOOGLE reCAPTCHA
 const isNotABot = ref(true)
 

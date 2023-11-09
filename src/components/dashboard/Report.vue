@@ -6,10 +6,13 @@ import CaretLeftIcon from '../../assets/icons/CaretLeftIcon.vue';
 import CaretRightIcon from '../../assets/icons/CaretRightIcon.vue';
 import EyeOutlineIcon from '../../assets/icons/EyeOutlineIcon.vue';
 import UserPlusOutlineIcon from '../../assets/icons/UserPlusOutlineIcon.vue';
+import FileIcon from "@/assets/icons/FileIcon.vue";
 import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
 import { useUserStore } from '../../stores/user.store';
 import { useModalStore } from '../../stores/modal.store';
+import {useFileStore} from "@/stores/file.store.js";
+import UploadService from "@/services/upload.service.js";
 
 const tasks = computed(() => {
   return useTaskStore().tasks
@@ -61,6 +64,25 @@ const openAssignExecutorModal = (taskId) => {
   useTaskStore().setSelectedTaskId(taskId)
   useModalStore().openAssignExecutorModal()
 }
+
+const openViewUploadedFile = async (assetId) => {
+  try {
+    const fileData = await UploadService.getUploadedFile(assetId);
+    if (fileData) {
+      const selectedFile = {
+        filename: fileData.filename,
+        url: fileData.url,
+      };
+      useFileStore().setSelectedFile(selectedFile);
+      useModalStore().openViewUploadedFileModal();
+    } else {
+      toast.error('File not exist.');
+    }
+  } catch (error) {
+    toast.error('Error while fetching file data.');
+  }
+};
+
 </script>
 
 <template>
@@ -144,6 +166,9 @@ const openAssignExecutorModal = (taskId) => {
                 </div>
                 <div @click="openAssignExecutorModal(data.id)" class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <UserPlusOutlineIcon class="w-6 h-6" />
+                </div>
+                <div @click="openViewUploadedFile(data.assetId)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                  <FileIcon class="w-6 h-6" />
                 </div>
               </div>
             </td>

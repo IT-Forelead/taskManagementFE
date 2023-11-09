@@ -12,6 +12,7 @@ import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
 import { useModalStore } from '../../stores/modal.store'
+import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue";
 </script>
 <template>
   <div
@@ -48,6 +49,7 @@ import { useModalStore } from '../../stores/modal.store'
   <EditTaskModal />
   <ViewTaskModal />
   <AssignExecutorModal />
+  <ViewUploadedFileModal/>
 </template>
 
 <style scoped></style>

@@ -3,7 +3,7 @@ import { useModalStore } from '../../stores/modal.store'
 import { useTaskStore } from '../../stores/task.store'
 import SpinnerIcon from '../../assets/icons/SpinnerIcon.vue'
 import XIcon from '../../assets/icons/XIcon.vue'
-import { ref, reactive } from 'vue'
+import {ref, reactive, onMounted, onUnmounted} from 'vue'
 import TaskService from '../../services/task.service'
 import UploadService from '../../services/upload.service'
 import { toast } from 'vue-sonner'
@@ -28,6 +28,20 @@ const closeModal = () => {
   useModalStore().closeAddTaskModal()
   clearForm()
 }
+
+onMounted(() => {
+  window.addEventListener("keydown", handleKeyDown);
+});
+
+const handleKeyDown = (event) => {
+  if (event.key === "Escape") {
+    closeModal();
+  }
+};
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeyDown);
+});
 
 function getFile(e) {
   if (e.target.files[0].type.includes('pdf')) {

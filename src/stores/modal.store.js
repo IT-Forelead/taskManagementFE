@@ -6,6 +6,7 @@ export const useModalStore = defineStore('modal', {
     isOpenEditTaskModal: false,
     isOpenViewTaskModal:false,
     isOpenAssignExecutorModal:false,
+    isOpenViewUploadedFileModal: false
   }),
   actions: {
     openAddTaskModal() {
@@ -31,6 +32,12 @@ export const useModalStore = defineStore('modal', {
     },
     closeAssignExecutorModal(){
       this.isOpenAssignExecutorModal = false
+    },
+    openViewUploadedFileModal() {
+      this.isOpenViewUploadedFileModal = true
+    },
+    closeViewUploadedFileModal() {
+      this.isOpenViewUploadedFileModal = false
     },
   },
 })
