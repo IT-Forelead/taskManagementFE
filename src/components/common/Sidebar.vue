@@ -64,7 +64,7 @@ import { useModalStore } from '../../stores/modal.store'
         <GraphUpOutlineIcon class="w-6 h-6" />
         <span>Ҳисоботлар</span>
       </router-link>
-      <router-link to="/tasks/statistics" active-class="active"
+      <router-link to="/statistics" active-class="active"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <PieChartOutlineIcon class="w-6 h-6" />
         <div>Статистика</div>
