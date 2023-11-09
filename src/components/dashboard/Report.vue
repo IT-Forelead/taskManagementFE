@@ -115,7 +115,7 @@ const openEditTaskModal = (taskId) => {
               <div class="text-sm leading-5 text-gray-900">{{ data?.title }}</div>
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-              {{ getFullName(data?.userId) }}
+              {{ data?.assignedUsers }}
             </td>
             <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
               {{ data?.description }}

@@ -33,7 +33,7 @@ const signOut = () => {
         <div @click="useDropdownStore().toggleProfileDropdown()"
             class="flex items-center justify-center px-3 py-1.5 space-x-2 text-gray-800 cursor-pointer rounded-md hover:bg-gray-100 hover:text-blue-800">
             <UserIdOutlineIcon class="w-6 h-6" />
-            <span class="text-base">Surojiddin</span>
+            <span class="text-base">*******</span>
         </div>
         <ul v-if="useDropdownStore().isOpenProfileDropdown"
             class="absolute right-0 z-20 bg-white divide-y divide-gray-200 shadow w-60 rounded-b-md top-9">
