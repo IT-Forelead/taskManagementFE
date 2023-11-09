@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '../../assets/icons/AddCircleOutlineIcon.vue'
 import AddTaskModal from '../modals/AddTaskModal.vue'
 import EditTaskModal from '../modals/EditTaskModal.vue'
 import ViewTaskModal from '../modals/ViewTaskModal.vue'
+import AssignExecutorModal from '../modals/AssignExecutorModal.vue'
 import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
@@ -22,11 +23,9 @@ import { useModalStore } from '../../stores/modal.store'
       <ul class="flex items-center space-x-6">
         <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
           <ChecklistMinimalisticOutlineIcon class="w-5 h-5" />
-          <span class="text-base">Топшириқлар</span>
-        </li>
-        <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
-          <ChatLineOutlineIcon class="w-5 h-5" />
-          <span class="text-base">Девонхона</span>
+          <router-link to="/dashboard">
+            <span class="text-base">Топшириқлар</span>
+          </router-link>
         </li>
         <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
           <ShieldCheckOutlineIcon class="w-5 h-5" />
@@ -48,6 +47,7 @@ import { useModalStore } from '../../stores/modal.store'
   <AddTaskModal />
   <EditTaskModal />
   <ViewTaskModal />
+  <AssignExecutorModal />
 </template>
 
 <style scoped></style>
