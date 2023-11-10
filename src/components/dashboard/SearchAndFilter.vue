@@ -8,7 +8,7 @@ import { useTaskStore } from '../../stores/task.store';
 import { cleanObjectEmptyFields } from '../../helpers/cleanEmptyFields';
 const sortBy = ref('dashboard')
 
-const statusAction = ref('')
+const statusAction = ref('all')
 
 const statusColor = (status) => {
   switch (status) {
