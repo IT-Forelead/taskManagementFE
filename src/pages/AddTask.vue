@@ -36,9 +36,6 @@ const deleteFile = () => {
     useUploadStore().setAssetId('')
     useUploadStore().setSelectedAsset({})
 }
-                        <label for="upload-file" class="block text-sm font-medium leading-6 text-gray-900">
-                            {{ selectedAsset }}
-                        </label>
 
 </script>
 
