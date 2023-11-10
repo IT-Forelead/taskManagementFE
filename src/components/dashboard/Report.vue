@@ -67,6 +67,7 @@ const openViewUploadedFile = async (assetId) => {
       const selectedFile = {
         filename: fileData.filename,
         url: fileData.url,
+        title: useTaskStore().tasks.find(task => task.assetId === assetId)?.title,
       };
       useFileStore().setSelectedFile(selectedFile);
       useModalStore().openViewUploadedFileModal();
@@ -77,6 +78,7 @@ const openViewUploadedFile = async (assetId) => {
     toast.error('Error while fetching file data.');
   }
 };
+
 
 </script>
 
