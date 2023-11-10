@@ -39,7 +39,7 @@ const loadReports = async () => {
 }
 
 const getFullName = (userId) => {
-    return useUserStore().users.find(u => u.id == userId)?.firstname
+  return useUserStore().users.find(u => u.id == userId)?.firstname
 }
 
 onMounted(() => {
@@ -52,11 +52,6 @@ const openViewTaskModal = (data) => {
   useModalStore().openViewTaskModal()
 }
 
-const openEditTaskModal = (taskId) => {
-  useTaskStore().setSelectedTaskId(taskId)
-  useModalStore().openEditTaskModal()
-}
-
 const openAssignExecutorModal = (taskId) => {
   useTaskStore().setSelectedTaskId(taskId)
   useModalStore().openAssignExecutorModal()
@@ -65,84 +60,70 @@ const openAssignExecutorModal = (taskId) => {
 
 <template>
   <div class="container mx-auto">
-    <!-- <div v-if="isLoadingCommonData" class="flex items-center w-full space-x-7 my-7">
-      <div v-for="i in 3" :key="i" class="flex items-center flex-1 h-24 px-6 space-x-4 bg-white rounded-lg">
-        <div class="flex items-center justify-center w-12 h-12 bg-gray-200 rounded-xl animate-pulse">
-        </div>
-        <div class="space-y-2">
-          <div class="w-40 h-3 bg-gray-200 rounded-full animate-pulse"></div>
-          <div class="flex items-center space-x-2">
-            <div class="w-32 h-5 bg-gray-200 rounded-full animate-pulse"></div>
-            <div class="h-5 bg-gray-200 rounded-full w-14 animate-pulse"></div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <div class="w-full py-2">
-      <table class="min-w-full">
-        <thead class="uppercase">
+    <div class="overflow-auto border border-gray-200 rounded shadow">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="font-medium bg-gray-50">
           <tr>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-center text-gray-500">
               #
             </th>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Топшириқ номи
             </th>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Ижрочилар
             </th>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Топшириқ мазмуни
             </th>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Яратилган сана
             </th>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Бажариш санаси
             </th>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-center text-gray-500">
               Холати
             </th>
-            <th class="px-4 py-3 text-sm leading-4 tracking-wider text-center text-gray-500">
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-center text-gray-500">
               Амаллар
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y-4 divide-[#F5F5F7] bg-white overflow-hidden">
-          <tr v-for="(data, idx) in tasks" :key="idx" class="">
-            <td class="px-6 py-3 whitespace-no-wrap rounded-l-md">
-              <div class="flex items-center">
-                <div class="text-sm leading-5 text-gray-800">{{ idx + 1 }}</div>
-              </div>
+        <tbody class="font-medium bg-white divide-y divide-gray-200">
+          <tr v-for="(data, idx) in tasks" :key="idx">
+            <td class="px-4 py-4 text-sm leading-5 text-center text-gray-900 whitespace-nowrap">
+              {{ idx + 1 }}
             </td>
-            <td class="px-6 py-3 whitespace-no-wrap">
-              <div class="text-sm leading-5 text-gray-900">{{ data?.title }}</div>
+            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
+              {{ data?.title }}
             </td>
-            <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
               {{ data?.assignedUsers }}
             </td>
-            <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
               {{ data?.description }}
             </td>
-            <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
               {{ moment(data?.createdAt).format('DD/MM/YYYY H:mm') }}
             </td>
-            <td class="px-6 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
               {{ moment(data?.dueDate).format('DD/MM/YYYY') }}
             </td>
-            <td class="px-4 py-3 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+            <td class="px-4 py-4 text-sm leading-5 text-center text-gray-900 whitespace-nowrap">
               <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
                 <span class="absolute inset-0 bg-green-200 rounded-full opacity-50"></span>
                 <span class="relative text-xs">{{ makePrettyStatus(data?.status) }}</span>
               </span>
             </td>
-            <td class="px-6 py-3 text-center whitespace-no-wrap rounded-r-md">
+            <td class="px-4 py-4 text-sm leading-5 text-center text-gray-900 whitespace-nowrap">
               <div class="flex justify-center space-x-4 item-center">
-                <div @click="openViewTaskModal(data)" class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                <div @click="openViewTaskModal(data)"
+                  class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <EyeOutlineIcon class="w-6 h-6" />
                 </div>
-                <div @click="openAssignExecutorModal(data.id)" class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                <div @click="openAssignExecutorModal(data.id)"
+                  class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <UserPlusOutlineIcon class="w-6 h-6" />
                 </div>
               </div>
@@ -150,41 +131,40 @@ const openAssignExecutorModal = (taskId) => {
           </tr>
         </tbody>
       </table>
+    </div>
 
-      <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between">
-        <div class="text-base leading-5 text-gray-700">
-          Хаммаси: <b>{{ tasks.length }}</b>
-        </div>
-        <nav class="relative z-0 inline-flex shadow-sm">
-          <div>
-            <a href="#"
-              class="relative inline-flex items-center px-2 py-2 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7] rounded-l-md hover:text-gray-400">
-              <CaretLeftIcon class="w-5 h-5" />
-            </a>
-          </div>
-          <div>
-            <a href="#"
-              class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-semibold leading-5 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7]">
-              1
-            </a>
-            <a href="#"
-              class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7]">
-              2
-            </a>
-            <a href="#"
-              class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7]">
-              3
-            </a>
-          </div>
-          <div>
-            <a href="#"
-              class="relative inline-flex items-center px-2 py-2 -ml-px text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7] rounded-r-md hover:text-gray-400">
-              <CaretRightIcon class="w-5 h-5" />
-            </a>
-          </div>
-        </nav>
+    <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between">
+      <div class="text-base leading-5 text-gray-700">
+        Хаммаси: <b>{{ tasks.length }}</b>
       </div>
-
+      <nav class="relative z-0 inline-flex shadow-sm">
+        <div>
+          <a href="#"
+            class="relative inline-flex items-center px-2 py-2 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7] rounded-l-md hover:text-gray-400">
+            <CaretLeftIcon class="w-5 h-5" />
+          </a>
+        </div>
+        <div>
+          <a href="#"
+            class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-semibold leading-5 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7]">
+            1
+          </a>
+          <a href="#"
+            class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7]">
+            2
+          </a>
+          <a href="#"
+            class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7]">
+            3
+          </a>
+        </div>
+        <div>
+          <a href="#"
+            class="relative inline-flex items-center px-2 py-2 -ml-px text-gray-600 transition duration-150 ease-in-out bg-white border-2 border-[#F5F5F7] rounded-r-md hover:text-gray-400">
+            <CaretRightIcon class="w-5 h-5" />
+          </a>
+        </div>
+      </nav>
     </div>
   </div>
 </template>

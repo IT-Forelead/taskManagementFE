@@ -1,17 +1,16 @@
 <script setup>
-// import Chart from '../components/dashboard/Chart.vue';
-// import Reports from '../components/dashboard/Reports.vue';
 import Report from '../components/dashboard/Report.vue'
 import SearchAndFilter from '../components/dashboard/SearchAndFilter.vue'
 
-
 </script>
-<template>
-  <SearchAndFilter />
-  <Report />
-  <!-- <Reports />
-  <Chart /> -->
-</template>
 
+<template>
+  <div class="container pb-10 m-auto">
+    <div class="space-y-8">
+      <SearchAndFilter />
+      <Report />
+    </div>
+  </div>
+</template>
 
 <style scoped></style>
