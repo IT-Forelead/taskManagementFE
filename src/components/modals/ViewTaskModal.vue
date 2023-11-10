@@ -18,6 +18,11 @@ import UserPlusBrokenIcon from "../../assets/icons/UserPlusBrokenIcon.vue";
 import BellOutlineIcon from "../../assets/icons/BellOutlineIcon.vue";
 import PencilEditIcon from "../../assets/icons/PencilEditIcon.vue";
 import PaperclipIcon from "../../assets/icons/PaperclipIcon.vue";
+import ShieldPlusOutlineIcon from "../../assets/icons/ShieldPlusOutlineIcon.vue";
+import ShieldCrossOutlineIcon from "../../assets/icons/ShieldCrossOutlineIcon.vue";
+import AlarmOutlineIcon from "../../assets/icons/AlarmOutlineIcon.vue";
+import ClockCircleOutlineIcon from "../../assets/icons/ClockCircleOutlineIcon.vue";
+import UserMinusOutlineIcon from "../../assets/icons/UserMinusOutlineIcon.vue";
 
 moment.locale("ru");
 const closeModal = () => {
@@ -92,20 +97,20 @@ const getFullName = (userId) => {
             <!---->
             <div class="flex justify-between items-center">
               <h1 class="font-bold">Назоратчилар руйхати (1)</h1>
-              <ShieldCheckOutlineIcon class="text-green-500" />
+              <ShieldPlusOutlineIcon class="text-green-500 text-base" />
             </div>
             <div class="taskUserList flex justify-between items-center">
               <div class="border-l px-2">
                 <h1 class="font-bold">Рахимов Улуғбек Джуманиязович</h1>
                 <h3>УП "Ургенчтрансгаз"</h3>
               </div>
-              <ShieldCheckOutlineIcon class="text-green-500" />
+              <ShieldCrossOutlineIcon class="text-green-500 text-base" />
             </div>
             <div class="flex justify-between">
               <h1>Ижрочилар руйхати (1)</h1>
-              <div class="flex text-indigo-700">
-                <user-plus-broken-icon />
-                <user-plus-broken-icon />
+              <div class="flex space-x-3 text-indigo-700 text-base">
+                <AlarmOutlineIcon />
+                <UserPlusBrokenIcon />
               </div>
             </div>
             <input
@@ -113,11 +118,23 @@ const getFullName = (userId) => {
               class="w-full p-3 border-2 border-gray-300"
               placeholder="Қидириш"
             />
-            <div class="bg-green-100 p-3">
-              <h1 class="font-bold">Рахимов Улуғбек Джуманиязович</h1>
-              <p>
-                {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
-              </p>
+            <div class="flex items-center justify-between bg-green-100">
+              <div class="flex space-x-2 p-3">
+                <ClockCircleOutlineIcon class="text-base  text-indigo-700" />
+                <div>
+                  <h1 class="font-bold">Рахимов Улуғбек Джуманиязович</h1>
+                  <p>
+                    {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
+                  </p>
+                </div>
+              </div>
+              <div class="flex space-x-2">
+                <BellOutlineIcon class="text-yellow-500 text-xs w-4 h-4" />
+                <p>
+                  {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
+                </p>
+                <UserMinusOutlineIcon class="text-indigo-700 text-base"/>
+              </div>
             </div>
           </article>
         </div>
@@ -172,7 +189,9 @@ const getFullName = (userId) => {
                 </div>
                 <div class="flex w-3/6 justify-between">
                   <button class="text-base">Бекор қилиш</button>
-                  <button class="text-base px-6 py-2 rounded-full bg-gray-200">Сақлаш</button>
+                  <button class="text-base px-6 py-2 rounded-full bg-gray-200">
+                    Сақлаш
+                  </button>
                 </div>
               </div>
               <!-- <button
