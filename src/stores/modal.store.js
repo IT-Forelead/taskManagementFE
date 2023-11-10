@@ -6,6 +6,8 @@ export const useModalStore = defineStore('modal', {
     isOpenEditTaskModal: false,
     isOpenViewTaskModal:false,
     isOpenAssignExecutorModal:false,
+    isOpenAddExecutorModal:false,
+    isOpenAddFileModal:false,
   }),
   actions: {
     openAddTaskModal() {
@@ -31,6 +33,18 @@ export const useModalStore = defineStore('modal', {
     },
     closeAssignExecutorModal(){
       this.isOpenAssignExecutorModal = false
+    },
+    openAddExecutorModal(){
+      this.isOpenAddExecutorModal = true
+    },
+    closeAddExecutorModal(){
+      this.isOpenAddExecutorModal = false
+    },
+    openAddFileModal(){
+      this.isOpenAddFileModal = true
+    },
+    closeAddFileModal(){
+      this.isOpenAddFileModal = false
     },
   },
 })

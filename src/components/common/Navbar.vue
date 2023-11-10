@@ -8,6 +8,8 @@ import AddTaskModal from '../modals/AddTaskModal.vue'
 import EditTaskModal from '../modals/EditTaskModal.vue'
 import ViewTaskModal from '../modals/ViewTaskModal.vue'
 import AssignExecutorModal from '../modals/AssignExecutorModal.vue'
+import AddExecutorModal from '../modals/AddExecutorModal.vue'
+import AddFileModal from '../modals/AddFileModal.vue'
 import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
@@ -48,6 +50,8 @@ import { useModalStore } from '../../stores/modal.store'
   <EditTaskModal />
   <ViewTaskModal />
   <AssignExecutorModal />
+  <AddExecutorModal />
+  <AddFileModal />
 </template>
 
 <style scoped></style>
