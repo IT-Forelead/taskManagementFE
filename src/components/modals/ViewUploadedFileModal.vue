@@ -47,6 +47,9 @@ const getFileExtension = (url) => {
   const urlObject = new URL(url);
   return urlObject.pathname.split('.').pop();
 };
+
+
+
 </script>
 <template>
   <div v-if="useModalStore().isOpenViewUploadedFileModal"
@@ -74,9 +77,9 @@ const getFileExtension = (url) => {
 
 
           <div class="bg-white rounded-lg overflow-hidden my-1">
-<!--            <h1>{{ selectedFile.url }}</h1>-->
             <template v-if="isPdfFile(selectedFile.url)">
-              <embed :src="selectedFile.url" type="" width="100%" height="700px">
+<!--              PDF-->
+              <object :data="selectedFile.url" type="" width="100%" height="700px"></object>
             </template>
             <template v-else-if="isImageFile(selectedFile.url)">
               <img :src="selectedFile.url" class="w-full h-[700px]" alt="">
