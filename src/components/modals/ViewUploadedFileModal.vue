@@ -5,7 +5,9 @@ import {computed, onMounted, onUnmounted} from "vue";
 import {useFileStore} from "..//../stores/file.store"
 import TaskIcon from "@/assets/icons/TaskIcon.vue";
 import FileIcon from "@/assets/icons/FileIcon.vue";
-
+import VuePdfApp from "vue3-pdf-app";
+// import this to use default icons for buttons
+import "vue3-pdf-app/dist/icons/main.css";
 const closeModal = () => {
   useModalStore().closeViewUploadedFileModal()
 }
@@ -69,17 +71,16 @@ const getFileExtension = (url) => {
             <h1 class="font-bold px-1">Топшириқ номи: </h1>
             <p>{{ selectedFile.title ? selectedFile.title : "Топшириқ номи йўқ" }}</p>
           </div>
-          <div class="flex py-2 items-center">
-            <FileIcon class="w-5 h-5"/>
-            <h1 class="font-bold px-1">Файл номи: </h1>
-            <p>{{ selectedFile.filename ? selectedFile.filename : "Файл номи йўқ" }}</p>
-          </div>
-
+<!--          <div class="flex py-2 items-center">-->
+<!--            <FileIcon class="w-5 h-5"/>-->
+<!--            <h1 class="font-bold px-1">Файл номи: </h1>-->
+<!--            <p>{{ selectedFile.filename ? selectedFile.filename : "Файл номи йўқ" }}</p>-->
+<!--          </div>-->
 
           <div class="bg-white rounded-lg overflow-hidden my-1">
             <template v-if="isPdfFile(selectedFile.url)">
-<!--              PDF-->
-              <object :data="selectedFile.url" type="" width="100%" height="700px"></object>
+              <vue-pdf-app style="height: 700px;" :pdf="selectedFile.url"></vue-pdf-app>
+<!--              <object :data="selectedFile.url" type="" width="100%" height="700px"></object>-->
             </template>
             <template v-else-if="isImageFile(selectedFile.url)">
               <img :src="selectedFile.url" class="w-full h-[700px]" alt="">
