@@ -184,36 +184,18 @@ const submitData = () => {
                         </div>
                     </div>
 
-                    <div class="hidden sm:col-span-2">
+                    <div v-if="useMultipleSelectStore().selectedControllers.length > 0" class="sm:col-span-2">
                         <div class="block text-sm font-medium leading-6 text-gray-900">
                             Назоратчилар
                         </div>
                         <div class="divide-y divide-gray-100">
-                            <div class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-100">
+                            <div v-for="(executor, idx) in useMultipleSelectStore().selectedControllers" :key="idx" class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-100">
                                 <div
                                     class="flex items-center justify-center w-8 h-8 p-2 text-sm uppercase bg-blue-200 rounded-full">
-                                    JS
+                                    {{ executor?.firstname.charAt(0) + executor?.lastname.charAt(0) }}
                                 </div>
                                 <span class="text-base capitalize">
-                                    Jumaniyozov Suroj
-                                </span>
-                            </div>
-                            <div class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-100">
-                                <div
-                                    class="flex items-center justify-center w-8 h-8 p-2 text-sm uppercase bg-blue-200 rounded-full">
-                                    JS
-                                </div>
-                                <span class="text-base capitalize">
-                                    Jumaniyozov Suroj
-                                </span>
-                            </div>
-                            <div class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-100">
-                                <div
-                                    class="flex items-center justify-center w-8 h-8 p-2 text-sm uppercase bg-blue-200 rounded-full">
-                                    JS
-                                </div>
-                                <span class="text-base capitalize">
-                                    Jumaniyozov Suroj
+                                    {{ executor?.firstname + ' ' + executor?.lastname }}
                                 </span>
                             </div>
                         </div>
@@ -227,11 +209,11 @@ const submitData = () => {
                             <UserPlusBrokenIcon class="w-5 h-5" />
                             <span>Ижрочи қўшиш</span>
                         </button>
-                        <!-- <button
+                        <button @click="useModalStore().openAddControllerModal()"
                             class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-blue-600 border border-blue-300 rounded-md hover:bg-blue-100">
                             <UserCheckBrokenIcon class="w-5 h-5" />
                             <span>Назоратчи қўшиш</span>
-                        </button> -->
+                        </button>
                         <div @click="useModalStore().openAddFileModal()"
                             class="flex items-center justify-center space-x-1 px-3 py-1.5 font-medium text-indigo-500 bg-white rounded-md cursor-pointer hover:bg-indigo-100">
                             <PaperclipOutlineIcon class="w-5 h-5" />

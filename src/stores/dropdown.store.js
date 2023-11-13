@@ -4,6 +4,7 @@ export const useDropdownStore = defineStore('dropdown', {
   state: () => ({
     selectOptionAssignExecutor: '',
     isOpenAssignExecutorDropdown: false,
+    isOpenAssignControllerDropdown: false,
     isOpenNotificationDropdown: false,
     isOpenLanguageDropdown: false,
     isOpenProfileDropdown: false
@@ -18,6 +19,12 @@ export const useDropdownStore = defineStore('dropdown', {
     closeAssignExecutorDropdown() {
       this.isOpenAssignExecutorDropdown = false
     },
+    openAssignControllerDropdown() {
+      this.isOpenAssignControllerDropdown = true
+    },
+    closeAssignControllerDropdown() {
+      this.isOpenAssignControllerDropdown = false
+    },
     toggleNotificationDropdown() {
       this.isOpenNotificationDropdown = !this.isOpenNotificationDropdown
     },
@@ -30,6 +37,7 @@ export const useDropdownStore = defineStore('dropdown', {
     clearStore() {
       this.selectOptionAssignExecutor = ''
       this.isOpenAssignExecutorDropdown = false
+      this.isOpenAssignControllerDropdown = false
     },
   },
 })
