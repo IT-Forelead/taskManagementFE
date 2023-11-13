@@ -6,7 +6,7 @@ export const useModalStore = defineStore('modal', {
     isOpenEditTaskModal: false,
     isOpenViewTaskModal:false,
     isOpenAssignExecutorModal:false,
-    isOpenViewUploadedFileModal: false
+    isOpenViewUploadedFileModal: false,
     isOpenAddExecutorModal:false,
     isOpenAddFileModal:false,
   }),

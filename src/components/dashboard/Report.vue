@@ -11,7 +11,7 @@ import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
 import { useUserStore } from '../../stores/user.store';
 import { useModalStore } from '../../stores/modal.store';
-import {useFileStore} from "@/stores/file.store.js";
+import { useFileStore } from "@/stores/file.store.js";
 import UploadService from "@/services/upload.service.js";
 
 const tasks = computed(() => {
@@ -60,17 +60,37 @@ const openAssignExecutorModal = (taskId) => {
   useModalStore().openAssignExecutorModal()
 }
 
-const openViewUploadedFile = async (assetId) => {
+// const openViewUploadedFile = async (assetId) => {
+//   try {
+//     const fileData = await UploadService.getUploadedFile(assetId);
+//     if (fileData) {
+//       const selectedFile = {
+//         filename: fileData.filename,
+//         url: fileData.url,
+//         title: useTaskStore().tasks.find(task => task.assetId === assetId)?.title,
+//       };
+//       useFileStore().setSelectedFile(selectedFile);
+//       useModalStore().openViewUploadedFileModal();
+//     } else {
+//       toast.error('File not exist.');
+//     }
+//   } catch (error) {
+//     toast.error('Error while fetching file data.');
+//   }
+// };
+
+// Add this method to your <script> section
+const downloadFile = async (assetId) => {
   try {
     const fileData = await UploadService.getUploadedFile(assetId);
     if (fileData) {
-      const selectedFile = {
-        filename: fileData.filename,
-        url: fileData.url,
-        title: useTaskStore().tasks.find(task => task.assetId === assetId)?.title,
-      };
-      useFileStore().setSelectedFile(selectedFile);
-      useModalStore().openViewUploadedFileModal();
+      const fileUrl = fileData.url;
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.download = fileData.filename; // Use the filename from the response
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } else {
       toast.error('File not exist.');
     }
@@ -79,6 +99,11 @@ const openViewUploadedFile = async (assetId) => {
   }
 };
 
+
+
+const selectedFile = computed(() => {
+  return useFileStore().selectedFile
+})
 
 </script>
 
@@ -150,9 +175,14 @@ const openViewUploadedFile = async (assetId) => {
                   class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <UserPlusOutlineIcon class="w-6 h-6" />
                 </div>
-                <div @click="openViewUploadedFile(data.assetId)" class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                <div @click="downloadFile(data.assetId)"
+                  class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <FileIcon class="w-6 h-6" />
                 </div>
+                <!-- <div @click="openViewUploadedFile(data.assetId)"
+                  class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
+                  <FileIcon class="w-6 h-6" />
+                </div> -->
               </div>
             </td>
           </tr>

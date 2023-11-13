@@ -49,50 +49,39 @@ const getFileExtension = (url) => {
   const urlObject = new URL(url);
   return urlObject.pathname.split('.').pop();
 };
-
-
-
 </script>
 <template>
-  <div v-if="useModalStore().isOpenViewUploadedFileModal"
-       class="fixed top-0 left-0 right-0 z-50 w-full max-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:inset-0 md:h-full">
-    <div class="relative w-full h-full max-w-6xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2">
+  <div v-if="useModalStore().isOpenViewUploadedFileModal" class="fixed top-0 left-0 right-0 z-50 w-full max-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:inset-0 md:h-full">
+    <div class="relative w-full h-full max-w-full md:max-w-4xl p-4 md:p-8 left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:h-auto">
       <div class="relative bg-white border rounded-lg shadow">
-        <div class="flex justify-between items-start p-4 rounded-t border-b">
-          <div class="flex items-center text-xl font-bold">Юкланган файл</div>
-          <button @click="closeModal()"
-                  class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full text-sm p-1.5 inline-flex items-center">
+        <div class="flex justify-between items-start p-4 md:p-6 rounded-t border-b">
+          <div class="flex items-center text-lg md:text-xl font-bold">Юкланган файл</div>
+          <button @click="closeModal()" class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full text-sm md:text-base p-1.5 inline-flex items-center">
             <XIcon/>
           </button>
         </div>
-        <div class="px-3">
+        <div class="px-3 md:px-6">
           <div class="flex py-2 items-center">
             <TaskIcon class="w-5 h-5" />
-            <h1 class="font-bold px-1">Топшириқ номи: </h1>
-            <p>{{ selectedFile.title ? selectedFile.title : "Топшириқ номи йўқ" }}</p>
+            <h1 class="font-bold px-1 text-sm md:text-base">Топшириқ номи: </h1>
+            <p class="text-sm md:text-base">{{ selectedFile.title ? selectedFile.title : "Топшириқ номи йўқ" }}</p>
           </div>
-<!--          <div class="flex py-2 items-center">-->
-<!--            <FileIcon class="w-5 h-5"/>-->
-<!--            <h1 class="font-bold px-1">Файл номи: </h1>-->
-<!--            <p>{{ selectedFile.filename ? selectedFile.filename : "Файл номи йўқ" }}</p>-->
-<!--          </div>-->
 
           <div class="bg-white rounded-lg overflow-hidden my-1">
             <template v-if="isPdfFile(selectedFile.url)">
-              <vue-pdf-app style="height: 700px;" :pdf="selectedFile.url"></vue-pdf-app>
-<!--              <object :data="selectedFile.url" type="" width="100%" height="700px"></object>-->
+              <!-- <vue-pdf-app style="height: 500px;" :pdf="selectedFile.url"></vue-pdf-app> -->
+              <!-- <embed :data="selectedFile.url" type="" height="200px"> -->
             </template>
             <template v-else-if="isImageFile(selectedFile.url)">
-              <img :src="selectedFile.url" class="w-full h-[700px]" alt="">
+              <img :src="selectedFile.url" class="w-full h-[500px]" alt="">
             </template>
             <template v-else>
               <p>Unsupported file type</p>
             </template>
           </div>
         </div>
-        <div class="flex items-center justify-end p-4 space-x-2 border-t">
-          <button @click="closeModal"
-                  class="w-36 py-2 px-4 rounded-md text-white text-base bg-red-600 cursor-pointer hover:bg-red-800">
+        <div class="flex items-center justify-end p-4 md:p-6 space-x-2 border-t">
+          <button @click="closeModal" class="w-full md:w-36 py-2 px-4 rounded-md text-white text-sm md:text-base bg-red-600 cursor-pointer hover:bg-red-800">
             Ёпиш
           </button>
         </div>
