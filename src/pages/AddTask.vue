@@ -34,6 +34,7 @@ const clearForm = () => {
 }
 
 const closeData = () => {
+    useMultipleSelectStore().clearStore()
     deleteFile()
     clearForm()
 }
@@ -64,11 +65,11 @@ const deleteFile = () => {
 
 const submitData = () => {
     if (!submitForm.title) {
-        toast.error("Please enter title")
+        toast.error("Илтимос, топшириқ номини киритинг!")
     } else if (!submitForm.dueDate) {
-        toast.error("Please enter dueDate")
+        toast.error("Илтимос, бажарилиш муддатини киритинг!")
     } else if (!submitForm.description) {
-        toast.error("Please enter description")
+        toast.error("Илтимос, топшириқ мазмунини киритинг!")
     } else {
         isLoading.value = true
         TaskService.createTask(
@@ -76,14 +77,15 @@ const submitData = () => {
                 title: submitForm.title,
                 assetId: assetId.value,
                 dueDate: submitForm.dueDate,
+                assigned: useMultipleSelectStore().selectedExecuters.length === 0 ? '' : useMultipleSelectStore().selectedExecuters.map((executer) => executer?.id),
                 description: submitForm.description
             })
         ).then(() => {
-            toast.success("Successfully created task")
+            toast.success("Топшириқ муваффақиятли қўшилди!")
             isLoading.value = false
             closeData();
         }).catch((err) => {
-            toast.error("Error creating task")
+            toast.error("Топшириқ қўшишда хатолик юз берди!")
             isLoading.value = false
         })
     }
@@ -127,9 +129,9 @@ const submitData = () => {
                         <textarea v-model="submitForm.description" id="about" rows="6"
                             class="block w-full rounded-md border px-2 py-1.5 text-gray-900 shadow-sm border-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"></textarea>
                     </div>
-                    <div v-if="selectedAsset?.url && assetId" class="sm:col-span-2">
+                    <div v-if="selectedAsset?.url && assetId" class="sm:col-span-full">
                         <div
-                            class="flex items-center justify-between px-3 py-2 space-x-4 border border-gray-300 rounded-md shadow-sm">
+                            class="flex items-center justify-between w-full max-w-lg px-3 py-2 space-x-4 border border-gray-300 rounded-md shadow-sm">
                             <div class="flex items-center space-x-4">
                                 <div class="flex items-center justify-center w-12 h-12 rounded-md bg-rose-500">
                                     <FileCheckOutlineIcon class="w-6 h-6 text-white" />
@@ -140,8 +142,8 @@ const submitData = () => {
                                     </div>
                                     <p class="text-xs leading-5 text-gray-600">
                                         Файл тури:
-                                        <span class="ml-1 font-medium">
-                                            {{ selectedAsset?.mediaType }}
+                                        <span class="ml-1 font-medium uppercase">
+                                            {{ selectedAsset?.extension }}
                                         </span>
                                     </p>
                                 </div>
@@ -225,14 +227,14 @@ const submitData = () => {
                             <UserPlusBrokenIcon class="w-5 h-5" />
                             <span>Ижрочи қўшиш</span>
                         </button>
-                        <button
+                        <!-- <button
                             class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-blue-600 border border-blue-300 rounded-md hover:bg-blue-100">
                             <UserCheckBrokenIcon class="w-5 h-5" />
                             <span>Назоратчи қўшиш</span>
-                        </button>
+                        </button> -->
                         <div @click="useModalStore().openAddFileModal()"
                             class="flex items-center justify-center space-x-1 px-3 py-1.5 font-medium text-indigo-500 bg-white rounded-md cursor-pointer hover:bg-indigo-100">
-                            <PaperclipOutdsdsddddlineIcon class="w-5 h-5" />
+                            <PaperclipOutlineIcon class="w-5 h-5" />
                             <span>Файл бириктириш</span>
                         </div>
                     </div>
@@ -247,7 +249,7 @@ const submitData = () => {
                             <SpinnerIcon class="w-5 h-5" />
                             <span>Сақлаш</span>
                         </button>
-                        <button type="button"
+                        <button @click="closeData()" type="button"
                             class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-red-500 border border-red-300 rounded-md hover:bg-red-100">
                             <TrashBinTrashOutlineIcon class="w-5 h-5" />
                             <span>Тозалаш</span>

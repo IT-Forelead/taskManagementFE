@@ -37,10 +37,10 @@ import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue
       </ul>
     </div>
     <div class="flex items-center space-x-4">
-      <div @click="useModalStore().openAddTaskModal()"
+      <!-- <div @click="useModalStore().openAddTaskModal()"
         class="flex items-center justify-center px-3 py-1.5 space-x-2 text-gray-800 cursor-pointer rounded-md hover:bg-gray-100 hover:text-blue-800">
         <AddCircleOutlineIcon class="w-5 h-5" />
-      </div>
+      </div> -->
       <NotificationDropdown />
       <LanguageDropdown />
       <ProfileDropdown />

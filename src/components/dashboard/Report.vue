@@ -9,13 +9,16 @@ import UserPlusOutlineIcon from '../../assets/icons/UserPlusOutlineIcon.vue';
 import FileIcon from "@/assets/icons/FileIcon.vue";
 import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
-import { useUserStore } from '../../stores/user.store';
 import { useModalStore } from '../../stores/modal.store';
 import { useFileStore } from "@/stores/file.store.js";
 import UploadService from "@/services/upload.service.js";
 
 const tasks = computed(() => {
   return useTaskStore().tasks
+})
+
+const selectedFile = computed(() => {
+  return useFileStore().selectedFile
 })
 
 const makePrettyStatus = (status) => {
@@ -39,10 +42,6 @@ const loadReports = async () => {
     .catch(() => {
       toast.error('Error while getting response')
     })
-}
-
-const getFullName = (userId) => {
-  return useUserStore().users.find(u => u.id == userId)?.firstname
 }
 
 onMounted(() => {
@@ -97,13 +96,7 @@ const downloadFile = async (assetId) => {
   } catch (error) {
     toast.error('Error while fetching file data.');
   }
-};
-
-
-
-const selectedFile = computed(() => {
-  return useFileStore().selectedFile
-})
+}
 
 </script>
 
