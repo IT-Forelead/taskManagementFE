@@ -41,19 +41,19 @@ const editableDate = ref(false);
 const editableText = ref(false);
 
 const addExecutor = () => {
-  
+
 };
 
 const deleteExecutor = (index) => {
-  
+
 };
 
 const addControllers = () => {
-  
+
 };
 
 const deleteControllers = (index) => {
-  
+
 };
 </script>
 <template>
@@ -200,8 +200,8 @@ const deleteControllers = (index) => {
                 </div>
               </div>
               </div>
-                
-              
+
+
           </article>
         </div>
         <div class="bg-white w-full items-star">

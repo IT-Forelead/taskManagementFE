@@ -7,7 +7,10 @@ import SettingsOutlineIcon from '../../assets/icons/SettingsOutlineIcon.vue'
 import UserIdOutlineIcon from '../../assets/icons/UserIdOutlineIcon.vue'
 import UserOutlineIcon from '../../assets/icons/UserOutlineIcon.vue'
 import { useAuthStore } from '../../stores/auth.store'
+import { useUserStore } from '../../stores/user.store'
 import { useDropdownStore } from '../../stores/dropdown.store'
+import { onMounted } from 'vue';
+import decodeJwt from '../../helpers/utils';
 
 const { user, logout } = useAuthStore();
 const dropdown = ref(null)
@@ -27,13 +30,16 @@ const signOut = () => {
         useDropdownStore().toggleProfileDropdown()
     }
 }
+onMounted(() => {
+  useUserStore().setUser(decodeJwt(JSON.parse(localStorage.getItem('session'))?.accessToken))
+})
 </script>
 <template>
     <div class="relative" ref="dropdown">
         <div @click="useDropdownStore().toggleProfileDropdown()"
             class="flex items-center justify-center px-3 py-1.5 space-x-2 text-gray-800 cursor-pointer rounded-md hover:bg-gray-100 hover:text-blue-800">
             <UserIdOutlineIcon class="w-6 h-6" />
-            <span class="text-base">*******</span>
+            <span class="text-base capitalize">{{ useUserStore().user?.User?.firstname.charAt(0) + '. ' + useUserStore().user?.User?.lastname }}</span>
         </div>
         <ul v-if="useDropdownStore().isOpenProfileDropdown"
             class="absolute right-0 z-20 bg-white divide-y divide-gray-200 shadow w-60 rounded-b-md top-9">

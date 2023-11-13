@@ -1,10 +1,9 @@
 <script setup>
 import { vMaska } from "maska";
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import EyeIcon from '../assets/icons/EyeIcon.vue';
 import EyeSlashIcon from '../assets/icons/EyeSlashIcon.vue';
 import SpinnerIcon from '../assets/icons/SpinnerIcon.vue';
-import ClubLogo from '../components/common/ClubLogo.vue';
 import { useAuthStore } from '../stores/auth.store';
 // import vueRecaptcha from 'vue3-recaptcha2';
 
@@ -25,6 +24,19 @@ const loginDashboard = () => {
   login(loginData.login.replace(/([() -])/g, ''), loginData.password)
 }
 
+onMounted(() => {
+  window.addEventListener("keydown", handleKeyDown);
+});
+
+const handleKeyDown = (event) => {
+  if (event.key === "Enter") {
+    loginDashboard()
+  }
+};
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeyDown);
+});
 // GOOGLE reCAPTCHA
 const isNotABot = ref(true)
 
@@ -46,7 +58,9 @@ const fail = () => {
 </script>
 <template>
   <div class="flex flex-col items-center bg-[#F5F5F7] justify-center w-full h-screen">
-    <ClubLogo v-motion-pop />
+    <div v-motion-pop class="flex items-center justify-start space-x-2">
+      <img src="/images/uztransgaz-logo.svg" alt="#" class="h-auto w-28">
+    </div>
     <div v-motion-slide-bottom class="p-8 mt-12 bg-white w-96 shadow-6xl rounded-xl space-y-7">
       <h1 class="text-2xl font-bold">Kirish</h1>
       <div class="flex flex-col space-y-2 mt-11">

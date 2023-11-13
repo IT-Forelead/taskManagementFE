@@ -8,7 +8,7 @@ class UploadService {
             },
         })
     }
-    async sendVerifyCode(assetId) {
+    async getUploadedFile(assetId) {
         return AxiosService.get(`/assets/${assetId}`)
     }
 }

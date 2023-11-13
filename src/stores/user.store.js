@@ -4,6 +4,7 @@ export const useUserStore = defineStore('user', {
     state: () => ({
         users: [],
         selectedUser: {},
+        user: {},
     }),
     actions: {
         setUsers(data) {
@@ -11,6 +12,9 @@ export const useUserStore = defineStore('user', {
         },
         setSelectedUser(data) {
             this.selectedUser = data
+        },
+        setUser(data) {
+            this.user = data
         },
         clearStore() {
             this.users = []
