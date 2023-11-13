@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import moment from "moment";
 import "moment/dist/locale/ru";
 import XIcon from "@/assets/icons/XIcon.vue";
@@ -24,6 +25,7 @@ const closeModal = () => {
   useModalStore().closeViewTaskModal();
 };
 const selectedTask = computed(() => {
+  console.log(useTaskStore().selectedTask);
   return useTaskStore().selectedTask;
 });
 
@@ -33,6 +35,25 @@ const getFullName = (userId) => {
     return `${user.firstname} ${user.lastname}`;
   }
   return "Ижрочи тайинланмаган";
+};
+
+const editableDate = ref(false);
+const editableText = ref(false);
+
+const addExecutor = () => {
+  
+};
+
+const deleteExecutor = (index) => {
+  
+};
+
+const addControllers = () => {
+  
+};
+
+const deleteControllers = (index) => {
+  
 };
 </script>
 <template>
@@ -48,13 +69,27 @@ const getFullName = (userId) => {
           <header
             class="text-sm p-4 border-b flex justify-between items-center shadow"
           >
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-3">
               <h1>Бажариш муддати:</h1>
-              <p class="text-red-500">
-                {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
-              </p>
-
-              <DateIcon class="text-blue-500 text-base" />
+              <div class="flex space-x-3" v-if="!editableDate">
+                <p class="text-red-500">
+                  {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
+                </p>
+                <DateIcon
+                  class="text-blue-500 text-base"
+                  @click="editableDate = true"
+                />
+              </div>
+              <div class="flex items-center space-x-4" v-if="editableDate">
+                <!-- <p class="text-red-500">
+                  {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
+                </p> -->
+                <input
+                  type="date"
+                  v-model="selectedTask.dueDate"
+                  class="border border-gray-300 p-2 rounded"
+                />
+              </div>
             </div>
             <button
               @click="closeModal()"
@@ -66,13 +101,28 @@ const getFullName = (userId) => {
           <article class="p-4 flex flex-col space-y-4">
             <div class="items-center">
               <h1 class="text-sm">Ким томонидан яратилган</h1>
-              <p>{{ getFullName(selectedTask?.userId) }}</p>
+              <p>{{ getFullName(selectedTask?.assetId) }}</p>
             </div>
             <div>
               <h1 class="text-sm">Топширик мазмуни</h1>
               <div class="flex items-center space-x-4">
-                <p>{{ selectedTask?.description }}</p>
-                <pencil-edit-icon class="text-indigo-500 text-xl" />
+                <div class="flex space-x-3" v-if="!editableText">
+                  <p>{{ selectedTask?.description }}</p>
+                  <pencil-edit-icon
+                    class="text-indigo-500 text-base"
+                    @click="editableText = true"
+                  />
+                </div>
+                <div class="flex items-center space-x-4" v-if="editableText">
+                  <!-- <p class="text-red-500">
+                  {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
+                </p> -->
+                  <input
+                    type="text"
+                    v-model="selectedTask.description"
+                    class="border border-gray-300 p-2 rounded"
+                  />
+                </div>
               </div>
             </div>
             <div class="flex items-center space-x-1">
@@ -93,26 +143,29 @@ const getFullName = (userId) => {
             <div class="flex justify-between items-center">
               <div class="flex space-x-4">
                 <h1 class="font-bold">Назоратчилар руйхати</h1>
-                <p>()</p>
+
+                <p>({{ selectedTask?.controllers.length }})</p>
               </div>
 
-              <ShieldPlusOutlineIcon class="text-green-500 text-base" />
+              <ShieldPlusOutlineIcon  @click="addControllers()" class="text-green-500 text-base" />
             </div>
-            <div class="taskUserList flex justify-between items-center">
-              <div class="border-l px-2">
-                <h1 class="font-bold"></h1>
-                <h3></h3>
+            <div v-for="(data, idx) in selectedTask?.controllers" :key="idx">
+              <div class="taskUserList flex justify-between items-center">
+                <div class="border-l px-2">
+                  <h1 class="font-bold">{{ data }}</h1>
+                  <h3>{{ idx }}</h3>
+                </div>
+                <ShieldCrossOutlineIcon  @click="deleteControllers()" class="text-green-500 text-base" />
               </div>
-              <ShieldCrossOutlineIcon class="text-green-500 text-base" />
             </div>
             <div class="flex justify-between">
               <div class="flex space-x-4">
                 <h1>Ижрочилар руйхати</h1>
-                <p>()</p>
+                <p>({{ selectedTask?.executors.length }})</p>
               </div>
               <div class="flex space-x-3 text-indigo-700 text-base">
                 <AlarmOutlineIcon />
-                <UserPlusBrokenIcon />
+                <UserPlusBrokenIcon @click="addExecutor()" />
               </div>
             </div>
             <input
@@ -120,24 +173,35 @@ const getFullName = (userId) => {
               class="w-full p-3 border-2 border-gray-300"
               placeholder="Қидириш"
             />
-            <div class="flex items-center justify-between bg-green-100">
-              <div class="flex space-x-2 p-3">
-                <ClockCircleOutlineIcon class="text-base text-indigo-700" />
-                <div>
-                  <h1 class="font-bold"></h1>
+            <div v-for="(data, idx) in selectedTask?.executors" :key="idx">
+              <div
+                v-if="data.length > 0"
+                class="flex items-center justify-between bg-green-100"
+              >
+                <div class="flex space-x-2 p-3">
+                  <ClockCircleOutlineIcon class="text-base text-indigo-700" />
+                  <div>
+                    <h1 class="font-bold">{{ data }}</h1>
+
+                    <p>
+                      {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <BellOutlineIcon class="text-yellow-500 text-xs w-4 h-4" />
                   <p>
                     {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
                   </p>
+                  <UserMinusOutlineIcon
+                    @click="deleteExecutor(idx)"
+                    class="text-indigo-700 text-base"
+                  />
                 </div>
               </div>
-              <div class="flex space-x-2">
-                <BellOutlineIcon class="text-yellow-500 text-xs w-4 h-4" />
-                <p>
-                  {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
-                </p>
-                <UserMinusOutlineIcon class="text-indigo-700 text-base" />
               </div>
-            </div>
+                
+              
           </article>
         </div>
         <div class="bg-white w-full items-star">
