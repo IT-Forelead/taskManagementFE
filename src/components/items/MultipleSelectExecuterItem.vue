@@ -39,8 +39,7 @@ onClickOutside(multiselect, () => {
     <div ref="multiselect" class="w-full my-2">
         <div class="relative">
             <SearchIcon class="absolute z-10 w-5 h-5 text-gray-500 -translate-y-1/2 cursor-pointer top-1/2 left-2.5" />
-            <input type="text" v-model="searchService" v-if="useDropdownStore().isOpenAssignExecutorDropdown"
-                v-on:keyup="getSearchResult(options)"
+            <input type="text" v-model="searchService" v-on:keyup="getSearchResult(options)"
                 class="block w-full py-1.5 px-2 text-gray-900 shadow border-b border-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-10"
                 placeholder="Ижрочи исмини киритинг..." />
         </div>
