@@ -148,7 +148,7 @@ const selectedFile = computed(() => {
               {{ data?.title }}
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-              {{ data?.assignedUsers }}
+              {{ data?.executors.join(', ') }}
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
               {{ data?.description }}
@@ -175,7 +175,7 @@ const selectedFile = computed(() => {
                   class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <UserPlusOutlineIcon class="w-6 h-6" />
                 </div>
-                <div @click="downloadFile(data.assetId)"
+                <div v-if="data?.assetId" @click="downloadFile(data.assetId)"
                   class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <FileIcon class="w-6 h-6" />
                 </div>
