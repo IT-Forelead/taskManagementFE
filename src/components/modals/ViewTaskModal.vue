@@ -30,15 +30,15 @@ const getFullName = (userId) => {
     class="fixed top-0 left-0 right-0 z-50 w-full max-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:inset-0 md:h-full">
     <div class="relative w-full h-full max-w-xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2">
       <div class="relative bg-white border rounded-lg shadow">
-        <div class="flex justify-between items-start p-4 rounded-t border-b">
+        <div class="flex items-start justify-between p-4 border-b rounded-t">
           <div class="flex items-center text-xl font-bold">Топшириқ ҳақида</div>
           <button @click="closeModal()"
             class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full text-sm p-1.5 inline-flex items-center">
             <XIcon />
           </button>
         </div>
-        <div class="bg-white rounded-lg overflow-hidden my-4">
-          <div class="py-2 px-6">
+        <div class="my-4 overflow-hidden bg-white rounded-lg">
+          <div class="px-6 py-2">
             <div class="flex items-center text-gray-700">
               <TaskIcon class="w-5 h-5" />
               <h1 class="px-1 font-bold">Топшириқ номи:</h1>
@@ -54,23 +54,21 @@ const getFullName = (userId) => {
               <h1 class="px-1 font-bold">Бажариш санаси:</h1>
               <p>{{ moment(selectedTask?.dueDate).format('DD/MM/YYYY') }}</p>
             </div>
-            <div class="flex  flex-wrap items-center mt-4 text-gray-700">
+            <div class="flex flex-wrap items-center mt-4 text-gray-700">
               <DescriptionIcon class="w-5 h-5" />
               <h1 class="px-1 font-bold">Топшириқ мазмуни:</h1>
               <p class="text-lg text-left"> {{ selectedTask?.description }}</p>
             </div>
             <div class="flex items-center mt-4 text-gray-700">
               <UserIcon class="w-5 h-5" />
-              <h1 class="px-2 font-bold">Ижрочи:</h1>
-              <p>
-              <p>{{ getFullName(selectedTask?.userId) }}</p>
-              </p>
+              <h1 class="px-2 font-bold">Ижрочилар:</h1>
+              <p>{{ selectedTask?.executors.join(', ') }}</p>
             </div>
           </div>
         </div>
         <div class="flex items-center justify-end p-4 space-x-2 border-t">
           <button @click="closeModal"
-            class="w-36 py-2 px-4 rounded-md text-white text-base bg-red-600 cursor-pointer hover:bg-red-800">
+            class="px-4 py-2 text-base text-white bg-red-600 rounded-md cursor-pointer w-36 hover:bg-red-800">
             Ёпиш
           </button>
         </div>
