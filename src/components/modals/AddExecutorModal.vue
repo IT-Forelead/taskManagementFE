@@ -1,32 +1,18 @@
 <script setup>
 import { useModalStore } from '../../stores/modal.store'
-import { useTaskStore } from '../../stores/task.store'
 import { useMultipleSelectStore } from '../../stores/multipleSelect.store'
 import { useUserStore } from '../../stores/user.store'
 import { useDropdownStore } from '../../stores/dropdown.store'
-import SpinnerIcon from '../../assets/icons/SpinnerIcon.vue'
 import XIcon from '../../assets/icons/XIcon.vue'
-import UserOutlineIcon from '../../assets/icons/UserOutlineIcon.vue'
-import ChevronRightRoundedIcon from '../../assets/icons/ChevronRightRoundedIcon.vue'
 import CheckCircleOutlineIcon from '../../assets/icons/CheckCircleOutlineIcon.vue'
-import { computed, onMounted, ref, reactive } from 'vue'
+import { computed, onMounted } from 'vue'
 import MultipleSelectExecuterItem from '../items/MultipleSelectExecuterItem.vue'
-import TaskService from '../../services/task.service'
 import UserService from '../../services/user.service'
+import { cleanObjectEmptyFields } from '../../helpers/cleanEmptyFields'
 import { toast } from 'vue-sonner'
 
 const users = computed(() => {
     return useUserStore().users
-})
-
-const taskId = computed(() => {
-    return useTaskStore().selectedTaskId
-})
-
-const isLoading = ref(false)
-
-const taskForm = reactive({
-    userId: ''
 })
 
 const closeModal = () => {
@@ -34,50 +20,19 @@ const closeModal = () => {
     useModalStore().closeAddExecutorModal()
 }
 
-const submitData = () => {
-    if (useMultipleSelectStore().selectedExecuters.length === 0) {
-        toast.error("Илтимос ижрочиларни танланг!")
-    } else {
-        isLoading.value = true
-        TaskService.updateTask(
-            taskId.value,
-            { userIds: useMultipleSelectStore().selectedExecuters.map((executer) => executer?.id) }
-        ).then(() => {
-            toast.success("Ижрочи муваффақиятли қўшилди")
-            clearMultipleSelectData()
-            isLoading.value = false
-            TaskService.getTasks({})
-                .then((res) => {
-                    useTaskStore().clearStore()
-                    setTimeout(() => {
-                        useTaskStore().setTasks(res)
-                    }, 500)
-                })
-                .catch(() => {
-                    toast.error("Топшириқларни олишда хатолик юз берди!")
-                })
-            closeModal();
-        }).catch((err) => {
-            toast.error("Ижрочи қўшишда хатолик юз берди")
-            isLoading.value = false
-        })
-    }
-}
-
 const getUsers = async () => {
-    UserService.getUsers({})
-        .then((result) => {
-            useUserStore().clearStore()
-            useUserStore().setUsers(result)
+    UserService.getUsers(
+        
+        cleanObjectEmptyFields({
+            roles: ['executor']
         })
-        .catch(() => {
-            toast.error('Error while getting response')
-        })
-}
-
-const clearMultipleSelectData = () => {
-    useMultipleSelectStore().clearStore()
-    useDropdownStore().closeAssignExecutorDropdown()
+    ).then((result) => {
+        useUserStore().clearStore()
+        useUserStore().setUsers(result)
+    })
+    .catch(() => {
+        toast.error('Error while getting response')
+    })
 }
 
 onMounted(() => {

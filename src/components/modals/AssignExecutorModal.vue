@@ -13,6 +13,7 @@ import { computed, onMounted, ref, reactive } from 'vue'
 import MultipleSelectExecuterItem from '../items/MultipleSelectExecuterItem.vue'
 import TaskService from '../../services/task.service'
 import UserService from '../../services/user.service'
+import { cleanObjectEmptyFields } from '../../helpers/cleanEmptyFields'
 import { toast } from 'vue-sonner'
 
 const users = computed(() => {
@@ -69,14 +70,16 @@ const submitData = () => {
 }
 
 const getUsers = async () => {
-    UserService.getUsers({})
-        .then((result) => {
-            useUserStore().clearStore()
-            useUserStore().setUsers(result)
+    UserService.getUsers(
+        cleanObjectEmptyFields({
+            roles: ['executor']
         })
-        .catch(() => {
-            toast.error('Error while getting response')
-        })
+    ).then((result) => {
+        useUserStore().clearStore()
+        useUserStore().setUsers(result)
+    }).catch(() => {
+        toast.error('Error while getting response')
+    })
 }
 
 const clearMultipleSelectData = () => {

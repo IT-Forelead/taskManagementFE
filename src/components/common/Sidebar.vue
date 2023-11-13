@@ -54,7 +54,7 @@ const changeReportType = (report) => {
         :class="reportType.includes('all_tasks') ? 'rounded-r-full bg-slate-800 text-white' : ''"
         class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <ClipboardListOutlineIcon class="w-6 h-6" />
-        <span>Барча Топшириқлар</span>
+        <span>Топшириқлар</span>
       </router-link>
       <router-link to="/tasks/report" active-class="active"
         @click="changeReportType('tasks_report')"

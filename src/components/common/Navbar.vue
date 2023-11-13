@@ -1,11 +1,7 @@
 <script setup>
-import ChatLineOutlineIcon from '../../assets/icons/ChatLineOutlineIcon.vue'
 import ChecklistMinimalisticOutlineIcon from '../../assets/icons/ChecklistMinimalisticOutlineIcon.vue'
 import HamburgerMenuOutlineIcon from '../../assets/icons/HamburgerMenuOutlineIcon.vue'
 import ShieldCheckOutlineIcon from '../../assets/icons/ShieldCheckOutlineIcon.vue'
-import AddCircleOutlineIcon from '../../assets/icons/AddCircleOutlineIcon.vue'
-import AddTaskModal from '../modals/AddTaskModal.vue'
-import EditTaskModal from '../modals/EditTaskModal.vue'
 import ViewTaskModal from '../modals/ViewTaskModal.vue'
 import AssignExecutorModal from '../modals/AssignExecutorModal.vue'
 import AddExecutorModal from '../modals/AddExecutorModal.vue'
@@ -13,9 +9,9 @@ import AddFileModal from '../modals/AddFileModal.vue'
 import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
-import { useModalStore } from '../../stores/modal.store'
 import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue";
 </script>
+
 <template>
   <div
     class="sticky top-0 z-50 flex items-center justify-between w-full h-12 px-4 py-2 bg-white border-b border-gray-200 shadow-7xl">
@@ -37,21 +33,15 @@ import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue
       </ul>
     </div>
     <div class="flex items-center space-x-4">
-      <!-- <div @click="useModalStore().openAddTaskModal()"
-        class="flex items-center justify-center px-3 py-1.5 space-x-2 text-gray-800 cursor-pointer rounded-md hover:bg-gray-100 hover:text-blue-800">
-        <AddCircleOutlineIcon class="w-5 h-5" />
-      </div> -->
       <NotificationDropdown />
       <LanguageDropdown />
       <ProfileDropdown />
     </div>
   </div>
 
-  <AddTaskModal />
-  <EditTaskModal />
   <ViewTaskModal />
   <AssignExecutorModal />
-  <ViewUploadedFileModal/>
+  <ViewUploadedFileModal />
   <AddExecutorModal />
   <AddFileModal />
 </template>
