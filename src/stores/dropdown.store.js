@@ -6,7 +6,8 @@ export const useDropdownStore = defineStore('dropdown', {
     isOpenAssignExecutorDropdown: false,
     isOpenNotificationDropdown: false,
     isOpenLanguageDropdown: false,
-    isOpenProfileDropdown: false
+    isOpenProfileDropdown: false,
+    isOpenSidebar:false
   }),
   actions: {
     setSelectOptionAssignExecutor(data) {
@@ -26,6 +27,9 @@ export const useDropdownStore = defineStore('dropdown', {
     },
     toggleProfileDropdown() {
       this.isOpenProfileDropdown = !this.isOpenProfileDropdown
+    },
+    toggleSidebar(){
+      this.isOpenSidebar = !this.isOpenSidebar
     },
     clearStore() {
       this.selectOptionAssignExecutor = ''

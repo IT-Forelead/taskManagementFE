@@ -7,21 +7,40 @@ import ClipboardHeartOutlineIcon from '../../assets/icons/ClipboardHeartOutlineI
 import ChatSquareArrowOutlineIcon from '../../assets/icons/ChatSquareArrowOutlineIcon.vue'
 import PieChartOutlineIcon from '../../assets/icons/PieChartOutlineIcon.vue'
 import { useModalStore } from '../../stores/modal.store'
-import { ref } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
+import { useDropdownStore } from '../../stores/dropdown.store'
 const reportType = ref('')
 const changeReportType = (report) => {
   reportType.value = report;
 }
+const isMobile = ref(window.innerWidth <= 768);
+
+const handleResize = () => {
+  isMobile.value = window.innerWidth <= 768;
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+  handleResize();
+});
+
+watchEffect(() => {
+  if (!isMobile.value) {
+    // On desktop, always show the sidebar
+    useDropdownStore().isOpenSidebar = true;
+  }
+});
+
 </script>
 <template>
-  <div class="fixed z-50 block h-screen text-gray-400 w-72 bg-slate-900">
+  <div v-if="useDropdownStore().isOpenSidebar" class="fixed z-50 block h-screen text-gray-400 w-72 bg-slate-900">
     <!-- <div class="flex flex-col items-center py-8 space-y-4">
       <div class="inline-flex items-center justify-center text-5xl text-white rounded-full bg-slate-700 h-28 w-28">
         JS
       </div>
       <div class="text-lg font-medium text-white">Jumaniyozov Surojiddin</div>
     </div> -->
-    <div class="flex items-center justify-center py-8">
+    <div class="flex items-center justify-center py-16">
       <router-link to="/dashboard">
         <img src="/images/uztransgaz-logo.svg" alt="Logo" class="w-auto h-36">
       </router-link>

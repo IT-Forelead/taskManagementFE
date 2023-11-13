@@ -15,15 +15,16 @@ import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
 import { useModalStore } from '../../stores/modal.store'
 import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue";
+import { useDropdownStore } from '../../stores/dropdown.store'
 </script>
 <template>
   <div
     class="sticky top-0 z-50 flex items-center justify-between w-full h-12 px-4 py-2 bg-white border-b border-gray-200 shadow-7xl">
     <div class="flex items-center space-x-8">
-      <div class="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer hover:bg-gray-100">
+      <div @click="useDropdownStore().toggleSidebar" class="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer hover:bg-gray-100">
         <HamburgerMenuOutlineIcon class="w-6 h-6" />
       </div>
-      <ul class="flex items-center space-x-6">
+      <ul class="hidden md:flex items-center space-x-6">
         <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
           <ChecklistMinimalisticOutlineIcon class="w-5 h-5" />
           <router-link to="/dashboard">
@@ -41,7 +42,7 @@ import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue
         class="flex items-center justify-center px-3 py-1.5 space-x-2 text-gray-800 cursor-pointer rounded-md hover:bg-gray-100 hover:text-blue-800">
         <AddCircleOutlineIcon class="w-5 h-5" />
       </div>
-      <NotificationDropdown />
+      <NotificationDropdown class="hidden md:block"/>
       <LanguageDropdown />
       <ProfileDropdown />
     </div>
