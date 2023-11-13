@@ -1,19 +1,14 @@
 <script setup>
 import moment from "moment";
 import "moment/dist/locale/ru";
-import UserIcon from "@/assets/icons/UserIcon.vue";
 import XIcon from "@/assets/icons/XIcon.vue";
 import { useModalStore } from "../../stores/modal.store";
 import { useTaskStore } from "../../stores/task.store";
 import { computed } from "vue";
 import { useUserStore } from "../../stores/user.store";
 
-import TaskIcon from "@/assets/icons/TaskIcon.vue";
 import DateIcon from "@/assets/icons/DateIcon.vue";
-import EndDateIcon from "@/assets/icons/EndDateIcon.vue";
-import DescriptionIcon from "@/assets/icons/DescriptionIcon.vue";
 import AddCircleOutlineIcon from "../../assets/icons/AddCircleOutlineIcon.vue";
-import ShieldCheckOutlineIcon from "../../assets/icons/ShieldCheckOutlineIcon.vue";
 import UserPlusBrokenIcon from "../../assets/icons/UserPlusBrokenIcon.vue";
 import BellOutlineIcon from "../../assets/icons/BellOutlineIcon.vue";
 import PencilEditIcon from "../../assets/icons/PencilEditIcon.vue";
@@ -46,7 +41,7 @@ const getFullName = (userId) => {
     class="fixed top-0 left-0 right-0 z-50 w-full max-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:inset-0 md:h-full"
   >
     <div
-      class="relative w-full h-full max-w-xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2 text-gray-500"
+      class="relative w-full h-full max-w-3xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2 text-gray-500"
     >
       <div class="text-xs relative bg-gray-200 flex flex-col space-y-4">
         <div class="bg-white">
@@ -96,18 +91,25 @@ const getFullName = (userId) => {
             </div>
             <!---->
             <div class="flex justify-between items-center">
-              <h1 class="font-bold">Назоратчилар руйхати (1)</h1>
+              <div class="flex space-x-4">
+                <h1 class="font-bold">Назоратчилар руйхати</h1>
+                <p>()</p>
+              </div>
+
               <ShieldPlusOutlineIcon class="text-green-500 text-base" />
             </div>
             <div class="taskUserList flex justify-between items-center">
               <div class="border-l px-2">
-                <h1 class="font-bold">Рахимов Улуғбек Джуманиязович</h1>
-                <h3>УП "Ургенчтрансгаз"</h3>
+                <h1 class="font-bold"></h1>
+                <h3></h3>
               </div>
               <ShieldCrossOutlineIcon class="text-green-500 text-base" />
             </div>
             <div class="flex justify-between">
-              <h1>Ижрочилар руйхати (1)</h1>
+              <div class="flex space-x-4">
+                <h1>Ижрочилар руйхати</h1>
+                <p>()</p>
+              </div>
               <div class="flex space-x-3 text-indigo-700 text-base">
                 <AlarmOutlineIcon />
                 <UserPlusBrokenIcon />
@@ -120,9 +122,9 @@ const getFullName = (userId) => {
             />
             <div class="flex items-center justify-between bg-green-100">
               <div class="flex space-x-2 p-3">
-                <ClockCircleOutlineIcon class="text-base  text-indigo-700" />
+                <ClockCircleOutlineIcon class="text-base text-indigo-700" />
                 <div>
-                  <h1 class="font-bold">Рахимов Улуғбек Джуманиязович</h1>
+                  <h1 class="font-bold"></h1>
                   <p>
                     {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
                   </p>
@@ -133,7 +135,7 @@ const getFullName = (userId) => {
                 <p>
                   {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
                 </p>
-                <UserMinusOutlineIcon class="text-indigo-700 text-base"/>
+                <UserMinusOutlineIcon class="text-indigo-700 text-base" />
               </div>
             </div>
           </article>
@@ -158,8 +160,8 @@ const getFullName = (userId) => {
                   </p>
                 </div>
                 <div>
-                  <h1 class="font-bold">Рахимов Улуғбек Джуманиязович</h1>
-                  <h3>УП "Ургенчтрансгаз"</h3>
+                  <h1 class="font-bold"></h1>
+                  <h3></h3>
                 </div>
               </div>
               <div class="taskDescriptionList">
@@ -194,12 +196,6 @@ const getFullName = (userId) => {
                   </button>
                 </div>
               </div>
-              <!-- <button
-                  @click="closeModal"
-                  class="w-36 py-2 px-4 rounded-md text-white text-base bg-red-600 cursor-pointer hover:bg-red-800"
-                >
-                  Ёпиш
-                </button> -->
             </div>
           </article>
         </div>
