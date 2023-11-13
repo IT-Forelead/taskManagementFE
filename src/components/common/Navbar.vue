@@ -21,7 +21,8 @@ import { useDropdownStore } from '../../stores/dropdown.store'
   <div
     class="sticky top-0 z-50 flex items-center justify-between w-full h-12 px-4 py-2 bg-white border-b border-gray-200 shadow-7xl">
     <div class="flex items-center space-x-8">
-      <div @click="useDropdownStore().toggleSidebar" class="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer hover:bg-gray-100">
+      <div @click="useDropdownStore().toggleSidebar"
+           class="flex md:hidden items-center justify-center w-8 h-8 rounded-lg cursor-pointer hover:bg-gray-100">
         <HamburgerMenuOutlineIcon class="w-6 h-6" />
       </div>
       <ul class="hidden md:flex items-center space-x-6">
