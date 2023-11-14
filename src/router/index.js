@@ -21,6 +21,23 @@ const router = createRouter({
         },
       ],
     },
+    // *** DASHBOARD ***
+    {
+      path: "/users",
+      redirect: "/users/",
+      component: () => import("@/layouts/DashboardLayout.vue"),
+      children: [
+        {
+          path: "",
+          name: "Users",
+          component: () => import("@/pages/Users.vue"),
+          meta: {
+            title: "Users",
+            protected: true,
+          },
+        },
+      ],
+    },
     // *** Tasks ***
     {
       path: "/tasks",
