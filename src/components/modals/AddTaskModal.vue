@@ -37,11 +37,11 @@ const handleKeyDown = (event) => {
   if (event.key === "Escape") {
     closeModal();
   }
-};
+}
 
 onUnmounted(() => {
   window.removeEventListener("keydown", handleKeyDown);
-});
+})
 
 function getFile(e) {
   if (e.target.files[0].type.includes('pdf')) {

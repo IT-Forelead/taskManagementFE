@@ -1,26 +1,10 @@
 <script setup>
-import { onMounted, computed } from "vue";
-import { useTaskStore } from "../stores/task.store";
-import TaskService from "../services/task.service";
 import { ref } from "vue";
+import TaskTabMenu from '../components/tasks/TaskTabMenu.vue'
+import TaskCountReport from '../components/tasks/TaskCountReport.vue'
+
 const tab = ref(1);
 const currentTab = (tabNumber) => (tab.value = tabNumber);
-const getTasksCounts = async () => {
-  TaskService.getTasksCounts()
-    .then((result) => {
-      useTaskStore().setTasksCounts(result);
-    })
-    .catch(() => {
-      toast.error("Error while getting response");
-    });
-};
-onMounted(() => {
-  getTasksCounts();
-});
-
-const tasksCounts = computed(() => {
-  return useTaskStore().tasksCounts;
-});
 </script>
 
 <template>
@@ -34,54 +18,10 @@ const tasksCounts = computed(() => {
           Шахсий топшириқлар ижро ҳолати
         </p>
       </div>
-      <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Барча топшириқлар</div>
-          <div class="text-lg font-medium text-blue-600">
-            {{ tasksCounts.count }}
-          </div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Бажарилмоқда</div>
-          <div class="text-lg font-medium text-orange-600">
-            {{ tasksCounts.inProgress }}
-          </div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Бажарилган</div>
-          <div class="text-lg font-medium text-green-600">
-            {{ tasksCounts.completed }}
-          </div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Бажарилмаган</div>
-          <div class="text-lg font-medium text-red-500">
-            {{ tasksCounts.new }}
-          </div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Муддатидан кеч бажарилган</div>
-          <div class="text-lg font-medium text-indigo-600">
-            {{ tasksCounts.onHold }}
-          </div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Қайта назоратга олинган</div>
-          <div class="text-lg font-medium text-yellow-600">
-            {{ tasksCounts.approved }}
-          </div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Берилган жавоблар</div>
-          <div class="text-lg font-medium text-green-600">0</div>
-        </div>
-        <div class="flex items-center justify-between p-4 bg-white rounded shadow">
-          <div class="text-base text-gray-900">Қабул қилинмаганлар</div>
-          <div class="text-lg font-medium text-red-600">
-            {{ tasksCounts.rejected }}
-          </div>
-        </div>
-      </div>
+
+      <TaskTabMenu />
+      <TaskCountReport />
+
       <div class="h-auto bg-white rounded shadow">
         <ul class="flex w-full space-x-2 text-black">
           <li class="p-3 text-red-600 border-b-2 border-transparent hover:border-red-500">
@@ -106,7 +46,7 @@ const tasksCounts = computed(() => {
           </div>
         </div>
         <div class="table-responsive ">
-          <table class="w-full table table-fixed border-solid border-2 b items-center text-center ">
+          <table class="items-center table w-full text-center border-2 border-solid table-fixed b ">
             <thead class="h-20">
               <tr>
                 <th scope="col">ФИШ</th>

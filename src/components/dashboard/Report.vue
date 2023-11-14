@@ -9,13 +9,16 @@ import UserPlusOutlineIcon from '../../assets/icons/UserPlusOutlineIcon.vue';
 import FileIcon from "@/assets/icons/FileIcon.vue";
 import TaskService from '../../services/task.service';
 import { useTaskStore } from '../../stores/task.store';
-import { useUserStore } from '../../stores/user.store';
 import { useModalStore } from '../../stores/modal.store';
 import { useFileStore } from "@/stores/file.store.js";
 import UploadService from "@/services/upload.service.js";
 
 const tasks = computed(() => {
   return useTaskStore().tasks
+})
+
+const selectedFile = computed(() => {
+  return useFileStore().selectedFile
 })
 
 const makePrettyStatus = (status) => {
@@ -39,10 +42,6 @@ const loadReports = async () => {
     .catch(() => {
       toast.error('Error while getting response')
     })
-}
-
-const getFullName = (userId) => {
-  return useUserStore().users.find(u => u.id == userId)?.firstname
 }
 
 onMounted(() => {
@@ -97,13 +96,7 @@ const downloadFile = async (assetId) => {
   } catch (error) {
     toast.error('Error while fetching file data.');
   }
-};
-
-
-
-const selectedFile = computed(() => {
-  return useFileStore().selectedFile
-})
+}
 
 </script>
 
@@ -121,6 +114,9 @@ const selectedFile = computed(() => {
             </th>
             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Ижрочилар
+            </th>
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+              Назоратчилар
             </th>
             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Топшириқ мазмуни
@@ -148,7 +144,20 @@ const selectedFile = computed(() => {
               {{ data?.title }}
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-              {{ data?.assignedUsers }}
+              <div v-if="data?.executors.length === 0">
+                -
+              </div>
+              <div v-else>
+                {{ data?.executors.join(', ') }}
+              </div>
+            </td>
+            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
+              <div v-if="data?.controllers.length === 0">
+                -
+              </div>
+              <div v-else>
+                {{ data?.controllers.join(', ') }}
+              </div>
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
               {{ data?.description }}
@@ -175,7 +184,7 @@ const selectedFile = computed(() => {
                   class="w-4 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <UserPlusOutlineIcon class="w-6 h-6" />
                 </div>
-                <div @click="downloadFile(data.assetId)"
+                <div v-if="data?.assetId" @click="downloadFile(data.assetId)"
                   class="w-4 mr-3 text-blue-500 transform cursor-pointer hover:text-purple-500 hover:scale-110">
                   <FileIcon class="w-6 h-6" />
                 </div>
