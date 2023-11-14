@@ -24,6 +24,9 @@ export const useUserStore = defineStore('user', {
         setUser(data) {
             this.user = data
         },
+        clearUsers() {
+            this.users = []
+        },
         clearExecutors() {
             this.executors = []
         },

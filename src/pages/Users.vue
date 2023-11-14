@@ -23,7 +23,7 @@ const makeRoleStatus = (status) => {
 
 const getUsers = () => {
     UserService.getUsers({}).then((result) => {
-        useUserStore().clearStore()
+        useUserStore().clearUsers()
         useUserStore().setUsers(result)
     })
     .catch(() => {
