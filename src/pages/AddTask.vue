@@ -1,5 +1,4 @@
 <script setup>
-import AddCircleOutlineIcon from '../assets/icons/AddCircleOutlineIcon.vue'
 import UserPlusBrokenIcon from '../assets/icons/UserPlusBrokenIcon.vue'
 import UserCheckBrokenIcon from '../assets/icons/UserCheckBrokenIcon.vue'
 import TrashBinTrashOutlineIcon from '../assets/icons/TrashBinTrashOutlineIcon.vue'
@@ -18,6 +17,7 @@ import UploadService from '../services/upload.service'
 import TaskService from '../services/task.service'
 
 const isLoading = ref(false)
+const assigns = ref([])
 
 const submitForm = reactive({
     title: '',
@@ -34,6 +34,7 @@ const clearForm = () => {
 }
 
 const closeData = () => {
+    assigns.value = []
     useMultipleSelectStore().clearStore()
     deleteFile()
     clearForm()
@@ -63,6 +64,13 @@ const deleteFile = () => {
     useUploadStore().setSelectedAsset({})
 }
 
+const makeAssigns = () => {
+    assigns.value = useMultipleSelectStore().selectedExecuters.concat(
+        useMultipleSelectStore().selectedControllers
+    )
+    console.log(assigns);
+}
+
 const submitData = () => {
     if (!submitForm.title) {
         toast.error("Илтимос, топшириқ номини киритинг!")
@@ -72,12 +80,13 @@ const submitData = () => {
         toast.error("Илтимос, топшириқ мазмунини киритинг!")
     } else {
         isLoading.value = true
+        makeAssigns()
         TaskService.createTask(
             cleanObjectEmptyFields({
                 title: submitForm.title,
                 assetId: assetId.value,
                 dueDate: submitForm.dueDate,
-                assigned: useMultipleSelectStore().selectedExecuters.length === 0 ? '' : useMultipleSelectStore().selectedExecuters.map((executer) => executer?.id),
+                assigned: assigns.value.length === 0 ? '' : assigns.value.map((user) => user?.id),
                 description: submitForm.description
             })
         ).then(() => {
@@ -160,12 +169,6 @@ const submitData = () => {
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="flex items-start space-x-2 sm:col-span-2">
-                        <div class="block mb-1 text-sm font-medium leading-6 text-gray-900">
-                            Ерлиқлар
-                        </div>
-                        <AddCircleOutlineIcon class="text-blue-500 w-7 h-7" />
-                    </div> -->
                     <div v-if="useMultipleSelectStore().selectedExecuters.length > 0" class="sm:col-span-2">
                         <div class="block text-sm font-medium leading-6 text-gray-900">
                             Ижрочилар
@@ -189,13 +192,13 @@ const submitData = () => {
                             Назоратчилар
                         </div>
                         <div class="divide-y divide-gray-100">
-                            <div v-for="(executor, idx) in useMultipleSelectStore().selectedControllers" :key="idx" class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-100">
+                            <div v-for="(controller, idx) in useMultipleSelectStore().selectedControllers" :key="idx" class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-100">
                                 <div
                                     class="flex items-center justify-center w-8 h-8 p-2 text-sm uppercase bg-blue-200 rounded-full">
-                                    {{ executor?.firstname.charAt(0) + executor?.lastname.charAt(0) }}
+                                    {{ controller?.firstname.charAt(0) + controller?.lastname.charAt(0) }}
                                 </div>
                                 <span class="text-base capitalize">
-                                    {{ executor?.firstname + ' ' + executor?.lastname }}
+                                    {{ controller?.firstname + ' ' + controller?.lastname }}
                                 </span>
                             </div>
                         </div>

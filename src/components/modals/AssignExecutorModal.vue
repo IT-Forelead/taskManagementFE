@@ -16,8 +16,8 @@ import UserService from '../../services/user.service'
 import { cleanObjectEmptyFields } from '../../helpers/cleanEmptyFields'
 import { toast } from 'vue-sonner'
 
-const users = computed(() => {
-    return useUserStore().users
+const executors = computed(() => {
+    return useUserStore().executors
 })
 
 const taskId = computed(() => {
@@ -75,8 +75,8 @@ const getUsers = async () => {
             roles: ['executor']
         })
     ).then((result) => {
-        useUserStore().clearStore()
-        useUserStore().setUsers(result)
+        useUserStore().clearExecutors()
+        useUserStore().setExecutors(result)
     }).catch(() => {
         toast.error('Error while getting response')
     })
@@ -132,8 +132,8 @@ onMounted(() => {
                                 @click="clearMultipleSelectData()"
                                 class="absolute z-10 w-5 h-5 p-1 text-gray-900 rounded-full cursor-pointer right-2 hover:bg-gray-100" />
                         </div>
-                        <MultipleSelectExecuterItem v-if="useDropdownStore().isOpenAssignExecutorDropdown" :id="'users'"
-                            :options="users" />
+                        <MultipleSelectExecuterItem v-if="useDropdownStore().isOpenAssignExecutorDropdown" :id="'executors'"
+                            :options="executors" />
                     </div>
                 </div>
                 <div class="flex items-center justify-end pt-4 gap-x-4">

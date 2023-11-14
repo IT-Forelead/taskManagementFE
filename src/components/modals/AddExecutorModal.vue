@@ -10,8 +10,8 @@ import { useMultipleSelectStore } from '../../stores/multipleSelect.store'
 import { useUserStore } from '../../stores/user.store'
 import MultipleSelectExecuterItem from '../items/MultipleSelectExecuterItem.vue'
 
-const users = computed(() => {
-    return useUserStore().users
+const executors = computed(() => {
+    return useUserStore().executors
 })
 
 const closeModal = () => {
@@ -25,8 +25,8 @@ const getUsers = async () => {
             roles: ['executor']
         })
     ).then((result) => {
-        useUserStore().clearStore()
-        useUserStore().setUsers(result)
+        useUserStore().clearExecutors()
+        useUserStore().setExecutors(result)
     })
     .catch(() => {
         toast.error('Error while getting response')
@@ -55,7 +55,7 @@ onMounted(() => {
                         <label class="mb-1 text-sm font-medium leading-6 text-gray-900">
                             Ижрочилар
                         </label>
-                        <MultipleSelectExecuterItem :id="'users'" :options="users" />
+                        <MultipleSelectExecuterItem :id="'executors'" :options="executors" />
                     </div>
                 </div>
                 <div class="flex items-center justify-end pt-4 gap-x-4">

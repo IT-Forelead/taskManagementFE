@@ -116,6 +116,9 @@ const downloadFile = async (assetId) => {
               Ижрочилар
             </th>
             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+              Назоратчилар
+            </th>
+            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
               Топшириқ мазмуни
             </th>
             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
@@ -141,7 +144,20 @@ const downloadFile = async (assetId) => {
               {{ data?.title }}
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-              {{ data?.executors.join(', ') }}
+              <div v-if="data?.executors.length === 0">
+                -
+              </div>
+              <div v-else>
+                {{ data?.executors.join(', ') }}
+              </div>
+            </td>
+            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
+              <div v-if="data?.controllers.length === 0">
+                -
+              </div>
+              <div v-else>
+                {{ data?.controllers.join(', ') }}
+              </div>
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
               {{ data?.description }}

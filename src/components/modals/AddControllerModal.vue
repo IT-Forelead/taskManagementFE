@@ -10,8 +10,8 @@ import { useMultipleSelectStore } from '../../stores/multipleSelect.store'
 import { useUserStore } from '../../stores/user.store'
 import MultipleSelectControllerItem from '../items/MultipleSelectControllerItem.vue'
 
-const users = computed(() => {
-    return useUserStore().users
+const controllers = computed(() => {
+    return useUserStore().controllers
 })
 
 const closeModal = () => {
@@ -22,11 +22,11 @@ const closeModal = () => {
 const getUsers = async () => {
     UserService.getUsers(
         cleanObjectEmptyFields({
-            roles: ['executor', 'controller']
+            roles: ['controller']
         })
     ).then((result) => {
-        useUserStore().clearStore()
-        useUserStore().setUsers(result)
+        useUserStore().clearControllers()
+        useUserStore().setControllers(result)
     })
     .catch(() => {
         toast.error('Error while getting response')
@@ -55,7 +55,7 @@ onMounted(() => {
                         <label class="mb-1 text-sm font-medium leading-6 text-gray-900">
                             Назоратчилар
                         </label>
-                        <MultipleSelectControllerItem :id="'users'" :options="users" />
+                        <MultipleSelectControllerItem :id="'controllers'" :options="controllers" />
                     </div>
                 </div>
                 <div class="flex items-center justify-end pt-4 gap-x-4">
