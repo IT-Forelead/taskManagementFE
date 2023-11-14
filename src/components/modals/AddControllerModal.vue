@@ -40,8 +40,8 @@ onMounted(() => {
 </script>
 <template>
     <div v-if="useModalStore().isOpenAddControllerModal"
-        class="fixed top-0 left-0 right-0 z-50 w-full max-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:inset-0 md:h-full">
-        <div class="relative w-full h-full max-w-xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2">
+        class="fixed top-0 left-0 right-0 z-50 w-full md:inset-0 h-[calc(100%-1rem)] max-h-full min-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:h-full">
+        <div class="relative w-full max-w-xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 md:top-1/2 top-1/3">
             <div class="relative p-4 bg-white border rounded-lg shadow">
                 <div class="flex items-center justify-between pb-4 mb-4 border-b border-gray-200">
                     <h1 class="flex items-center text-xl font-semibold">Назоратчи қўшиш</h1>
