@@ -7,6 +7,7 @@ import ClipboardHeartOutlineIcon from '../../assets/icons/ClipboardHeartOutlineI
 import ChatSquareArrowOutlineIcon from '../../assets/icons/ChatSquareArrowOutlineIcon.vue'
 import PieChartOutlineIcon from '../../assets/icons/PieChartOutlineIcon.vue'
 import UsersGroupRoundedOutlineIcon from '../../assets/icons/UsersGroupRoundedOutlineIcon.vue'
+import LetterOutlineIcon from '../../assets/icons/LetterOutlineIcon.vue'
 import { useModalStore } from '../../stores/modal.store'
 import { ref } from 'vue'
 const reportType = ref('')
@@ -77,6 +78,13 @@ const changeReportType = (report) => {
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <UsersGroupRoundedOutlineIcon class="w-6 h-6" />
         <div>Фойдаланувчилар</div>
+      </router-link>
+      <router-link to="/messages" active-class="active"
+        @click="changeReportType('messages')"
+        :class="reportType.includes('messages') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <LetterOutlineIcon class="w-6 h-6" />
+        <div>SMS хабарлар</div>
       </router-link>
     </div>
     <div class="absolute bottom-0 w-full mb-3 text-xs text-center dark:text-gray-400">
