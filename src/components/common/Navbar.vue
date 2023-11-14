@@ -5,6 +5,7 @@ import ShieldCheckOutlineIcon from '../../assets/icons/ShieldCheckOutlineIcon.vu
 import ViewTaskModal from '../modals/ViewTaskModal.vue'
 import AssignExecutorModal from '../modals/AssignExecutorModal.vue'
 import AddExecutorModal from '../modals/AddExecutorModal.vue'
+import AddControllerModal from '../modals/AddControllerModal.vue'
 import AddFileModal from '../modals/AddFileModal.vue'
 import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
@@ -43,6 +44,7 @@ import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue
   <AssignExecutorModal />
   <ViewUploadedFileModal />
   <AddExecutorModal />
+  <AddControllerModal />
   <AddFileModal />
 </template>
 

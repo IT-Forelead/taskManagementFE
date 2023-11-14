@@ -6,6 +6,7 @@ import ClipboardListOutlineIcon from '../../assets/icons/ClipboardListOutlineIco
 import ClipboardHeartOutlineIcon from '../../assets/icons/ClipboardHeartOutlineIcon.vue'
 import ChatSquareArrowOutlineIcon from '../../assets/icons/ChatSquareArrowOutlineIcon.vue'
 import PieChartOutlineIcon from '../../assets/icons/PieChartOutlineIcon.vue'
+import UsersGroupRoundedOutlineIcon from '../../assets/icons/UsersGroupRoundedOutlineIcon.vue'
 import { useModalStore } from '../../stores/modal.store'
 import { ref } from 'vue'
 const reportType = ref('')
@@ -51,24 +52,31 @@ const changeReportType = (report) => {
     <div class="relative py-4 overflow-y-auto h-5/6">
       <router-link to="/dashboard" active-class="active"
         @click="changeReportType('all_tasks')"
-        :class="reportType.includes('all_tasks') ? 'rounded-r-full bg-slate-800 text-white' : ''"
+        :class="reportType.includes('all_tasks') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
         class="flex items-center w-[97%] px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <ClipboardListOutlineIcon class="w-6 h-6" />
         <span>Топшириқлар</span>
       </router-link>
       <router-link to="/tasks/report" active-class="active"
         @click="changeReportType('tasks_report')"
-        :class="reportType.includes('tasks_report') ? 'rounded-r-full bg-slate-800 text-white' : ''"
+        :class="reportType.includes('tasks_report') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <GraphUpOutlineIcon class="w-6 h-6" />
         <span>Ҳисоботлар</span>
       </router-link>
       <router-link to="/statistics" active-class="active"
         @click="changeReportType('statistics')"
-        :class="reportType.includes('statistics') ? 'rounded-r-full bg-slate-800 text-white' : ''"
+        :class="reportType.includes('statistics') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
         class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
         <PieChartOutlineIcon class="w-6 h-6" />
         <div>Статистика</div>
+      </router-link>
+      <router-link to="/users" active-class="active"
+        @click="changeReportType('users')"
+        :class="reportType.includes('users') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <UsersGroupRoundedOutlineIcon class="w-6 h-6" />
+        <div>Фойдаланувчилар</div>
       </router-link>
     </div>
     <div class="absolute bottom-0 w-full mb-3 text-xs text-center dark:text-gray-400">
