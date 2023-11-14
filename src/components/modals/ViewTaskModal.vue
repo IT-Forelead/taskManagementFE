@@ -19,6 +19,7 @@ import ShieldCrossOutlineIcon from "../../assets/icons/ShieldCrossOutlineIcon.vu
 import AlarmOutlineIcon from "../../assets/icons/AlarmOutlineIcon.vue";
 import ClockCircleOutlineIcon from "../../assets/icons/ClockCircleOutlineIcon.vue";
 import UserMinusOutlineIcon from "../../assets/icons/UserMinusOutlineIcon.vue";
+import MinusCircleOutlineIcon from "../../assets/icons/MinusCircleOutlineIcon.vue";
 
 moment.locale("ru");
 const closeModal = () => {
@@ -36,24 +37,32 @@ const getFullName = (userId) => {
   }
   return "Ижрочи тайинланмаган";
 };
-
+const addFile = () => {
+  fileNames.value.push("");
+};
 const editableDate = ref(false);
 const editableText = ref(false);
 
-const addExecutor = () => {
-
-};
-
 const deleteExecutor = (index) => {
-
+  useTaskStore().selectedTask.executors.splice(index, 1);
 };
 
-const addControllers = () => {
+const addControllers = () => {};
 
+const deleteControllers = (index) => {};
+
+const fileName = ref("");
+const fileNames = ref([""]);
+
+const onFileChange = (event, idx) => {
+  var fileData = event.target.files[0];
+  fileName.value = fileData.name;
+
+  fileNames.value[idx] = fileData.name;
 };
 
-const deleteControllers = (index) => {
-
+const deleteContent = (idx) => {
+  fileNames.value.splice(idx, 1);
 };
 </script>
 <template>
@@ -127,16 +136,31 @@ const deleteControllers = (index) => {
             </div>
             <div class="flex items-center space-x-1">
               <h1 class="text-sm">Ёрлиқлар</h1>
-              <AddCircleOutlineIcon class="text-indigo-500 text-3xl" />
+              <AddCircleOutlineIcon
+                @click="!fileNames.includes('') ? addFile() : null"
+                class="text-indigo-500 text-3xl"
+              />
             </div>
-            <div class="relative">
-              <input type="file" id="fileInput" class="hidden" />
+            <div
+              class="relative flex items-center"
+              v-for="(data, idx) in fileNames"
+              :key="idx"
+            >
+
+              <input
+                type="file"
+                :id="'fileInput-' + idx"
+                class="hidden"
+                @change="onFileChange($event, idx)"
+              />
               <label
-                for="fileInput"
-                class="flex text-indigo-500 space-x-2 items-center px-2 py-2 border-2"
+                :for="'fileInput-' + idx"
+                class="flex w-full text-indigo-500 space-x-2 items-center px-2 py-2 border-2"
               >
                 <PaperclipIcon class="flex items-start text-lg" />
-                <p>Файл бириктириш</p>
+                <p v-if="data.length == 0">Файл бириктириш</p>
+                <p v-if="data.length > 0">{{ data }}</p>
+                <MinusCircleOutlineIcon class="flex absolute right-0 text-base" @click="deleteContent(idx)" />
               </label>
             </div>
             <!---->
@@ -147,7 +171,10 @@ const deleteControllers = (index) => {
                 <p>({{ selectedTask?.controllers.length }})</p>
               </div>
 
-              <ShieldPlusOutlineIcon  @click="addControllers()" class="text-green-500 text-base" />
+              <ShieldPlusOutlineIcon
+                @click="addControllers()"
+                class="text-green-500 text-base"
+              />
             </div>
             <div v-for="(data, idx) in selectedTask?.controllers" :key="idx">
               <div class="taskUserList flex justify-between items-center">
@@ -155,7 +182,10 @@ const deleteControllers = (index) => {
                   <h1 class="font-bold">{{ data }}</h1>
                   <h3>{{ idx }}</h3>
                 </div>
-                <ShieldCrossOutlineIcon  @click="deleteControllers()" class="text-green-500 text-base" />
+                <ShieldCrossOutlineIcon
+                  @click="deleteControllers()"
+                  class="text-green-500 text-base"
+                />
               </div>
             </div>
             <div class="flex justify-between">
@@ -165,7 +195,9 @@ const deleteControllers = (index) => {
               </div>
               <div class="flex space-x-3 text-indigo-700 text-base">
                 <AlarmOutlineIcon />
-                <UserPlusBrokenIcon @click="addExecutor()" />
+                <UserPlusBrokenIcon
+                  @click="useModalStore().openAddExecutorModal()"
+                />
               </div>
             </div>
             <input
@@ -199,9 +231,7 @@ const deleteControllers = (index) => {
                   />
                 </div>
               </div>
-              </div>
-
-
+            </div>
           </article>
         </div>
         <div class="bg-white w-full items-star">
