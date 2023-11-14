@@ -108,7 +108,7 @@ const closeSidebar = (event) => {
 
           <div v-if="!isMediumScreen" @click="useSidebarStore().toggleSubMenuForFinance()"
             :class="router?.currentRoute?.value?.path === '/statistics' || router?.currentRoute?.value?.path === '/chiqim' || router?.currentRoute?.value?.path === '/rasxod' ? 'active rounded-r-full bg-slate-800 text-white' : ''"
-            class="relative flex items-center justify-between h-10 w-ful hover:text-white font-medium py-6 cursor-pointer transition-colors duration-300">
+            class="relative flex items-center justify-between h-10 w-full hover:text-white font-medium py-6 cursor-pointer transition-colors duration-300">
             <div class="flex items-center">
               <div
                 class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
@@ -122,7 +122,7 @@ const closeSidebar = (event) => {
           <div v-if="isMediumScreen" @click="useSidebarStore().toggleSubMenuForFinance()"
             class="relative flex items-center justify-between h-10 w-ful hover:text-white font-medium py-3 cursor-pointer transition-colors duration-300">
             <div class="flex items-center"
-              :class="router?.currentRoute?.value?.path === '/statistics' || router?.currentRoute?.value?.path === '/tasks/report' || router?.currentRoute?.value?.path === '/dashboard' ? 'active bg-slate-800 rounded-full' : ''">
+              :class="router?.currentRoute?.value?.path === '/statistics' || router?.currentRoute?.value?.path === '/tasks/report' || router?.currentRoute?.value?.path === '/dashboard' ? 'active bg-slate-800 rounded-full mt-8' : ''">
               <div
                 class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
                 <WalletMoneyOutlineIcon class="w-7 h-7" />
