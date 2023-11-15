@@ -45,40 +45,40 @@ const currentTab = (tabNumber) => (tab.value = tabNumber);
             Қуйи ташкилотлар кесимида
           </div>
         </div>
-        <div class="table-responsive ">
-          <table class="items-center table w-full text-center border-2 border-solid table-fixed b ">
+        <div class="table-responsive overflow-auto">
+          <table class="items-center  table w-full min-w-full text-center border-2 border-solid">
             <thead class="h-20">
               <tr>
-                <th scope="col">ФИШ</th>
-                <th scope="col">Топшириқлар сони</th>
-                <th scope="col">Бажарилмоқда</th>
-                <th class="text-red-500" scope="col">Бажарилмаган</th>
-                <th scope="col">Бажарилган</th>
-                <th scope="col">Муддитидан кеч бажарилган</th>
-                <th scope="col">Рад этилган</th>
-                <th scope="col">Қайта назоратга олинган</th>
+                <th scope="col" class="p-3">ФИШ</th>
+                <th scope="col" class="p-3">Топшириқлар сони</th>
+                <th scope="col" class="p-3">Бажарилмоқда</th>
+                <th class="text-red-500 p-3" scope="col">Бажарилмаган</th>
+                <th scope="col" class="p-3">Бажарилган</th>
+                <th scope="col" class="p-3">Муддитидан кеч бажарилган</th>
+                <th scope="col" class="p-3">Рад этилган</th>
+                <th scope="col" class="p-3">Қайта назоратга олинган</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-gray-200 dark:divide-gray-700">
               <tr class="border">
-                <td class="py-4">Жами</td>
-                <td class="py-4">1</td>
-                <td class="py-4">0</td>
-                <td class="py-4 text-red-500">0</td>
-                <td class="py-4">1</td>
-                <td class="py-4">0</td>
-                <td class="py-4">0</td>
-                <td class="py-4 text-yellow-500">0</td>
+                <td class="p-3">Жами</td>
+                <td class="p-3">1</td>
+                <td class="p-3">0</td>
+                <td class="p-3 text-red-500">0</td>
+                <td class="p-3">1</td>
+                <td class="p-3">0</td>
+                <td class="p-3">0</td>
+                <td class="p-3 text-yellow-500">0</td>
               </tr>
               <tr class="border">
-                <td class="py-4 uppercase">Matchanov Sanjarber Ruzmetovich</td>
-                <td class="py-4">1</td>
-                <td class="py-4">0</td>
-                <td class="py-4 text-red-500">0</td>
-                <td class="py-4">1</td>
-                <td class="py-4">0</td>
-                <td class="py-4">0</td>
-                <td class="py-4 text-yellow-500">0</td>
+                <td class="p-3 uppercase">Matchanov Sanjarber Ruzmetovich</td>
+                <td class="p-3">1</td>
+                <td class="p-3">0</td>
+                <td class="p-3 text-red-500">0</td>
+                <td class="p-3">1</td>
+                <td class="p-3">0</td>
+                <td class="p-3">0</td>
+                <td class="p-3 text-yellow-500">0</td>
               </tr>
             </tbody>
           </table>

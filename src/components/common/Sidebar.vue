@@ -25,15 +25,16 @@ const checkScreenSize = () => {
   isMediumScreen.value = window.innerWidth >= 1024 && window.innerWidth <= 1525;
 };
 
-onMounted(() => {
-  checkScreenSize();
-  window.addEventListener('resize', checkScreenSize);
-});
 const closeSidebar = (event) => {
   if (event.target.closest('#sidebar') === null) {
     useSidebarStore().isOpenSidebar = false;
   }
 };
+
+onMounted(() => {
+  checkScreenSize();
+  window.addEventListener('resize', checkScreenSize);
+});
 </script>
 <template>
   <div v-if="useSidebarStore().toggleSidebar">
@@ -62,9 +63,10 @@ const closeSidebar = (event) => {
             <AddCircleOutlineIcon class="w-7 h-7" />
             <span>Топшириқни яратиш</span>
           </router-link>
-          <router-link v-if="isMediumScreen" to="/add-task" active-class="active" @click="changeReportType('add_task')"
+          <router-link v-if="isMediumScreen" to="/add-task" title="Топшириқни яратиш" active-class="active"
+            @click="changeReportType('add_task')"
             :class="reportType.includes('add_task') ? 'rounded-full bg-slate-800 text-white' : ''"
-            class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            class="flex items-center w-full px-4 py-4 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <AddCircleOutlineIcon class="w-8 h-8" />
           </router-link>
           <router-link v-if="!isMediumScreen" to="/dashboard" active-class="active" @click="changeReportType('all_tasks')"
@@ -73,9 +75,10 @@ const closeSidebar = (event) => {
             <ClipboardListOutlineIcon class="w-7 h-7" />
             <span>Топшириқлар</span>
           </router-link>
-          <router-link v-if="isMediumScreen" to="/dashboard" active-class="active" @click="changeReportType('all_tasks')"
+          <router-link v-if="isMediumScreen" to="/dashboard" title="Топшириқлар" active-class="active"
+            @click="changeReportType('all_tasks')"
             :class="reportType.includes('all_tasks') ? 'rounded-full bg-slate-800 text-white' : ''"
-            class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            class="flex items-center w-full px-4 py-4 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <ClipboardListOutlineIcon class="w-8 h-8" />
           </router-link>
           <router-link v-if="!isMediumScreen" to="/tasks/report" active-class="active"
@@ -85,31 +88,27 @@ const closeSidebar = (event) => {
             <GraphUpOutlineIcon class="w-7 h-7" />
             <span>Ҳисоботлар</span>
           </router-link>
-          <router-link v-if="isMediumScreen" to="/tasks/report" active-class="active"
+          <router-link v-if="isMediumScreen" to="/tasks/report" active-class="active" title="Ҳисоботлар"
             @click="changeReportType('tasks_report')"
             :class="reportType.includes('tasks_report') ? 'rounded-full bg-slate-800 text-white' : ''"
-            class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            class="flex items-center w-full px-4 py-4 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <GraphUpOutlineIcon class="w-8 h-8" />
           </router-link>
           <router-link v-if="!isMediumScreen" to="/statistics" active-class="active"
             @click="changeReportType('statistics')"
-            :class="reportType.includes('statistics') ? 'rounded-r-full w-full bg-slate-800 text-white w-[98%]' : ''"
+            :class="reportType.includes('statistics') ? 'rounded-r-full w-full bg-slate-800 text-white' : ''"
             class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <PieChartOutlineIcon class="w-7 h-7" />
             <span>Статистика</span>
           </router-link>
-          <router-link v-if="isMediumScreen" to="/statistics" active-class="active"
+          <router-link v-if="isMediumScreen" to="/statistics" active-class="active" title="Статистика"
             @click="changeReportType('statistics')"
             :class="reportType.includes('statistics') ? 'rounded-full bg-slate-800 text-white w-[98%]' : ''"
-            class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            class="flex items-center w-full px-4 py-4 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <PieChartOutlineIcon class="w-8 h-8" />
           </router-link>
-
-
-
-
           <div v-if="!isMediumScreen" @click="useSidebarStore().toggleSubMenuForFinance()"
-            :class="router?.currentRoute?.value?.path === '/statistics' || router?.currentRoute?.value?.path === '/chiqim' || router?.currentRoute?.value?.path === '/rasxod' ? 'active rounded-r-full bg-slate-800 text-white' : ''"
+            :class="router?.currentRoute?.value?.path === '/a' || router?.currentRoute?.value?.path === '/f' || router?.currentRoute?.value?.path === '/d' ? 'active rounded-r-full bg-slate-800 text-white' : ''"
             class="relative flex items-center justify-between h-10 w-full hover:text-white font-medium py-6 cursor-pointer transition-colors duration-300">
             <div class="flex items-center">
               <div
@@ -121,55 +120,77 @@ const closeSidebar = (event) => {
             <ChevronRightRoundedIcon class="w-5 h-5 transition-all text-gray-400 duration-300 mx-4"
               :class="{ 'rotate-90': isOpenSubMenuForFinance }" />
           </div>
-          <div v-if="isMediumScreen" @click="useSidebarStore().toggleSubMenuForFinance()"
-            class="relative flex items-center justify-between h-10 w-ful hover:text-white font-medium py-3 cursor-pointer transition-colors duration-300">
+          <div v-if="isMediumScreen" @click="useSidebarStore().toggleSubMenuForFinance()" title="Финанс"
+            class="relativ flex items-center h-10 hover:text-white font-medium py-3 cursor-pointer transition-colors duration-300">
             <div class="flex items-center"
-              :class="router?.currentRoute?.value?.path === '/statistics' || router?.currentRoute?.value?.path === '/tasks/report' || router?.currentRoute?.value?.path === '/dashboard' ? 'active bg-slate-800 rounded-full mt-8' : ''">
-              <div
-                class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
-                <WalletMoneyOutlineIcon class="w-7 h-7" />
+              :class="router?.currentRoute?.value?.path === '/a' || router?.currentRoute?.value?.path === 'f' || router?.currentRoute?.value?.path === '/d' ? 'active rounded-full bg-slate-800 text-white mt-8' : ''">
+              <div class="flex items-center w-full px-4 py-2 my-2 cursor-pointer hover:text-white">
+                <WalletMoneyOutlineIcon class="w-8 h-8" />
               </div>
             </div>
-            <ChevronRightRoundedIcon class="w-5 h-5 transition-all text-gray-400 duration-300 mx-4"
-              :class="{ 'rotate-90': isOpenSubMenuForFinance }" />
-        </div>
-
-
-        <div :class="{ hidden: !isOpenSubMenuForFinance }" class="transition-all duration-300">
-          <router-link to="/statistics" active-class="active"
-            class="flex items-center justify-between hover:text-white p-3 rounded-lg cursor-pointer pl-14">
-            <div class="flex items-center space-x-2">
-              <p>Расчёт цены</p>
-            </div>
-          </router-link>
-          <router-link to="/tasks/report" active-class="active"
-            class="flex items-center justify-between hover:text-white p-3 rounded-lg cursor-pointer pl-14">
+          </div>
+          <div :class="{ hidden: !isOpenSubMenuForFinance }" class="transition-all duration-300">
+            <router-link v-if="!isMediumScreen" to="/statistics" active-class="active"
+              class="flex items-center justify-between hover:text-white p-3 rounded-lg cursor-pointer pl-14">
+              <div class="flex items-center space-x-2">
+                <p>Расчёт цены</p>
+              </div>
+            </router-link>
+            <router-link v-if="isMediumScreen" to="/statistics" active-class="active" title="Расчёт цены"
+              class="flex items-center justify-between hover:text-white pl-5 rounded-lg cursor-pointer mt-8">
+              <div class="flex items-center space-x-2">
+                <PieChartOutlineIcon class="w-6 h-6" />
+              </div>
+            </router-link>
+            <router-link v-if="!isMediumScreen" to="/tasks/report" active-class="active"
+              class="flex items-center justify-between hover:text-white p-3 rounded-lg cursor-pointer pl-14">
               <div class="flex items-center space-x-2">
                 <p>Товары</p>
               </div>
             </router-link>
-            <router-link to="/dashboard" active-class="active"
+            <router-link v-if="isMediumScreen" to="/tasks/report" active-class="active" title="Товары"
+              class="flex items-center justify-between hover:text-white pl-5 rounded-lg cursor-pointer mt-6">
+              <div class="flex items-center space-x-2">
+                <GraphUpOutlineIcon class="w-6 h-6" />
+              </div>
+            </router-link>
+            <router-link v-if="!isMediumScreen" to="/dashboard" active-class="active"
               class="flex items-center justify-between hover:text-white p-3 rounded-lg cursor-pointer pl-14">
               <div class="flex items-center space-x-2">
                 <p>Расход</p>
               </div>
-      </router-link>
-      <router-link to="/users" active-class="active"
-        @click="changeReportType('users')"
-        :class="reportType.includes('users') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
-        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
-        <UsersGroupRoundedOutlineIcon class="w-6 h-6" />
-        <div>Фойдаланувчилар</div>
-      </router-link>
-      <router-link to="/messages" active-class="active"
-        @click="changeReportType('messages')"
-        :class="reportType.includes('messages') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
-        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
-        <LetterOutlineIcon class="w-6 h-6" />
-        <div>SMS хабарлар</div>
+            </router-link>
+            <router-link v-if="isMediumScreen" to="/dashboard" active-class="active" title="Расход"
+              class="flex items-center justify-between hover:text-white pl-5 rounded-lg cursor-pointer mt-6">
+              <div class="flex items-center space-x-2">
+                <ClipboardListOutlineIcon class="w-6 h-6" />
+              </div>
             </router-link>
           </div>
-
+          <router-link v-if="!isMediumScreen" to="/users" active-class="active" @click="changeReportType('users')"
+            :class="reportType.includes('users') ? 'rounded-r-full w-full bg-slate-800 text-white' : ''"
+            class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            <UsersGroupRoundedOutlineIcon class="w-7 h-7" />
+            <span>Фойдаланувчилар</span>
+          </router-link>
+          <router-link v-if="isMediumScreen" to="/users" active-class="active" title="Фойдаланувчилар"
+            @click="changeReportType('users')"
+            :class="reportType.includes('users') ? 'rounded-full bg-slate-800 text-white w-[98%]' : ''"
+            class="flex items-center w-full mt-6 px-4 py-4 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            <UsersGroupRoundedOutlineIcon class="w-8 h-8" />
+          </router-link>
+          <router-link v-if="!isMediumScreen" to="/messages" active-class="active" @click="changeReportType('messages')"
+            :class="reportType.includes('messages') ? 'rounded-r-full w-full bg-slate-800 text-white' : ''"
+            class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            <LetterOutlineIcon class="w-7 h-7" />
+            <span>SMS хабарлар</span>
+          </router-link>
+          <router-link v-if="isMediumScreen" to="/messages" active-class="active" title="SMS хабарлар"
+            @click="changeReportType('messages')"
+            :class="reportType.includes('messages') ? 'rounded-full bg-slate-800 text-white w-[98%]' : ''"
+            class="flex items-center w-full mt px-4 py-4 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+            <LetterOutlineIcon class="w-8 h-8" />
+          </router-link>
         </div>
       </div>
 
@@ -179,20 +200,6 @@ const closeSidebar = (event) => {
         <a href="https://it-forelead.uz" class="hover:underline">IT-Forelead</a>.<br />
         All Rights Reserved.
       </div>
-      <!-- Expand / collapse button -->
-      <!-- <div class="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
-                          <div class="px-4 py-2">
-                              <button @click="useDropdownStore().toggleSidebar">
-                                  <span class="sr-only">Expand / collapse sidebar</span>
-                                  <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                                      <path class="text-slate-400"
-                                          d="M19.586 11l-5-5L16 4.586 23.414 12 16 19.414 14.586 18l5-5H7v-2z" />
-                                      <path class="text-slate-600" d="M3 23H1V1h2z" />
-                                  </svg>
-                              </button>
-
-                          </div>
-                  </div> -->
     </div>
   </div>
 </template>
