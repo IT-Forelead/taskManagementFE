@@ -62,7 +62,12 @@ const getFullName = (userId) => {
             <div class="flex items-center mt-4 text-gray-700">
               <UserIcon class="w-5 h-5" />
               <h1 class="px-2 font-bold">Ижрочилар:</h1>
-              <p>{{ selectedTask?.executors.join(', ') }}</p>
+              <p>{{ selectedTask?.executors.map((user) => user?.firstname + ' ' + user?.lastname).join(', ') }}</p>
+            </div>
+            <div class="flex items-center mt-4 text-gray-700">
+              <UserIcon class="w-5 h-5" />
+              <h1 class="px-2 font-bold">Назоратчилар:</h1>
+              <p>{{ selectedTask?.controllers.map((user) => user?.firstname + ' ' + user?.lastname).join(', ') }}</p>
             </div>
           </div>
         </div>

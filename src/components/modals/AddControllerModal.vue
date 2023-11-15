@@ -26,7 +26,7 @@ const getUsers = async () => {
         })
     ).then((result) => {
         useUserStore().clearControllers()
-        useUserStore().setControllers(result)
+        useUserStore().setControllers(result?.data)
     })
     .catch(() => {
         toast.error('Error while getting response')

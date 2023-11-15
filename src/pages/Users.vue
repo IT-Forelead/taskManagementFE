@@ -24,7 +24,7 @@ const makeRoleStatus = (status) => {
 const getUsers = () => {
     UserService.getUsers({}).then((result) => {
         useUserStore().clearUsers()
-        useUserStore().setUsers(result)
+        useUserStore().setUsers(result?.data)
     })
     .catch(() => {
         toast.error('Фойдаланувчиларни олишда хатолик юз берди')
