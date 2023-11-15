@@ -205,37 +205,37 @@ const submitData = () => {
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between mt-6 gap-x-6">
-                    <div class="flex items-center space-x-4">
+                <div class="md:flex items-center justify-between mt-6">
+                    <div class="md:flex items-center md:space-x-4 md:space-y-0 space-y-3">
                         <button @click="useModalStore().openAddExecutorModal()"
-                            class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-green-600 border border-green-300 rounded-md hover:bg-green-100">
+                            class="flex w-full items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-green-600 border border-green-300 rounded-md hover:bg-green-100">
                             <UserPlusBrokenIcon class="w-5 h-5" />
                             <span>Ижрочи қўшиш</span>
                         </button>
                         <button @click="useModalStore().openAddControllerModal()"
-                            class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-blue-600 border border-blue-300 rounded-md hover:bg-blue-100">
+                            class="flex w-full items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-blue-600 border border-blue-300 rounded-md hover:bg-blue-100">
                             <UserCheckBrokenIcon class="w-5 h-5" />
                             <span>Назоратчи қўшиш</span>
                         </button>
                         <div @click="useModalStore().openAddFileModal()"
-                            class="flex items-center justify-center space-x-1 px-3 py-1.5 font-medium text-indigo-500 bg-white rounded-md cursor-pointer hover:bg-indigo-100">
+                            class="flex w-full items-center justify-center space-x-1 px-3 py-1.5 font-medium text-indigo-500 bg-white rounded-md cursor-pointer hover:bg-indigo-100">
                             <PaperclipOutlineIcon class="w-5 h-5" />
                             <span>Файл бириктириш</span>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-4">
+                    <div class="md:flex items-center md:space-x-4 md:space-y-0 space-y-3 md:mt-0 mt-10">
                         <button v-if="!isLoading" @click="submitData()" type="button"
-                            class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm bg-green-500 font-normal leading-6 text-white border border-green-300 rounded-md hover:bg-green-600">
+                            class="flex w-full items-center justify-center px-3 py-1.5 space-x-1 text-sm bg-green-500 font-normal leading-6 text-white border border-green-300 rounded-md hover:bg-green-600">
                             <CheckCircleOutlineIcon class="w-5 h-5" />
                             <span>Сақлаш</span>
                         </button>
                         <button v-else type="button"
-                            class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm bg-green-600 font-normal leading-6 cursor-default text-white border border-green-300 rounded-md">
+                            class="flex w-full items-center justify-center px-3 py-1.5 space-x-1 text-sm bg-green-600 font-normal leading-6 cursor-default text-white border border-green-300 rounded-md">
                             <SpinnerIcon class="w-5 h-5" />
                             <span>Сақлаш</span>
                         </button>
                         <button @click="closeData()" type="button"
-                            class="flex items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-red-500 border border-red-300 rounded-md hover:bg-red-100">
+                            class="flex w-full items-center justify-center px-3 py-1.5 space-x-1 text-sm font-normal leading-6 text-red-500 border border-red-300 rounded-md hover:bg-red-100">
                             <TrashBinTrashOutlineIcon class="w-5 h-5" />
                             <span>Тозалаш</span>
                         </button>

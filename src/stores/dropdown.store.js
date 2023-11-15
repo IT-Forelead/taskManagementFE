@@ -7,7 +7,7 @@ export const useDropdownStore = defineStore('dropdown', {
     isOpenAssignControllerDropdown: false,
     isOpenNotificationDropdown: false,
     isOpenLanguageDropdown: false,
-    isOpenProfileDropdown: false
+    isOpenProfileDropdown: false,
   }),
   actions: {
     setSelectOptionAssignExecutor(data) {

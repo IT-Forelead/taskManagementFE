@@ -11,16 +11,18 @@ import LanguageDropdown from './LanguageDropdown.vue'
 import NotificationDropdown from './NotificationDropdown.vue'
 import ProfileDropdown from './ProfileDropdown.vue'
 import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue";
+import { useSidebarStore } from '../../stores/sidebar.store'
 </script>
 
 <template>
   <div
     class="sticky top-0 z-50 flex items-center justify-between w-full h-12 px-4 py-2 bg-white border-b border-gray-200 shadow-7xl">
     <div class="flex items-center space-x-8">
-      <div class="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer hover:bg-gray-100">
+      <div @click="useSidebarStore().toggleSidebar"
+           class="flex md:hidden items-center justify-center w-8 h-8 rounded-lg cursor-pointer hover:bg-gray-100">
         <HamburgerMenuOutlineIcon class="w-6 h-6" />
       </div>
-      <ul class="flex items-center space-x-6">
+      <ul class="hidden md:flex items-center space-x-6">
         <li class="flex items-center space-x-2 text-gray-800 cursor-pointer hover:text-blue-800">
           <ChecklistMinimalisticOutlineIcon class="w-5 h-5" />
           <router-link to="/dashboard">
@@ -34,7 +36,7 @@ import ViewUploadedFileModal from "@/components/modals/ViewUploadedFileModal.vue
       </ul>
     </div>
     <div class="flex items-center space-x-4">
-      <NotificationDropdown />
+      <NotificationDropdown class="hidden md:block"/>
       <LanguageDropdown />
       <ProfileDropdown />
     </div>
