@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { toast } from "vue-sonner";
 import moment from "moment";
 import "moment/dist/locale/ru";
 import XIcon from "@/assets/icons/XIcon.vue";
@@ -21,6 +22,8 @@ import AlarmOutlineIcon from "../../assets/icons/AlarmOutlineIcon.vue";
 import ClockCircleOutlineIcon from "../../assets/icons/ClockCircleOutlineIcon.vue";
 import UserMinusOutlineIcon from "../../assets/icons/UserMinusOutlineIcon.vue";
 import MinusCircleOutlineIcon from "../../assets/icons/MinusCircleOutlineIcon.vue";
+
+import TaskService from '../../services/task.service'
 
 moment.locale("ru");
 const closeModal = () => {
@@ -45,35 +48,23 @@ const editableDate = ref(false);
 const editableText = ref(false);
 
 const executors = computed(() => {
-  const a = [
-    ...new Set(
-      useTaskStore().selectedTask.executors.concat(
-        useMultipleSelectStore().selectedExecuters
-      )
-    )
-  ];
-  console.log(a);
-  return a;
+  return useTaskStore().selectedTask.executors.concat(
+    useMultipleSelectStore().selectedExecuters
+  );
 });
 
 const controllers = computed(() => {
-  const b = [
-    ...new Set(
-      useTaskStore().selectedTask.controllers.concat(
-        useMultipleSelectStore().selectedControllers
-      )
-    ),
-  ];
-  console.log(b);
-  return b
+  return useTaskStore().selectedTask.controllers.concat(
+    useMultipleSelectStore().selectedControllers
+  );
 });
 
 const deleteExecutor = (index) => {
-  executors.splice(index, 1);
+  // executors.value.splice(index, 1);
 };
 
 const deleteControllers = (index) => {
-  controllers.splice(index, 1);
+  // controllers.value.splice(index, 1);
 };
 
 const fileName = ref("");
@@ -88,6 +79,22 @@ const onFileChange = (event, idx) => {
 
 const deleteContent = (idx) => {
   fileNames.value.splice(idx, 1);
+};
+
+const comment = ref("");
+
+const submitComment = () => {
+  if (!comment) {
+    toast.error("Илтимос, жавоб киритинг!");
+  } else {
+    TaskService.createTasksComments({taskId: selectedTask.value.id, note: comment.value})
+      .then(() => {
+        toast.success("Жавоб муваффақиятли қўшилди!");
+      })
+      .catch((err) => {
+        toast.error("Жавобнни қўшишда хатолик юз берди!");
+      });
+  }
 };
 </script>
 <template>
@@ -159,15 +166,28 @@ const deleteContent = (idx) => {
                 </div>
               </div>
             </div>
-            <div class="flex items-center mt-4 text-gray-700">
+            <div class="items-center mt-4 text-gray-700" hidden>
               <UserIcon class="w-5 h-5" />
               <h1 class="px-2 font-bold">Ижрочилар:</h1>
-              <p>{{ selectedTask?.executors.map((user) => user?.firstname + ' ' + user?.lastname).join(', ') }}</p>
+              <p>
+                {{
+                  selectedTask?.executors
+                    .map((user) => user?.firstname + " " + user?.lastname)
+                    .join(", ")
+                }}
+              </p>
             </div>
-            <div class="flex items-center mt-4 text-gray-700">
+            <div class="items-center mt-4 text-gray-700" hidden>
               <UserIcon class="w-5 h-5" />
               <h1 class="px-2 font-bold">Назоратчилар:</h1>
-              <p>{{ selectedTask?.controllers.map((user) => user?.firstname + ' ' + user?.lastname).join(', ') }}</p>
+              <p>
+                {{
+                  selectedTask?.controllers
+                    .map((user) => user?.firstname + " " + user?.lastname)
+                    .join(", ")
+                }}
+              </p>
+            </div>
             <div class="flex items-center space-x-1">
               <h1 class="text-sm">Ёрлиқлар</h1>
               <AddCircleOutlineIcon
@@ -194,7 +214,7 @@ const deleteContent = (idx) => {
                 <p v-if="data.length == 0">Файл бириктириш</p>
                 <p v-if="data.length > 0">{{ data }}</p>
                 <MinusCircleOutlineIcon
-                  class=" absolute right-0 text-base hidden"
+                  class="absolute right-0 text-base hidden"
                   @click="deleteContent(idx)"
                 />
               </label>
@@ -215,12 +235,13 @@ const deleteContent = (idx) => {
             <div v-for="(data, idx) in controllers" :key="idx">
               <div class="taskUserList flex justify-between items-center">
                 <div class="border-l px-2">
-                  <h1 class="font-bold">{{ data }}</h1>
-                  <h3>{{ idx }}</h3>
+                  <h1 class="font-bold">
+                    {{ data?.firstname + " " + data?.lastname }}
+                  </h1>
                 </div>
                 <ShieldCrossOutlineIcon
                   @click="deleteControllers()"
-                  class="text-green-500 text-base"
+                  class="green-red-500 text-base hidden"
                 />
               </div>
             </div>
@@ -242,14 +263,13 @@ const deleteContent = (idx) => {
               placeholder="Қидириш"
             />
             <div v-for="(data, idx) in executors" :key="idx">
-              <div
-                v-if="data.length > 0"
-                class="flex items-center justify-between bg-green-100"
-              >
+              <div class="flex items-center justify-between bg-green-100">
                 <div class="flex space-x-2 p-3">
                   <ClockCircleOutlineIcon class="text-base text-indigo-700" />
                   <div>
-                    <h1 class="font-bold">{{ data }}</h1>
+                    <h1 class="font-bold">
+                      {{ data?.firstname + " " + data?.lastname }}
+                    </h1>
 
                     <p>
                       {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
@@ -278,9 +298,6 @@ const deleteContent = (idx) => {
             <div class="flex flex-col space-y-4">
               <div class="flex justify-between">
                 <div>
-                  <button class="p-3 bg-blue-500 text-white rounded-lg">
-                    Берилган жавоб
-                  </button>
                   <p>
                     {{
                       moment(selectedTask?.dueDate)
@@ -297,8 +314,9 @@ const deleteContent = (idx) => {
               <div class="taskDescriptionList">
                 <p class="border-l px-2">{{ selectedTask?.description }}</p>
               </div>
-              <div class="w-full">
+              <div class="w-full space-y-2">
                 <textarea
+                  v-model="comment"
                   class="p-2 boreder-gray-500 border-2 w-full"
                   placeholder="Жавоб матни"
                   name=""
@@ -306,19 +324,27 @@ const deleteContent = (idx) => {
                   rows="5"
                   cols="60"
                 ></textarea>
+                <div class="flex justify-between">
+                  <div class="relative">
+                    <input type="file" id="fileInput" class="hidden" />
+                    <label
+                      for="fileInput"
+                      class="flex text-indigo-500 space-x-2 items-center px-2 py-2"
+                    >
+                      <PaperclipIcon class="flex items-start text-lg" />
+                      <p>Файл бириктириш</p>
+                    </label>
+                  </div>
+                  <button
+                    @click="submitComment"
+                    class="p-3 bg-blue-500 text-white rounded-lg"
+                  >
+                    Жавоб сақлаш
+                  </button>
+                </div>
               </div>
 
-              <div class="flex items-center justify-between">
-                <div class="relative">
-                  <input type="file" id="fileInput" class="hidden" />
-                  <label
-                    for="fileInput"
-                    class="flex text-indigo-500 space-x-2 items-center px-2 py-2"
-                  >
-                    <PaperclipIcon class="flex items-start text-lg" />
-                    <p>Файл бириктириш</p>
-                  </label>
-                </div>
+              <div class="flex items-center justify-end">
                 <div class="flex w-3/6 justify-between">
                   <button class="text-base">Бекор қилиш</button>
                   <button class="text-base px-6 py-2 rounded-full bg-gray-200">

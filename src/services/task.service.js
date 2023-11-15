@@ -13,6 +13,9 @@ class TaskService {
   async getTasksCounts() {
     return AxiosService.get('/tasks/counts')
   }
+  async createTasksComments(data) {
+    return AxiosService.post('/tasks/comments', data)
+  }
 }
 
 export default new TaskService()
