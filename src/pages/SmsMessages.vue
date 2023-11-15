@@ -104,7 +104,7 @@ onMounted(() => {
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
                                 {{ moment(sms?.sentAt).format('DD/MM/YYYY H:mm') }}
                             </td>
-                            <td class="px-4 py-4 text-sm leading-5 text-center text-gray-900">
+                            <td class="px-4 py-4 text-sm leading-5 text-center">
                                 <span class="inline-block px-3 py-1 font-semibold leading-tight rounded-full" :class="makeSmsColor(sms?.status)">
                                     {{ makeSmsStatus(sms?.status) }}
                                 </span>
