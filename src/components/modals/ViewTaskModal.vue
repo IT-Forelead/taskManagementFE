@@ -7,6 +7,7 @@ import { useModalStore } from "../../stores/modal.store";
 import { useTaskStore } from "../../stores/task.store";
 import { computed } from "vue";
 import { useUserStore } from "../../stores/user.store";
+import { useMultipleSelectStore } from "../../stores/multipleSelect.store";
 
 import DateIcon from "@/assets/icons/DateIcon.vue";
 import AddCircleOutlineIcon from "../../assets/icons/AddCircleOutlineIcon.vue";
@@ -43,13 +44,37 @@ const addFile = () => {
 const editableDate = ref(false);
 const editableText = ref(false);
 
+const executors = computed(() => {
+  const a = [
+    ...new Set(
+      useTaskStore().selectedTask.executors.concat(
+        useMultipleSelectStore().selectedExecuters
+      )
+    )
+  ];
+  console.log(a);
+  return a;
+});
+
+const controllers = computed(() => {
+  const b = [
+    ...new Set(
+      useTaskStore().selectedTask.controllers.concat(
+        useMultipleSelectStore().selectedControllers
+      )
+    ),
+  ];
+  console.log(b);
+  return b
+});
+
 const deleteExecutor = (index) => {
-  useTaskStore().selectedTask.executors.splice(index, 1);
+  executors.splice(index, 1);
 };
 
-const addControllers = () => {};
-
-const deleteControllers = (index) => {};
+const deleteControllers = (index) => {
+  controllers.splice(index, 1);
+};
 
 const fileName = ref("");
 const fileNames = ref([""]);
@@ -124,8 +149,8 @@ const deleteContent = (idx) => {
                 </div>
                 <div class="flex items-center space-x-4" v-if="editableText">
                   <!-- <p class="text-red-500">
-                  {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
-                </p> -->
+                    {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
+                    </p> -->
                   <input
                     type="text"
                     v-model="selectedTask.description"
@@ -138,7 +163,7 @@ const deleteContent = (idx) => {
               <h1 class="text-sm">Ёрлиқлар</h1>
               <AddCircleOutlineIcon
                 @click="!fileNames.includes('') ? addFile() : null"
-                class="text-indigo-500 text-3xl"
+                class="text-indigo-500 text-3xl hidden"
               />
             </div>
             <div
@@ -146,7 +171,6 @@ const deleteContent = (idx) => {
               v-for="(data, idx) in fileNames"
               :key="idx"
             >
-
               <input
                 type="file"
                 :id="'fileInput-' + idx"
@@ -160,7 +184,10 @@ const deleteContent = (idx) => {
                 <PaperclipIcon class="flex items-start text-lg" />
                 <p v-if="data.length == 0">Файл бириктириш</p>
                 <p v-if="data.length > 0">{{ data }}</p>
-                <MinusCircleOutlineIcon class="flex absolute right-0 text-base" @click="deleteContent(idx)" />
+                <MinusCircleOutlineIcon
+                  class=" absolute right-0 text-base hidden"
+                  @click="deleteContent(idx)"
+                />
               </label>
             </div>
             <!---->
@@ -168,15 +195,15 @@ const deleteContent = (idx) => {
               <div class="flex space-x-4">
                 <h1 class="font-bold">Назоратчилар руйхати</h1>
 
-                <p>({{ selectedTask?.controllers.length }})</p>
+                <p>({{ controllers.length }})</p>
               </div>
 
               <ShieldPlusOutlineIcon
-                @click="addControllers()"
+                @click="useModalStore().openAddControllerModal()"
                 class="text-green-500 text-base"
               />
             </div>
-            <div v-for="(data, idx) in selectedTask?.controllers" :key="idx">
+            <div v-for="(data, idx) in controllers" :key="idx">
               <div class="taskUserList flex justify-between items-center">
                 <div class="border-l px-2">
                   <h1 class="font-bold">{{ data }}</h1>
@@ -191,7 +218,7 @@ const deleteContent = (idx) => {
             <div class="flex justify-between">
               <div class="flex space-x-4">
                 <h1>Ижрочилар руйхати</h1>
-                <p>({{ selectedTask?.executors.length }})</p>
+                <p>({{ executors.length }})</p>
               </div>
               <div class="flex space-x-3 text-indigo-700 text-base">
                 <AlarmOutlineIcon />
@@ -205,7 +232,7 @@ const deleteContent = (idx) => {
               class="w-full p-3 border-2 border-gray-300"
               placeholder="Қидириш"
             />
-            <div v-for="(data, idx) in selectedTask?.executors" :key="idx">
+            <div v-for="(data, idx) in executors" :key="idx">
               <div
                 v-if="data.length > 0"
                 class="flex items-center justify-between bg-green-100"
