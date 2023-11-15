@@ -37,10 +37,10 @@ const makePrettyStatus = (status) => {
 const loadReports = async () => {
   TaskService.getTasks({})
     .then((result) => {
-      useTaskStore().setTasks(result)
+      useTaskStore().setTasks(result?.data)
     })
     .catch(() => {
-      toast.error('Error while getting response')
+      toast.error('Фойдаланувчиларни олишда хатолик юз берди!')
     })
 }
 

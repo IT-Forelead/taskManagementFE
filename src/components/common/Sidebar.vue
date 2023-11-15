@@ -8,6 +8,8 @@ import PieChartOutlineIcon from "@/assets/icons/PieChartOutlineIcon.vue";
 import WalletMoneyOutlineIcon from "@/assets/icons/WalletMoneyOutlineIcon.vue";
 import ArrowLeftOutlineIcon from "@/assets/icons/ArrowLeftOutlineIcon.vue";
 import ChevronRightRoundedIcon from "@/assets/icons/ChevronRightRoundedIcon.vue";
+import UsersGroupRoundedOutlineIcon from '../../assets/icons/UsersGroupRoundedOutlineIcon.vue'
+import LetterOutlineIcon from '../../assets/icons/LetterOutlineIcon.vue'
 import { useSidebarStore } from '../../stores/sidebar.store';
 
 const router = useRouter()
@@ -78,7 +80,7 @@ const closeSidebar = (event) => {
           </router-link>
           <router-link v-if="!isMediumScreen" to="/tasks/report" active-class="active"
             @click="changeReportType('tasks_report')"
-            :class="reportType.includes('tasks_report') ? 'rounded-r-full bg-slate-800 text-white' : ''"
+            :class="reportType.includes('tasks_report') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
             class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <GraphUpOutlineIcon class="w-7 h-7" />
             <span>Ҳисоботлар</span>
@@ -91,14 +93,14 @@ const closeSidebar = (event) => {
           </router-link>
           <router-link v-if="!isMediumScreen" to="/statistics" active-class="active"
             @click="changeReportType('statistics')"
-            :class="reportType.includes('statistics') ? 'rounded-r-full w-full bg-slate-800 text-white' : ''"
+            :class="reportType.includes('statistics') ? 'rounded-r-full w-full bg-slate-800 text-white w-[98%]' : ''"
             class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <PieChartOutlineIcon class="w-7 h-7" />
             <span>Статистика</span>
           </router-link>
           <router-link v-if="isMediumScreen" to="/statistics" active-class="active"
             @click="changeReportType('statistics')"
-            :class="reportType.includes('statistics') ? 'rounded-full bg-slate-800 text-white' : ''"
+            :class="reportType.includes('statistics') ? 'rounded-full bg-slate-800 text-white w-[98%]' : ''"
             class="flex items-center w-full px-4 py-3 my-2 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
             <PieChartOutlineIcon class="w-8 h-8" />
           </router-link>
@@ -151,6 +153,20 @@ const closeSidebar = (event) => {
               <div class="flex items-center space-x-2">
                 <p>Расход</p>
               </div>
+      </router-link>
+      <router-link to="/users" active-class="active"
+        @click="changeReportType('users')"
+        :class="reportType.includes('users') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <UsersGroupRoundedOutlineIcon class="w-6 h-6" />
+        <div>Фойдаланувчилар</div>
+      </router-link>
+      <router-link to="/messages" active-class="active"
+        @click="changeReportType('messages')"
+        :class="reportType.includes('messages') ? 'rounded-r-full bg-slate-800 text-white w-[98%]' : ''"
+        class="flex items-center w-full px-4 py-3 space-x-3 font-medium transition-colors duration-300 cursor-pointer hover:text-white">
+        <LetterOutlineIcon class="w-6 h-6" />
+        <div>SMS хабарлар</div>
             </router-link>
           </div>
 
@@ -177,7 +193,6 @@ const closeSidebar = (event) => {
 
                           </div>
                   </div> -->
-
     </div>
   </div>
 </template>
