@@ -1,39 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue';
-import { useUserStore } from '../stores/user.store';
-import UserService from '../services/user.service';
 import moment from 'moment';
-
-const users = computed(() => {
-    return useUserStore().users
-})
-
-const makeRoleStatus = (status) => {
-  switch (status) {
-    case 'creator':
-      return 'Сайт яратувчиси'
-    case 'admin':
-      return 'Администратор'
-    case 'executor':
-      return 'Ижрочи'
-    case 'controller':
-      return 'Назоратчи'
-  }
-}
-
-const getUsers = () => {
-    UserService.getUsers({}).then((result) => {
-        useUserStore().clearUsers()
-        useUserStore().setUsers(result?.data)
-    })
-    .catch(() => {
-        toast.error('Фойдаланувчиларни олишда хатолик юз берди')
-    })
-}
-
-onMounted(() => {
-    getUsers()
-})
 
 </script>
 
@@ -42,10 +8,10 @@ onMounted(() => {
         <div class="space-y-8">
             <div>
                 <h2 class="text-base font-semibold leading-7 text-gray-900">
-                    Фойдаланувчилар
+                    SMS хабарлар
                 </h2>
                 <p class="text-sm leading-6 text-gray-600">
-                    Барча фойдаланувчилар рўйхати
+                    Барча юборилган SMS хабарлар ҳисоботи
                 </p>
             </div>
 
@@ -57,35 +23,47 @@ onMounted(() => {
                                 #
                             </th>
                             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-                                ФИО
-                            </th>
-                            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
                                 Телефон рақам
                             </th>
                             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-                                Роль
+                                Хабар матни
                             </th>
                             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-                                Қўшилган вақти
+                                Юборилган вақти
+                            </th>
+                            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+                                Хабар тури
+                            </th>
+                            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+                                Етказилганлик ҳолати
                             </th>
                         </tr>
                     </thead>
                     <tbody class="font-medium bg-white divide-y divide-gray-200">
-                        <tr v-for="(user, idx) in users" :key="idx">
+                        <tr>
                             <td class="px-4 py-4 text-sm leading-5 text-center text-gray-900 whitespace-nowrap">
-                                {{ idx + 1 }}
+                                1
                             </td>
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                {{ user?.firstname + ' ' + user?.lastname }}
+                                +998937475995
                             </td>
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                {{ user?.phone }}
+                                utg-urgench.iflead.uz
+                                Сизга топшириқ берилди:
+                                Топшириқ номи: ИЧТБваТБ бошлиғи Н.Жуманиязовга.
+                                Муддат тугашига қолган вақт: 2 кун
                             </td>
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                {{ makeRoleStatus(user?.role) }}
+                                {{ moment().format('DD/MM/YYYY H:mm') }}
                             </td>
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                {{ moment(user?.createdAt).format('DD/MM/YYYY H:mm') }}
+                                Билдиришнома
+                            </td>
+                            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
+                                <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
+                                    <span class="absolute inset-0 bg-green-200 rounded-full opacity-50"></span>
+                                    <span class="relative text-xs">Етказилди</span>
+                                </span>
                             </td>
                         </tr>
                     </tbody>

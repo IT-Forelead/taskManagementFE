@@ -76,7 +76,7 @@ const getUsers = async () => {
         })
     ).then((result) => {
         useUserStore().clearExecutors()
-        useUserStore().setExecutors(result)
+        useUserStore().setExecutors(result?.data)
     }).catch(() => {
         toast.error('Error while getting response')
     })

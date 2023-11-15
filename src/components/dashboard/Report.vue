@@ -37,10 +37,10 @@ const makePrettyStatus = (status) => {
 const loadReports = async () => {
   TaskService.getTasks({})
     .then((result) => {
-      useTaskStore().setTasks(result)
+      useTaskStore().setTasks(result?.data)
     })
     .catch(() => {
-      toast.error('Error while getting response')
+      toast.error('Фойдаланувчиларни олишда хатолик юз берди!')
     })
 }
 
@@ -148,7 +148,7 @@ const downloadFile = async (assetId) => {
                 -
               </div>
               <div v-else>
-                {{ data?.executors.join(', ') }}
+                {{ data?.executors.map((user) => user?.firstname + ' ' + user?.lastname).join(', ') }}
               </div>
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
@@ -156,7 +156,7 @@ const downloadFile = async (assetId) => {
                 -
               </div>
               <div v-else>
-                {{ data?.controllers.join(', ') }}
+                {{ data?.controllers.map((user) => user?.firstname + ' ' + user?.lastname).join(', ') }}
               </div>
             </td>
             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
