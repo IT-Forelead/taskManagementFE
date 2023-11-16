@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, watch, onActivated } from "vue";
 import { toast } from "vue-sonner";
 import moment from "moment";
 import "moment/dist/locale/ru";
@@ -9,6 +9,8 @@ import { useTaskStore } from "../../stores/task.store";
 import { computed } from "vue";
 import { useUserStore } from "../../stores/user.store";
 import { useMultipleSelectStore } from "../../stores/multipleSelect.store";
+import { useUploadStore } from "../../stores/upload.store";
+import { cleanObjectEmptyFields } from "../../helpers/cleanEmptyFields";
 
 import DateIcon from "@/assets/icons/DateIcon.vue";
 import AddCircleOutlineIcon from "../../assets/icons/AddCircleOutlineIcon.vue";
@@ -23,7 +25,8 @@ import ClockCircleOutlineIcon from "../../assets/icons/ClockCircleOutlineIcon.vu
 import UserMinusOutlineIcon from "../../assets/icons/UserMinusOutlineIcon.vue";
 import MinusCircleOutlineIcon from "../../assets/icons/MinusCircleOutlineIcon.vue";
 
-import TaskService from '../../services/task.service'
+import TaskService from "../../services/task.service";
+import UploadService from "../../services/upload.service";
 
 moment.locale("ru");
 const closeModal = () => {
@@ -87,7 +90,13 @@ const submitComment = () => {
   if (!comment) {
     toast.error("Илтимос, жавоб киритинг!");
   } else {
-    TaskService.createTasksComments({taskId: selectedTask.value.id, note: comment.value})
+    TaskService.createTasksComments(
+      cleanObjectEmptyFields({
+        taskId: selectedTask.value.id,
+        note: comment.value,
+        assetId: assetId.value,
+      })
+    )
       .then(() => {
         toast.success("Жавоб муваффақиятли қўшилди!");
       })
@@ -96,6 +105,38 @@ const submitComment = () => {
       });
   }
 };
+
+const taskComments = ref([{}]);
+
+watch(
+  () => selectedTask.value.id,
+  (data) => {
+    if (data) {
+      TaskService.getTasksComments(selectedTask.value.id).then((result) => {
+        taskComments.value = result;
+      });
+    }
+  }
+);
+
+const assetId = computed(() => {
+  return useUploadStore().assetId;
+});
+
+const selectedAsset = computed(() => {
+  return useUploadStore().selectedAsset;
+});
+
+watch(
+  () => assetId.value,
+  (data) => {
+    if (data) {
+      UploadService.getUploadedFile(data).then((res) => {
+        useUploadStore().setSelectedAsset(res);
+      });
+    }
+  }
+);
 </script>
 <template>
   <div
@@ -188,15 +229,10 @@ const submitComment = () => {
                 }}
               </p>
             </div>
-            <div class="flex items-center space-x-1">
-              <h1 class="text-sm">Ёрлиқлар</h1>
-              <AddCircleOutlineIcon
-                @click="!fileNames.includes('') ? addFile() : null"
-                class="text-indigo-500 text-3xl hidden"
-              />
-            </div>
+
             <div
-              class="relative flex items-center"
+              @click="useModalStore().openAddFileModal()"
+              class="relative hidden items-center"
               v-for="(data, idx) in fileNames"
               :key="idx"
             >
@@ -218,6 +254,14 @@ const submitComment = () => {
                   @click="deleteContent(idx)"
                 />
               </label>
+            </div>
+            <!---->
+            <div
+              @click="useModalStore().openAddFileModal()"
+              class="flex items-center space-x-4 px-3 py-1.5 font-medium text-indigo-500 bg-white rounded-md cursor-pointer"
+            >
+              <PaperclipIcon class="flex text-lg" />
+              <span>Файл бириктириш</span>
             </div>
             <!---->
             <div class="flex justify-between items-center">
@@ -324,16 +368,15 @@ const submitComment = () => {
                   rows="5"
                   cols="60"
                 ></textarea>
-                <div class="flex justify-between">
-                  <div class="relative">
-                    <input type="file" id="fileInput" class="hidden" />
-                    <label
-                      for="fileInput"
-                      class="flex text-indigo-500 space-x-2 items-center px-2 py-2"
-                    >
-                      <PaperclipIcon class="flex items-start text-lg" />
-                      <p>Файл бириктириш</p>
-                    </label>
+                <div
+                  class="flex justify-between items-center space-x-1 px-3 py-1.5 font-medium text-indigo-500  rounded-md cursor-pointer "
+                >
+                  <div
+                    @click="useModalStore().openAddFileModal()"
+                    class="flex items-center space-x-4 px-3 py-1.5 font-medium text-indigo-500  rounded-md cursor-pointer "
+                  >
+                    <PaperclipIcon class="flex text-lg" />
+                    <span>Файл бириктириш</span>
                   </div>
                   <button
                     @click="submitComment"
