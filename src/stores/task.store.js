@@ -18,14 +18,17 @@ export const useTaskStore = defineStore('task', {
         setSelectedTaskId(data) {
             this.selectedTaskId = data
         },
-        clearStore() {
-            this.tasks = []
-        },
         setTasksCounts(data) {
             this.tasksCounts = data
         },
         createTaskComment(data) {
-          this.taskComment = data
+                  this.taskComment = data
+                },
+        clearStore() {
+            this.tasks = []
+            this.selectedTask = {}
+            this.selectedTaskId = ''
+            this.tasksCounts = {}
         },
     },
 })

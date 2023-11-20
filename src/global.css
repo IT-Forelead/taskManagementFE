@@ -5,3 +5,27 @@
 * {
   font-family: "SF Pro Display", sans-serif;
 }
+
+/* Scrollbar Style */
+::-webkit-scrollbar {
+  @apply w-2.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply rounded-lg;
+  @apply bg-gray-100;
+  -webkit-border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-lg;
+  @apply bg-gray-700;
+  -webkit-border-radius: 10px;
+}
+
+/* SIDEBAR ACTIVE CLASS */
+.active {
+  @apply rounded-lg;
+  @apply bg-slate-800;
+  @apply text-white;
+}

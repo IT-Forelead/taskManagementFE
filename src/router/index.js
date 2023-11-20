@@ -46,10 +46,10 @@ const router = createRouter({
       children: [
         {
           path: "",
-          name: "Messages",
-          component: () => import("@/pages/Messages.vue"),
+          name: "SMS Messages",
+          component: () => import("@/pages/SmsMessages.vue"),
           meta: {
-            title: "Messages",
+            title: "SMS Messages",
             protected: true,
           },
         },

@@ -1,6 +1,60 @@
 <script setup>
+import { computed, onMounted } from 'vue';
+import { useSmsMessageStore } from '../stores/smsMessages.store';
+import SmsMessageService from '../services/smsMessage.service';
 import moment from 'moment';
 
+const smsMessages = computed(() => {
+    return useSmsMessageStore().smsMessages
+})
+
+const makeSmsStatus = (status) => {
+  switch (status) {
+    case 'sent':
+      return 'Юборилган'
+    case 'delivered':
+      return 'Етказилган'
+    case 'not_delivered':
+      return 'Етказилмаган'
+    case 'failed':
+      return 'Муваффақиятсиз'
+    case 'transmitted':
+      return 'Узатилган'
+    case 'undefined':
+      return 'Аниқланмаган'
+  }
+}
+
+const makeSmsColor = (status) => {
+  switch (status) {
+    case 'sent':
+      return 'bg-orange-200 text-orange-900'
+    case 'delivered':
+      return 'bg-green-200 text-green-900'
+    case 'not_delivered':
+      return 'bg-red-200 text-red-900'
+    case 'failed':
+      return 'bg-red-200 text-red-900'
+    case 'transmitted':
+      return 'bg-cyan-200 text-cyan-900'
+    case 'undefined':
+      return 'bg-teal-200 text-teal-900'
+  }
+}
+
+const getSmsMessages = () => {
+    SmsMessageService.getSmsMessages({}).then((result) => {
+        useSmsMessageStore().clearStore()
+        useSmsMessageStore().setSmsMessages(result?.data)
+    })
+    .catch(() => {
+        toast.error('Фойдаланувчиларни олишда хатолик юз берди')
+    })
+}
+
+onMounted(() => {
+    getSmsMessages()
+})
 </script>
 
 <template>
@@ -31,38 +85,28 @@ import moment from 'moment';
                             <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
                                 Юборилган вақти
                             </th>
-                            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
-                                Хабар тури
-                            </th>
-                            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-left text-gray-500">
+                            <th scope="col" class="px-4 py-3 text-sm leading-4 tracking-wider text-center text-gray-500">
                                 Етказилганлик ҳолати
                             </th>
                         </tr>
                     </thead>
                     <tbody class="font-medium bg-white divide-y divide-gray-200">
-                        <tr>
+                        <tr v-for="(sms, idx) in smsMessages" :key="idx">
                             <td class="px-4 py-4 text-sm leading-5 text-center text-gray-900 whitespace-nowrap">
-                                1
+                                {{ idx + 1 }}
                             </td>
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                +998937475995
+                                {{ sms?.phone }}
                             </td>
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                utg-urgench.iflead.uz
-                                Сизга топшириқ берилди:
-                                Топшириқ номи: ИЧТБваТБ бошлиғи Н.Жуманиязовга.
-                                Муддат тугашига қолган вақт: 2 кун
+                                {{ sms?.text }}
                             </td>
                             <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                {{ moment().format('DD/MM/YYYY H:mm') }}
+                                {{ moment(sms?.sentAt).format('DD/MM/YYYY H:mm') }}
                             </td>
-                            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                Билдиришнома
-                            </td>
-                            <td class="px-4 py-4 text-sm leading-5 text-left text-gray-900">
-                                <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span class="absolute inset-0 bg-green-200 rounded-full opacity-50"></span>
-                                    <span class="relative text-xs">Етказилди</span>
+                            <td class="px-4 py-4 text-sm leading-5 text-center">
+                                <span class="inline-block px-3 py-1 font-semibold leading-tight rounded-full" :class="makeSmsColor(sms?.status)">
+                                    {{ makeSmsStatus(sms?.status) }}
                                 </span>
                             </td>
                         </tr>

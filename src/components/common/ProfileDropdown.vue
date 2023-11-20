@@ -31,7 +31,7 @@ const signOut = () => {
     }
 }
 onMounted(() => {
-  useUserStore().setUser(decodeJwt(JSON.parse(localStorage.getItem('session'))?.accessToken))
+    useUserStore().setUser(decodeJwt(JSON.parse(localStorage.getItem('session'))?.accessToken))
 })
 </script>
 <template>
@@ -39,23 +39,39 @@ onMounted(() => {
         <div @click="useDropdownStore().toggleProfileDropdown()"
             class="flex items-center justify-center px-3 py-1.5 space-x-2 text-gray-800 cursor-pointer rounded-md hover:bg-gray-100 hover:text-blue-800">
             <UserIdOutlineIcon class="w-6 h-6" />
-            <span class="text-base capitalize">{{ useUserStore().user?.User?.firstname.charAt(0) + '. ' + useUserStore().user?.User?.lastname }}</span>
+            <span class="text-base capitalize">{{ useUserStore().user?.User?.firstname.charAt(0) + '. ' +
+                useUserStore().user?.User?.lastname }}</span>
         </div>
-        <ul v-if="useDropdownStore().isOpenProfileDropdown"
+        <div v-if="useDropdownStore().isOpenProfileDropdown"
             class="absolute right-0 z-20 bg-white divide-y divide-gray-200 shadow w-60 rounded-b-md top-9">
-            <li class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-200">
-                <UserOutlineIcon class="w-5 h-5" />
-                <span>Профиль</span>
-            </li>
-            <li class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-200">
-                <SettingsOutlineIcon class="w-5 h-5" />
-                <span>Созламалар</span>
-            </li>
-            <li @click="signOut()" class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-200">
+            <div class="flex items-center px-2 py-3 space-x-2">
+                <div class="flex items-center justify-center w-10 h-10 p-2 text-sm uppercase bg-blue-200 rounded-full">
+                    {{ useUserStore().user?.User?.firstname.charAt(0) + useUserStore().user?.User?.lastname.charAt(0) }}
+                </div>
+                <div>
+                    <div class="text-base font-medium capitalize">
+                        {{ useUserStore().user?.User?.firstname.charAt(0) + '. ' + useUserStore().user?.User?.lastname }}
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        {{ useUserStore().user?.User?.phone }}
+                    </div>
+                </div>
+            </div>
+            <ul class="py-1 divide-y divide-gray-50">
+                <li class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-200">
+                    <UserOutlineIcon class="w-5 h-5" />
+                    <span>Профиль</span>
+                </li>
+                <li class="flex items-center p-2 space-x-2 cursor-pointer hover:bg-gray-200">
+                    <SettingsOutlineIcon class="w-5 h-5" />
+                    <span>Созламалар</span>
+                </li>
+            </ul>
+            <div @click="signOut()" class="flex items-center px-2 py-3 space-x-2 cursor-pointer hover:bg-gray-200">
                 <LogoutOutlineIcon class="w-5 h-5" />
                 <span>Чиқиш</span>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </template>
 <style scoped></style>
