@@ -13,12 +13,15 @@ class TaskService {
   async getTasksCounts() {
     return AxiosService.get('/tasks/counts')
   }
-  async createTasksComments(data) {
+  async createTaskComment(data) {
     return AxiosService.post('/tasks/comments', data)
   }
- async getTasksComments(taskId) {
-  return AxiosService.get(`/tasks/comments/${taskId}`)
-} 
+  async getTaskComments(taskId) {
+    return AxiosService.get(`/tasks/comments/${taskId}`)
+  }
+  async editTask(taskId, data) {
+    return AxiosService.put(`/tasks/edit/${taskId}`, data)
+  }
 }
 
 export default new TaskService()

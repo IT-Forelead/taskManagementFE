@@ -13,7 +13,6 @@ import { useUploadStore } from "../../stores/upload.store";
 import { cleanObjectEmptyFields } from "../../helpers/cleanEmptyFields";
 
 import DateIcon from "@/assets/icons/DateIcon.vue";
-import AddCircleOutlineIcon from "../../assets/icons/AddCircleOutlineIcon.vue";
 import UserPlusBrokenIcon from "../../assets/icons/UserPlusBrokenIcon.vue";
 import BellOutlineIcon from "../../assets/icons/BellOutlineIcon.vue";
 import PencilEditIcon from "../../assets/icons/PencilEditIcon.vue";
@@ -23,218 +22,271 @@ import ShieldCrossOutlineIcon from "../../assets/icons/ShieldCrossOutlineIcon.vu
 import AlarmOutlineIcon from "../../assets/icons/AlarmOutlineIcon.vue";
 import ClockCircleOutlineIcon from "../../assets/icons/ClockCircleOutlineIcon.vue";
 import UserMinusOutlineIcon from "../../assets/icons/UserMinusOutlineIcon.vue";
-import MinusCircleOutlineIcon from "../../assets/icons/MinusCircleOutlineIcon.vue";
 
 import TaskService from "../../services/task.service";
 import UploadService from "../../services/upload.service";
 
 moment.locale("ru");
+
+const editableDate = ref(false);
+const editableText = ref(false);
+const taskComments = ref([{}]);
+const comment = ref("");
+const isCommentFile = ref(false);
+
 const closeModal = () => {
-  useModalStore().closeViewTaskModal();
+    useTaskStore().setSelectedTask({});
+    useModalStore().closeViewTaskModal();
+    editableDate.value = false;
+    editableText.value = false;
+    useMultipleSelectStore().clearStore();
+    useUploadStore().clearStore();
 };
 const selectedTask = computed(() => {
-  console.log(useTaskStore().selectedTask);
-  return useTaskStore().selectedTask;
+    return useTaskStore().selectedTask;
 });
 
 const getFullName = (userId) => {
-  const user = useUserStore().users.find((u) => u.id === userId);
-  if (user) {
-    return `${user.firstname} ${user.lastname}`;
-  }
-  return "Ижрочи тайинланмаган";
+    const user = useUserStore().users.find((u) => u.id === userId);
+    if (user) {
+        return `${user.firstname} ${user.lastname}`;
+    }
+    return "Ижрочи тайинланмаган";
 };
-const addFile = () => {
-  fileNames.value.push("");
-};
-const editableDate = ref(false);
-const editableText = ref(false);
 
 const executors = computed(() => {
-  return useTaskStore().selectedTask.executors.concat(
-    useMultipleSelectStore().selectedExecuters
-  );
+    return useTaskStore().selectedTask.executors.concat(
+        useMultipleSelectStore().selectedExecuters
+    );
 });
 
 const controllers = computed(() => {
-  return useTaskStore().selectedTask.controllers.concat(
-    useMultipleSelectStore().selectedControllers
-  );
+    return useTaskStore().selectedTask.controllers.concat(
+        useMultipleSelectStore().selectedControllers
+    );
 });
-
-const deleteExecutor = (index) => {
-  // executors.value.splice(index, 1);
-};
-
-const deleteControllers = (index) => {
-  // controllers.value.splice(index, 1);
-};
-
-const fileName = ref("");
-const fileNames = ref([""]);
-
-const onFileChange = (event, idx) => {
-  var fileData = event.target.files[0];
-  fileName.value = fileData.name;
-
-  fileNames.value[idx] = fileData.name;
-};
-
-const deleteContent = (idx) => {
-  fileNames.value.splice(idx, 1);
-};
-
-const comment = ref("");
-
-const submitComment = () => {
-  if (!comment) {
-    toast.error("Илтимос, жавоб киритинг!");
-  } else {
-    TaskService.createTasksComments(
-      cleanObjectEmptyFields({
-        taskId: selectedTask.value.id,
-        note: comment.value,
-        assetId: assetId.value,
-      })
-    )
-      .then(() => {
-        toast.success("Жавоб муваффақиятли қўшилди!");
-      })
-      .catch((err) => {
-        toast.error("Жавобнни қўшишда хатолик юз берди!");
-      });
-  }
-};
-
-const taskComments = ref([{}]);
-
-watch(
-  () => selectedTask.value.id,
-  (data) => {
-    if (data) {
-      TaskService.getTasksComments(selectedTask.value.id).then((result) => {
-        taskComments.value = result;
-      });
-    }
-  }
-);
 
 const assetId = computed(() => {
-  return useUploadStore().assetId;
+    if (!isCommentFile.value) {
+        return useUploadStore().assetId;
+    }
 });
 
-const selectedAsset = computed(() => {
-  return useUploadStore().selectedAsset;
+const commentAssetId = computed(() => {
+    if (isCommentFile.value) {
+        return useUploadStore().assetId;
+    }
 });
+
+const submitComment = () => {
+    if (!comment) {
+        toast.error("Илтимос, жавоб киритинг!");
+    } else {
+        TaskService.createTaskComment(
+            cleanObjectEmptyFields({
+                taskId: selectedTask.value.id,
+                note: comment.value,
+                assetId: commentAssetId.value,
+            })
+        )
+            .then(() => {
+                toast.success("Жавоб муваффақиятли қўшилди!");
+                TaskService.getTaskComments(selectedTask.value.id).then(
+                    (result) => {
+                        taskComments.value = result;
+                    }
+                );
+            })
+            .catch((err) => {
+                toast.error("Жавобнни қўшишда хатолик юз берди!");
+            });
+    }
+};
+
+const editTask = () => {
+    if (!selectedTask.value.dueDate) {
+        toast.error("Илтимос, санани киритинг!");
+    } else if (!selectedTask.value.description) {
+        toast.error("Илтимос, топширик мазмунини киритинг!");
+    } else {
+        TaskService.editTask(
+            selectedTask.value.id,
+            cleanObjectEmptyFields({
+                dueDate: selectedTask.value.dueDate,
+                description: selectedTask.value.description,
+                assetId: assetId.value,
+                status: selectedTask.value.status,
+                title: selectedTask.value.title,
+            })
+        )
+            .then(() => {
+                toast.success("Топширик муваффақиятли ўзгарди!");
+                editableDate.value = false;
+                editableText.value = false;
+                TaskService.getTaskComments(selectedTask.value.id).then(
+                    (result) => {
+                        taskComments.value = result;
+                    }
+                );
+            })
+            .catch((err) => {
+                toast.error("Топширик ўзгаришда хатолик юз берди!");
+            });
+    }
+};
 
 watch(
-  () => assetId.value,
-  (data) => {
-    if (data) {
-      UploadService.getUploadedFile(data).then((res) => {
-        useUploadStore().setSelectedAsset(res);
-      });
+    () => selectedTask.value.id,
+    (data) => {
+        if (data) {
+            TaskService.getTaskComments(data).then((result) => {
+                taskComments.value = result;
+            });
+        }
     }
-  }
+);
+
+watch(
+    () => assetId.value,
+    (data) => {
+        if (data) {
+            UploadService.getUploadedFile(data).then((res) => {
+                useUploadStore().setSelectedAsset(res);
+            });
+        }
+    }
+);
+watch(
+    () => commentAssetId.value,
+    (data) => {
+        if (data) {
+            UploadService.getUploadedFile(data).then((res) => {
+                useUploadStore().setSelectedAsset(res);
+            });
+        }
+    }
 );
 </script>
 <template>
-  <div
-    v-if="useModalStore().isOpenViewTaskModal"
-    class="fixed top-0 left-0 right-0 z-50 w-full max-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:inset-0 md:h-full"
-  >
     <div
-      class="relative w-full h-full max-w-3xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2 text-gray-500"
+        v-if="useModalStore().isOpenViewTaskModal"
+        class="fixed top-0 left-0 right-0 z-50 w-full max-h-screen overflow-x-hidden overflow-y-auto backdrop-blur bg-gray-900/75 md:inset-0 md:h-full"
     >
-      <div class="text-xs relative bg-gray-200 flex flex-col space-y-4">
-        <div class="bg-white">
-          <header
-            class="text-sm p-4 border-b flex justify-between items-center shadow"
-          >
-            <div class="flex items-center space-x-3">
-              <h1>Бажариш муддати:</h1>
-              <div class="flex space-x-3" v-if="!editableDate">
-                <p class="text-red-500">
-                  {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
-                </p>
-                <DateIcon
-                  class="text-blue-500 text-base"
-                  @click="editableDate = true"
-                />
-              </div>
-              <div class="flex items-center space-x-4" v-if="editableDate">
-                <!-- <p class="text-red-500">
+        <div
+            class="relative w-full h-full max-w-3xl p-4 -translate-x-1/2 -translate-y-1/2 md:h-auto left-1/2 top-1/2 text-gray-500"
+        >
+            <div class="text-xs relative bg-gray-200 flex flex-col space-y-4">
+                <div class="bg-white">
+                    <header
+                        class="text-sm p-4 border-b flex justify-between items-center shadow"
+                    >
+                        <div class="flex items-center space-x-3">
+                            <h1>Бажариш муддати:</h1>
+                            <div class="flex space-x-3" v-if="!editableDate">
+                                <p class="text-red-500">
+                                    {{
+                                        moment(selectedTask.dueDate).format(
+                                            "DD MMM YYYY"
+                                        )
+                                    }}
+                                </p>
+
+                                <DateIcon
+                                    class="text-blue-500 text-base"
+                                    @click="editableDate = true"
+                                />
+                            </div>
+                            <div
+                                class="flex items-center space-x-4"
+                                v-if="editableDate"
+                            >
+                                <!-- <p class="text-red-500">
                   {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
                 </p> -->
-                <input
-                  type="date"
-                  v-model="selectedTask.dueDate"
-                  class="border border-gray-300 p-2 rounded"
-                />
-              </div>
-            </div>
-            <button
-              @click="closeModal()"
-              class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full p-1.5 inline-flex items-center"
-            >
-              <XIcon />
-            </button>
-          </header>
-          <article class="p-4 flex flex-col space-y-4">
-            <div class="items-center">
-              <h1 class="text-sm">Ким томонидан яратилган</h1>
-              <p>{{ getFullName(selectedTask?.assetId) }}</p>
-            </div>
-            <div>
-              <h1 class="text-sm">Топширик мазмуни</h1>
-              <div class="flex items-center space-x-4">
-                <div class="flex space-x-3" v-if="!editableText">
-                  <p>{{ selectedTask?.description }}</p>
-                  <pencil-edit-icon
-                    class="text-indigo-500 text-base"
-                    @click="editableText = true"
-                  />
-                </div>
-                <div class="flex items-center space-x-4" v-if="editableText">
-                  <!-- <p class="text-red-500">
+                                <input
+                                    type="date"
+                                    v-model="selectedTask.dueDate"
+                                    class="border border-gray-300 p-2 rounded"
+                                />
+                            </div>
+                        </div>
+                        <button
+                            @click="closeModal()"
+                            class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full p-1.5 inline-flex items-center"
+                        >
+                            <XIcon />
+                        </button>
+                    </header>
+                    <article class="p-4 flex flex-col space-y-4">
+                        <div class="items-center">
+                            <h1 class="text-sm">Ким томонидан яратилган</h1>
+                            <p>{{ getFullName(selectedTask?.assetId) }}</p>
+                        </div>
+                        <div>
+                            <h1 class="text-sm">Топширик мазмуни</h1>
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="flex space-x-3"
+                                    v-if="!editableText"
+                                >
+                                    <p>{{ selectedTask?.description }}</p>
+                                    <pencil-edit-icon
+                                        class="text-indigo-500 text-base"
+                                        @click="editableText = true"
+                                    />
+                                </div>
+                                <div
+                                    class="flex items-center space-x-4"
+                                    v-if="editableText"
+                                >
+                                    <!-- <p class="text-red-500">
                     {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
                     </p> -->
-                  <input
-                    type="text"
-                    v-model="selectedTask.description"
-                    class="border border-gray-300 p-2 rounded"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="items-center mt-4 text-gray-700" hidden>
-              <UserIcon class="w-5 h-5" />
-              <h1 class="px-2 font-bold">Ижрочилар:</h1>
-              <p>
-                {{
-                  selectedTask?.executors
-                    .map((user) => user?.firstname + " " + user?.lastname)
-                    .join(", ")
-                }}
-              </p>
-            </div>
-            <div class="items-center mt-4 text-gray-700" hidden>
-              <UserIcon class="w-5 h-5" />
-              <h1 class="px-2 font-bold">Назоратчилар:</h1>
-              <p>
-                {{
-                  selectedTask?.controllers
-                    .map((user) => user?.firstname + " " + user?.lastname)
-                    .join(", ")
-                }}
-              </p>
-            </div>
+                                    <input
+                                        type="text"
+                                        v-model="selectedTask.description"
+                                        class="border border-gray-300 p-2 rounded"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="items-center mt-4 text-gray-700" hidden>
+                            <UserIcon class="w-5 h-5" />
+                            <h1 class="px-2 font-bold">Ижрочилар:</h1>
+                            <p>
+                                {{
+                                    selectedTask?.executors
+                                        .map(
+                                            (user) =>
+                                                user?.firstname +
+                                                " " +
+                                                user?.lastname
+                                        )
+                                        .join(", ")
+                                }}
+                            </p>
+                        </div>
+                        <div class="items-center mt-4 text-gray-700" hidden>
+                            <UserIcon class="w-5 h-5" />
+                            <h1 class="px-2 font-bold">Назоратчилар:</h1>
+                            <p>
+                                {{
+                                    selectedTask?.controllers
+                                        .map(
+                                            (user) =>
+                                                user?.firstname +
+                                                " " +
+                                                user?.lastname
+                                        )
+                                        .join(", ")
+                                }}
+                            </p>
+                        </div>
 
-            <div
-              @click="useModalStore().openAddFileModal()"
-              class="relative hidden items-center"
-              v-for="(data, idx) in fileNames"
-              :key="idx"
+                        <div
+                            @click="useModalStore().openAddFileModal()"
+                            class="relative hidden items-center"
+            >
             >
               <input
                 type="file"
@@ -242,164 +294,212 @@ watch(
                 class="hidden"
                 @change="onFileChange($event, idx)"
               />
-              <label
-                :for="'fileInput-' + idx"
-                class="flex w-full text-indigo-500 space-x-2 items-center px-2 py-2 border-2"
-              >
-                <PaperclipIcon class="flex items-start text-lg" />
-                <p v-if="data.length == 0">Файл бириктириш</p>
-                <p v-if="data.length > 0">{{ data }}</p>
-                <MinusCircleOutlineIcon
-                  class="absolute right-0 text-base hidden"
-                  @click="deleteContent(idx)"
-                />
-              </label>
-            </div>
-            <!---->
-            <div
-              @click="useModalStore().openAddFileModal()"
-              class="flex items-center space-x-4 px-3 py-1.5 font-medium text-indigo-500 bg-white rounded-md cursor-pointer"
-            >
-              <PaperclipIcon class="flex text-lg" />
-              <span>Файл бириктириш</span>
-            </div>
-            <!---->
-            <div class="flex justify-between items-center">
-              <div class="flex space-x-4">
-                <h1 class="font-bold">Назоратчилар руйхати</h1>
-
-                <p>({{ controllers.length }})</p>
-              </div>
-
-              <ShieldPlusOutlineIcon
-                @click="useModalStore().openAddControllerModal()"
-                class="text-green-500 text-base"
+                        >
+              <input
+                type="file"
+                :id="'fileInput-' + idx"
+                class="hidden"
+                @change="onFileChange($event, idx)"
               />
-            </div>
-            <div v-for="(data, idx) in controllers" :key="idx">
-              <div class="taskUserList flex justify-between items-center">
-                <div class="border-l px-2">
-                  <h1 class="font-bold">
-                    {{ data?.firstname + " " + data?.lastname }}
-                  </h1>
-                </div>
-                <ShieldCrossOutlineIcon
-                  @click="deleteControllers()"
-                  class="green-red-500 text-base hidden"
-                />
-              </div>
-            </div>
-            <div class="flex justify-between">
-              <div class="flex space-x-4">
-                <h1>Ижрочилар руйхати</h1>
-                <p>({{ executors.length }})</p>
-              </div>
-              <div class="flex space-x-3 text-indigo-700 text-base">
-                <AlarmOutlineIcon />
-                <UserPlusBrokenIcon
-                  @click="useModalStore().openAddExecutorModal()"
-                />
-              </div>
-            </div>
-            <input
-              type="text"
-              class="w-full p-3 border-2 border-gray-300"
-              placeholder="Қидириш"
-            />
-            <div v-for="(data, idx) in executors" :key="idx">
-              <div class="flex items-center justify-between bg-green-100">
-                <div class="flex space-x-2 p-3">
-                  <ClockCircleOutlineIcon class="text-base text-indigo-700" />
-                  <div>
-                    <h1 class="font-bold">
-                      {{ data?.firstname + " " + data?.lastname }}
-                    </h1>
+                            <label
+                                :for="fileInput"
+                                class="flex w-full text-indigo-500 space-x-2 items-center px-2 py-2 border-2"
+                            >
+                                <PaperclipIcon
+                                    class="flex items-start text-lg"
+                                />
+                            </label>
+                        </div>
+                        <!---->
+                        <div
+                            @click="
+                                useModalStore().openAddFileModal();
+                                isCommentFile = false;
+                            "
+                            class="flex items-center space-x-4 px-3 py-1.5 font-medium text-indigo-500 bg-white rounded-md cursor-pointer"
+                        >
+                            <PaperclipIcon class="flex text-lg" />
+                            <span>Файл бириктириш</span>
+                        </div>
+                        <!---->
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-4">
+                                <h1 class="font-bold">Назоратчилар руйхати</h1>
 
-                    <p>
-                      {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
-                    </p>
-                  </div>
-                </div>
-                <div class="flex space-x-2">
-                  <BellOutlineIcon class="text-yellow-500 text-xs w-4 h-4" />
-                  <p>
-                    {{ moment(selectedTask?.dueDate).format("DD MMM YYYY") }}
-                  </p>
-                  <UserMinusOutlineIcon
-                    @click="deleteExecutor(idx)"
-                    class="text-indigo-700 text-base"
-                  />
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-        <div class="bg-white w-full items-star">
-          <div class="flex items-center border-b">
-            <h1 class="p-4">Берилган жавоблар</h1>
-          </div>
-          <article class="p-4">
-            <div class="flex flex-col space-y-4">
-              <div class="flex justify-between">
-                <div>
-                  <p>
-                    {{
-                      moment(selectedTask?.dueDate)
-                        .locale("ru")
-                        .format("DD MMM YYYY")
-                    }}
-                  </p>
-                </div>
-                <div>
-                  <h1 class="font-bold"></h1>
-                  <h3></h3>
-                </div>
-              </div>
-              <div class="taskDescriptionList">
-                <p class="border-l px-2">{{ selectedTask?.description }}</p>
-              </div>
-              <div class="w-full space-y-2">
-                <textarea
-                  v-model="comment"
-                  class="p-2 boreder-gray-500 border-2 w-full"
-                  placeholder="Жавоб матни"
-                  name=""
-                  id=""
-                  rows="5"
-                  cols="60"
-                ></textarea>
-                <div
-                  class="flex justify-between items-center space-x-1 px-3 py-1.5 font-medium text-indigo-500  rounded-md cursor-pointer "
-                >
-                  <div
-                    @click="useModalStore().openAddFileModal()"
-                    class="flex items-center space-x-4 px-3 py-1.5 font-medium text-indigo-500  rounded-md cursor-pointer "
-                  >
-                    <PaperclipIcon class="flex text-lg" />
-                    <span>Файл бириктириш</span>
-                  </div>
-                  <button
-                    @click="submitComment"
-                    class="p-3 bg-blue-500 text-white rounded-lg"
-                  >
-                    Жавоб сақлаш
-                  </button>
-                </div>
-              </div>
+                                <p>({{ controllers.length }})</p>
+                            </div>
 
-              <div class="flex items-center justify-end">
-                <div class="flex w-3/6 justify-between">
-                  <button class="text-base">Бекор қилиш</button>
-                  <button class="text-base px-6 py-2 rounded-full bg-gray-200">
-                    Сақлаш
-                  </button>
+                            <ShieldPlusOutlineIcon
+                                @click="
+                                    useModalStore().openAddControllerModal()
+                                "
+                                class="text-green-500 text-base"
+                            />
+                        </div>
+                        <div v-for="(data, idx) in controllers" :key="idx">
+                            <div
+                                class="taskUserList flex justify-between items-center"
+                            >
+                                <div class="border-l px-2">
+                                    <h1 class="font-bold">
+                                        {{
+                                            data?.firstname +
+                                            " " +
+                                            data?.lastname
+                                        }}
+                                    </h1>
+                                </div>
+                                <ShieldCrossOutlineIcon
+                                    @click="deleteControllers()"
+                                    class="green-red-500 text-base hidden"
+                                />
+                            </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <div class="flex space-x-4">
+                                <h1>Ижрочилар руйхати</h1>
+                                <p>({{ executors.length }})</p>
+                            </div>
+                            <div
+                                class="flex space-x-3 text-indigo-700 text-base"
+                            >
+                                <AlarmOutlineIcon />
+                                <UserPlusBrokenIcon
+                                    @click="
+                                        useModalStore().openAddExecutorModal()
+                                    "
+                                />
+                            </div>
+                        </div>
+                        <input
+                            type="text"
+                            class="w-full p-3 border-2 border-gray-300"
+                            placeholder="Қидириш"
+                        />
+                        <div v-for="(data, idx) in executors" :key="idx">
+                            <div
+                                class="flex items-center justify-between bg-green-100"
+                            >
+                                <div class="flex space-x-2 p-3">
+                                    <ClockCircleOutlineIcon
+                                        class="text-base text-indigo-700"
+                                    />
+                                    <div>
+                                        <h1 class="font-bold">
+                                            {{
+                                                data?.firstname +
+                                                " " +
+                                                data?.lastname
+                                            }}
+                                        </h1>
+
+                                        <p>
+                                            {{
+                                                moment(
+                                                    selectedTask?.dueDate
+                                                ).format("DD MMM YYYY")
+                                            }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <BellOutlineIcon
+                                        class="text-yellow-500 text-xs w-4 h-4"
+                                    />
+                                    <p>
+                                        {{
+                                            moment(
+                                                selectedTask?.dueDate
+                                            ).format("DD MMM YYYY")
+                                        }}
+                                    </p>
+                                    <UserMinusOutlineIcon
+                                        @click="deleteExecutor(idx)"
+                                        class="text-indigo-700 text-base hidden"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-              </div>
+                <div class="bg-white w-full items-star">
+                    <div class="flex items-center border-b">
+                        <h1 class="p-4">Берилган жавоблар</h1>
+                    </div>
+                    <article class="p-4">
+                        <div class="flex flex-col space-y-4">
+                            <div class="flex justify-between">
+                                <div>
+                                    <p>
+                                        {{
+                                            moment(selectedTask?.dueDate)
+                                                .locale("ru")
+                                                .format("DD MMM YYYY")
+                                        }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <h1 class="font-bold"></h1>
+                                    <h3></h3>
+                                </div>
+                            </div>
+                            <div
+                                class="taskDescriptionList"
+                                v-for="(data, idx) in taskComments"
+                                :key="idx"
+                            >
+                                <p class="border-l px-2">{{ data.note }}</p>
+                            </div>
+                            <div class="w-full space-y-2">
+                                <textarea
+                                    v-model="comment"
+                                    class="p-2 boreder-gray-500 border-2 w-full"
+                                    placeholder="Жавоб матни"
+                                    name=""
+                                    id=""
+                                    rows="5"
+                                    cols="60"
+                                ></textarea>
+                                <div
+                                    class="flex justify-between items-center space-x-1 px-3 py-1.5 font-medium text-indigo-500 rounded-md cursor-pointer"
+                                >
+                                    <div
+                                        @click="
+                                            useModalStore().openAddFileModal();
+                                            isCommentFile = true;
+                                        "
+                                        class="flex items-center space-x-4 px-3 py-1.5 font-medium text-indigo-500 rounded-md cursor-pointer"
+                                    >
+                                        <PaperclipIcon class="flex text-lg" />
+                                        <span>Файл бириктириш</span>
+                                    </div>
+                                    <button
+                                        @click="submitComment"
+                                        class="p-3 bg-blue-500 text-white rounded-lg"
+                                    >
+                                        Жавоб сақлаш
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-end">
+                                <div class="flex w-3/6 justify-between">
+                                    <button class="text-base">
+                                        Бекор қилиш
+                                    </button>
+                                    <button
+                                        class="text-base px-6 py-2 rounded-full bg-gray-200"
+                                        @click="editTask"
+                                    >
+                                        Сақлаш
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </div>
-          </article>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 <style scoped></style>
