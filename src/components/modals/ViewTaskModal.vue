@@ -24,6 +24,7 @@ import ClockCircleOutlineIcon from "../../assets/icons/ClockCircleOutlineIcon.vu
 import UserMinusOutlineIcon from "../../assets/icons/UserMinusOutlineIcon.vue";
 
 import TaskService from "../../services/task.service";
+import UserService from "../../services/user.service";
 import UploadService from "../../services/upload.service";
 
 moment.locale("ru");
@@ -43,15 +44,19 @@ const closeModal = () => {
     useUploadStore().clearStore();
 };
 const selectedTask = computed(() => {
+    console.log(useTaskStore().selectedTask);
     return useTaskStore().selectedTask;
 });
 
 const getFullName = (userId) => {
+    console.log(userId);
     const user = useUserStore().users.find((u) => u.id === userId);
+    console.log(useUserStore().users);
     if (user) {
+        console.log(user.firstname);
         return `${user.firstname} ${user.lastname}`;
     }
-    return "Ижрочи тайинланмаган";
+    return "Тест";
 };
 
 const executors = computed(() => {
@@ -166,6 +171,21 @@ watch(
         }
     }
 );
+
+onMounted(() => {
+    getUsers();
+});
+
+const getUsers = () => {
+    UserService.getUsers({})
+        .then((result) => {
+            useUserStore().clearUsers();
+            useUserStore().setUsers(result?.data);
+        })
+        .catch(() => {
+            toast.error("Фойдаланувчиларни олишда хатолик юз берди");
+        });
+};
 </script>
 <template>
     <div
@@ -200,9 +220,6 @@ watch(
                                 class="flex items-center space-x-4"
                                 v-if="editableDate"
                             >
-                                <!-- <p class="text-red-500">
-                  {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
-                </p> -->
                                 <input
                                     type="date"
                                     v-model="selectedTask.dueDate"
@@ -220,7 +237,7 @@ watch(
                     <article class="p-4 flex flex-col space-y-4">
                         <div class="items-center">
                             <h1 class="text-sm">Ким томонидан яратилган</h1>
-                            <p>{{ getFullName(selectedTask?.assetId) }}</p>
+                            <p>{{ getFullName(selectedTask?.userId) }}</p>
                         </div>
                         <div>
                             <h1 class="text-sm">Топширик мазмуни</h1>
@@ -239,9 +256,6 @@ watch(
                                     class="flex items-center space-x-4"
                                     v-if="editableText"
                                 >
-                                    <!-- <p class="text-red-500">
-                    {{ moment(selectedTask.dueDate).format("DD MMM YYYY") }}
-                    </p> -->
                                     <input
                                         type="text"
                                         v-model="selectedTask.description"
@@ -286,21 +300,21 @@ watch(
                         <div
                             @click="useModalStore().openAddFileModal()"
                             class="relative hidden items-center"
-            >
-            >
-              <input
-                type="file"
-                :id="'fileInput-' + idx"
-                class="hidden"
-                @change="onFileChange($event, idx)"
-              />
                         >
-              <input
-                type="file"
-                :id="'fileInput-' + idx"
-                class="hidden"
-                @change="onFileChange($event, idx)"
-              />
+                            >
+                            <input
+                                type="file"
+                                :id="'fileInput-' + idx"
+                                class="hidden"
+                                @change="onFileChange($event, idx)"
+                            />
+                            >
+                            <input
+                                type="file"
+                                :id="'fileInput-' + idx"
+                                class="hidden"
+                                @change="onFileChange($event, idx)"
+                            />
                             <label
                                 :for="fileInput"
                                 class="flex w-full text-indigo-500 space-x-2 items-center px-2 py-2 border-2"
@@ -378,9 +392,9 @@ watch(
                         />
                         <div v-for="(data, idx) in executors" :key="idx">
                             <div
-                                class="flex items-center justify-between bg-green-100"
+                                class="flex p-3 items-center justify-between bg-green-100"
                             >
-                                <div class="flex space-x-2 p-3">
+                                <div class="flex space-x-2">
                                     <ClockCircleOutlineIcon
                                         class="text-base text-indigo-700"
                                     />
@@ -395,9 +409,9 @@ watch(
 
                                         <p>
                                             {{
-                                                moment(
-                                                    selectedTask?.dueDate
-                                                ).format("DD MMM YYYY")
+                                                moment(data?.createdAt).format(
+                                                    "DD MMM YYYY HH:MM"
+                                                )
                                             }}
                                         </p>
                                     </div>
@@ -408,9 +422,9 @@ watch(
                                     />
                                     <p>
                                         {{
-                                            moment(
-                                                selectedTask?.dueDate
-                                            ).format("DD MMM YYYY")
+                                            moment(data?.createdAt).format(
+                                                "DD MMM YYYY HH:MM"
+                                            )
                                         }}
                                     </p>
                                     <UserMinusOutlineIcon
@@ -428,16 +442,7 @@ watch(
                     </div>
                     <article class="p-4">
                         <div class="flex flex-col space-y-4">
-                            <div class="flex justify-between">
-                                <div>
-                                    <p>
-                                        {{
-                                            moment(selectedTask?.dueDate)
-                                                .locale("ru")
-                                                .format("DD MMM YYYY")
-                                        }}
-                                    </p>
-                                </div>
+                            <div class="flex flex-col">
                                 <div>
                                     <h1 class="font-bold"></h1>
                                     <h3></h3>
@@ -448,6 +453,18 @@ watch(
                                 v-for="(data, idx) in taskComments"
                                 :key="idx"
                             >
+                                <div class="flex justify-between">
+                                    <p>
+                                        {{
+                                            moment(data?.createdAt)
+                                                .locale("ru")
+                                                .format("DD MMM YYYY HH:MM")
+                                        }}
+                                    </p>
+                                    <p class="font-bold">
+                                        {{ getFullName(data?.userId) }}
+                                    </p>
+                                </div>
                                 <p class="border-l px-2">{{ data.note }}</p>
                             </div>
                             <div class="w-full space-y-2">
